@@ -118,28 +118,28 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.Q( oLed    )
 );
 
-wire [7:0] wResult4_IMUL;
-IMUL_LOGIC4
+wire [7:0] wResult4_IMUL1;
+IMUL1_LOGIC4 imul1_4
 (
 	.a(wSourceData0[3:0]),
 	.b(wSourceData1[3:0]),
-	.Result(wResult4_IMUL)
+	.Result(wResult4_IMUL1)
 );
 
-/*wire [31:0] wResult16_IMUL;
-IMUL1_LOGIC # ( 16 )
+/*wire [31:0] wResult16_IMUL1;
+IMUL1_LOGIC # ( 16 ) imul1_16
 (	
 	.A(wSourceData0[15:0]),
 	.B(wSourceData1[15:0]),
-	.Result(wResult16_IMUL)
+	.Result(wResult16_IMUL1)
 );
 
-wire [7:0] wResult_IMUL2;
-IMUL2_LOGIC4
+wire [7:0] wResult4_IMUL2;
+IMUL2_LOGIC4 imul2_4
 (
 	.a(wSourceData0[3:0]),
 	.b(wSourceData1[3:0]),
-	.Result(wResult_IMUL)
+	.Result(wResult4_IMUL2)
 );*/
 
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
@@ -184,30 +184,30 @@ begin
 		rResult      <= wSourceData1 * wSourceData0;
 	end
 	//-------------------------------------
-	`IMUL4:
+	`IMUL1_4:
 	begin
 		rFFLedEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
-		rResult      <= wResult4_IMUL;
+		rResult      <= wResult4_IMUL1;
 	end
 
 	/*//-------------------------------------
-	`IMUL16:
+	`IMUL1_16:
 	begin
 		rFFLedEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b0;
-		rResult      <= wResult16_IMUL;
+		rResult      <= wResult16_IMUL1;
 	end
 
 	//-------------------------------------
-	`IMUL2:
+	`IMUL2_4:
 	begin
 		rFFLedEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
-		rResult      <= wResult_IMUL2;
+		rResult      <= wResult4_IMUL2;
 	end
 	//-------------------------------------*/
 	`STO:
