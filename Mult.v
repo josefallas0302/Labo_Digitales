@@ -41,9 +41,19 @@ module IMUL2_LOGIC4
 	wire [5:0] wSumA, wSumB, wRSum;
 	wire wCarry;
 	
-	MULT_MUX #(4) mux0 (.A(A), .B(B[1:0]), .Result(wRMux0));
+	MULT_MUX #(4) mux0 
+	(
+		.A(A), 
+		.B(B[1:0]), 
+		.Result(wRMux0)
+	);
    
-	MULT_MUX #(4) mux1 (.A(A), .B(B[3:2]), .Result(wRMux1));
+	MULT_MUX #(4) mux1 
+	(
+		.A(A), 
+		.B(B[3:2]), 
+		.Result(wRMux1)
+	);
 
 	assign wSumA = {2'b0,wRMux0[5:2]};
 	assign wSumB = wRMux1;
