@@ -70,7 +70,12 @@ module IMUL2_LOGIC4
 endmodule
 
 
-/*
+module IMUL1_LOGIC #(parameter SIZE = 4)
+(	
+	input wire [SIZE-1:0] A,
+	input wire [SIZE-1:0] B,
+	output wire [(2*SIZE)-1:0] Result
+);
 
 wire [15:0] wCarry [15:0];
 wire [15:0] sum0 [15:0];
