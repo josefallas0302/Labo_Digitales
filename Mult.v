@@ -70,17 +70,55 @@ module IMUL2_LOGIC4
 endmodule
 
 
-module IMUL1_LOGIC #(parameter SIZE = 4)
+module IMUL1_LOGIC4
+(	
+	input wire [3:0] a,
+	input wire [3:0] b,
+	output wire [7:0] Result
+);
+
+	wire [3:0] Sum0 [3:0];
+	wire [3:0] Sum1 [3:0];
+
+	wire [3:0] ResultA [2:0];
+	wire Carryout [2:0];
+
+
+	assign Sum0[0] = { 1'b0 ,  a[3]&b[0], a[2]&b[0], a[0]&b[1]};
+	assign Sum1[0] = { a[3]&b[1],  a[2]&b[1], a[1]&b[1], a[1]&b[0]};
+
+	assign Sum0[1] = { Carryout [0] ,  ResultA[0][3], ResultA[0][2], ResultA[0][1]};
+	assign Sum1[1] = { a[3]&b[2],  a[2]&b[2], a[1]&b[2], a[0]&b[2]};
+
+	assign Sum0[2] = { Carryout [1] ,  ResultA[1][3], ResultA[1][2], ResultA[1][1]};
+	assign Sum1[2] = { a[3]&b[3],  a[2]&b[3], a[1]&b[3], a[0]&b[3]};
+
+
+	ADDER # (4) SUM1 (.A(Sum0[0]), .B(Sum1[0]), .Result(ResultA[0]), .CarryO(Carryout[0]));
+	ADDER # (4) SUM2 (.A(Sum0[1]), .B(Sum1[1]), .Result(ResultA[1]), .CarryO(Carryout[1]));
+	ADDER # (4) SUM3 (.A(Sum0[2]), .B(Sum1[2]), .Result(ResultA[2]), .CarryO(Carryout[2]));
+
+	assign Result = {Carryout[2], ResultA[2], ResultA[1][0], ResultA[0][0], a[0]& b[0]};
+
+endmodule
+
+
+
+module IMUL1_LOGIC #(parameter SIZE = 16)
 (	
 	input wire [SIZE-1:0] A,
 	input wire [SIZE-1:0] B,
 	output wire [(2*SIZE)-1:0] Result
 );
 
-wire [15:0] wCarry [15:0];
-wire [15:0] sum0 [15:0];
+wire [SIZE-1:0] wSumOp0 [SIZE-2:0]
+wire [SIZE-1:0] wSumOp1 [SIZE-2:0]
 
-wire [15:0] wRes [15:0];
+wire [SIZE-1:0] wAddResult [SIZE-2:0];
+wire [SIZE-2:0] wCarryOut;
+
+
+assign 
 
 
 genvar C_Row, C_C;
@@ -98,11 +136,11 @@ generate
 			.oCarry(wCarry[C_Row])
 		);	
 
-		assign wCarry[C_Row][0] = 0;l
+		assign wCarry[C_Row][0] = 0;
 	
 	end
 endgenerate
 
-*/
+endmodule
 
 
