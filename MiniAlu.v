@@ -92,7 +92,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRL
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == (`SMUL /*|| 'IMUL16)*/ ),
+	.Enable(wOperation == `SMUL /*|| 'IMUL16)*/ ),
 	.D(rResult[15:0]),
 	.Q(wRL)
 );
@@ -102,7 +102,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRH
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == (`SMUL /*|| 'IMUL16)*/ ), //IMUL de 16?
+	.Enable(wOperation == `SMUL /*|| 'IMUL16)*/ ), //IMUL de 16?
 	.D(rResult[31:16]),
 	.Q(wRH)
 );
@@ -121,8 +121,8 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 wire [7:0] wResult4_IMUL1;
 IMUL1_LOGIC4 imul1_4
 (
-	.a(wSourceData0[3:0]),
-	.b(wSourceData1[3:0]),
+	.A(wSourceData0[3:0]),
+	.B(wSourceData1[3:0]),
 	.Result(wResult4_IMUL1)
 );
 
@@ -137,10 +137,13 @@ IMUL1_LOGIC # ( 16 ) imul1_16
 wire [7:0] wResult4_IMUL2;
 IMUL2_LOGIC4 imul2_4
 (
-	.a(wSourceData0[3:0]),
-	.b(wSourceData1[3:0]),
+	.A(wSourceData0[3:0]),
+	.B(wSourceData1[3:0]),
 	.Result(wResult4_IMUL2)
-);*/
+);
+
+*/
+
 
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
 assign wSourceData0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : wSourceDataRAM0);
