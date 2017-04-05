@@ -84,8 +84,8 @@ module IMUL1_LOGIC4
 	wire Carryout [2:0];
 
 
-	assign Sum0[0] = { 1'b0 ,  a[3]&b[0], a[2]&b[0], a[0]&b[1]};
-	assign Sum1[0] = { a[3]&b[1],  a[2]&b[1], a[1]&b[1], a[1]&b[0]};
+	assign Sum0[0] = { 1'b0 ,  a[3]&b[0], a[2]&b[0], a[1]&b[0]};
+	assign Sum1[0] = { a[3]&b[1],  a[2]&b[1], a[1]&b[1], a[0]&b[1]};
 
 	assign Sum0[1] = { Carryout [0] ,  ResultA[0][3], ResultA[0][2], ResultA[0][1]};
 	assign Sum1[1] = { a[3]&b[2],  a[2]&b[2], a[1]&b[2], a[0]&b[2]};
@@ -118,8 +118,8 @@ wire [SIZE-1:0] wAddResult [SIZE-2:0];
 wire [SIZE-2:0] wCarryOut;
 
 
-assign 
-
+assign wSumOp0[0] = { 1'b0 ,  a[3]&b[0], a[2]&b[0], a[0]&b[1]};
+assign wSumOp1[1] = { a[3]&b[1],  a[2]&b[1], a[1]&b[1], a[1]&b[0]};
 
 genvar C_Row, C_C;
 
