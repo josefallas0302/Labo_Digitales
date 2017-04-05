@@ -121,8 +121,8 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 wire [7:0] wResult4_IMUL1;
 IMUL1_LOGIC4 imul1_4
 (
-	.a(wSourceData0[3:0]),
-	.b(wSourceData1[3:0]),
+	.A(wSourceData0[3:0]),
+	.B(wSourceData1[3:0]),
 	.Result(wResult4_IMUL1)
 );
 
@@ -137,8 +137,8 @@ IMUL1_LOGIC # ( 16 ) imul1_16
 wire [7:0] wResult4_IMUL2;
 IMUL2_LOGIC4 imul2_4
 (
-	.a(wSourceData0[3:0]),
-	.b(wSourceData1[3:0]),
+	.A(wSourceData0[3:0]),
+	.B(wSourceData1[3:0]),
 	.Result(wResult4_IMUL2)
 );
 
