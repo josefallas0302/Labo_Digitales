@@ -92,7 +92,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRL
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == `SMUL),
+	.Enable(wOperation == `SMUL ),
 	.D(rResult[15:0]),
 	.Q(wRL)
 );
@@ -102,7 +102,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRH
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == `SMUL),
+	.Enable(wOperation == `SMUL ), //IMUL de 16?
 	.D(rResult[31:16]),
 	.Q(wRH)
 );
@@ -118,6 +118,14 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.Q( oLed    )
 );
 
+wire [7:0] wResult_IMUL;
+IMUL1_LOGIC4
+(
+	.a(wSourceData0[3:0]),
+	.b(wSourceData1[3:0]),
+	.Result(wResult_IMUL)
+);
+
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
 assign wSourceData0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : wSourceDataRAM0);
 assign wSourceData1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : wSourceDataRAM1);
@@ -125,6 +133,15 @@ assign wSourceData1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wR
 always @ ( * )
 begin
 	case (wOperation)
+	//-------------------------------------
+	`IMUL:
+	begin
+		rFFLedEN     <= 1'b0;
+		rBranchTaken <= 1'b0;
+		rWriteEnable <= 1'b1;
+		rResult      <= wResult_IMUL;
+	end
+
 	//-------------------------------------
 	`NOP:
 	begin
@@ -205,6 +222,8 @@ begin
 	//-------------------------------------	
 	endcase	
 end
+
+
 
 
 endmodule
