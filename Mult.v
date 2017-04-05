@@ -69,3 +69,35 @@ module IMUL2_LOGIC4
 
 endmodule
 
+
+/*
+
+wire [15:0] wCarry [15:0];
+wire [15:0] sum0 [15:0];
+
+wire [15:0] wRes [15:0];
+
+
+genvar C_Row, C_C;
+
+generate
+	
+	for (C_Row = 0; C_Row < Size; C_Row = C_Row + 1)
+	begin:Mul_Row
+		assign wCarry [C_Row] [0] = 0 ;
+		Sumador # (16) Sumadorbit(
+			.isum0(sum0[]),
+			.isum1(sum0[C_Row),
+
+			.oResult(wRes[C_Row]),
+			.oCarry(wCarry[C_Row])
+		);	
+
+		assign wCarry[C_Row][0] = 0;l
+	
+	end
+endgenerate
+
+*/
+
+
