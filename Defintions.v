@@ -11,9 +11,11 @@
 `define JMP    4'd6
 `define SUB    4'd7
 `define SMUL   4'd8
-`define IMUL4  4'd9
-`define IMUL16 4'd10
-`define IMUL2  4'd11
+`define IMUL1_4  4'd9
+`define IMUL1_16 4'd10
+`define IMUL2_4  4'd11
+`define IMUL2_16  4'd12
+
 
 //RAM registers
 `define R0 8'd0
