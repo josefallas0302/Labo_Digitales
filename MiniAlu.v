@@ -136,7 +136,7 @@ IMUL1_LOGIC # ( 16 ) imul1_16
 	.Result(wResult16_IMUL1)
 );
 
-/*wire [7:0] wResult4_IMUL2;
+wire [7:0] wResult4_IMUL2;
 IMUL2_LOGIC4 imul2_4
 (
 	.A(wSourceData0[3:0]),
@@ -151,7 +151,7 @@ IMUL2_LOGIC # ( 16 ) imul2_16
 	.B(wSourceData1[15:0]),
 	.Result(wResult16_IMUL2)
 );
-*/
+
 
 //Mux selección registros RL, RH
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
