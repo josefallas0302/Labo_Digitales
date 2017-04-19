@@ -92,7 +92,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRL
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == `SMUL /*|| 'IMUL16)*/ ),
+	.Enable((wOperation == `SMUL) || (wOperation == `IMUL1_16) || (wOperation == `IMUL2_16)),
 	.D(rResult[15:0]),
 	.Q(wRL)
 );
@@ -102,7 +102,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRH
 (
 	.Clock(Clock),
 	.Reset(Reset),
-	.Enable(wOperation == `SMUL /*|| 'IMUL16)*/ ), //IMUL de 16?
+	.Enable((wOperation == `SMUL) || (wOperation == `IMUL1_16) || (wOperation == `IMUL2_16)),
 	.D(rResult[31:16]),
 	.Q(wRH)
 );
@@ -118,6 +118,8 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.Q( oLed    )
 );
 
+
+//IMUL1, IMUL2
 wire [7:0] wResult4_IMUL1;
 IMUL1_LOGIC4 imul1_4
 (
@@ -126,7 +128,7 @@ IMUL1_LOGIC4 imul1_4
 	.Result(wResult4_IMUL1)
 );
 
-/*wire [31:0] wResult16_IMUL1;
+wire [31:0] wResult16_IMUL1;
 IMUL1_LOGIC # ( 16 ) imul1_16
 (	
 	.A(wSourceData0[15:0]),
@@ -142,12 +144,20 @@ IMUL2_LOGIC4 imul2_4
 	.Result(wResult4_IMUL2)
 );
 
-*/
+wire [31:0] wResult16_IMUL2;
+IMUL2_LOGIC # ( 16 ) imul2_16
+(	
+	.A(wSourceData0[15:0]),
+	.B(wSourceData1[15:0]),
+	.Result(wResult16_IMUL2)
+);
 
 
+//Mux selección registros RL, RH
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
 assign wSourceData0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : wSourceDataRAM0);
 assign wSourceData1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : wSourceDataRAM1);
+
 
 always @ ( * )
 begin
@@ -195,7 +205,7 @@ begin
 		rResult      <= wResult4_IMUL1;
 	end
 
-	/*//-------------------------------------
+	//-------------------------------------
 	`IMUL1_16:
 	begin
 		rFFLedEN     <= 1'b0;
@@ -203,7 +213,6 @@ begin
 		rWriteEnable <= 1'b0;
 		rResult      <= wResult16_IMUL1;
 	end
-
 	//-------------------------------------
 	`IMUL2_4:
 	begin
@@ -212,7 +221,15 @@ begin
 		rWriteEnable <= 1'b1;
 		rResult      <= wResult4_IMUL2;
 	end
-	//-------------------------------------*/
+	//-------------------------------------
+	`IMUL2_16:
+	begin
+		rFFLedEN     <= 1'b0;
+		rBranchTaken <= 1'b0;
+		rWriteEnable <= 1'b0;
+		rResult      <= wResult16_IMUL2;
+	end
+	//-------------------------------------
 	`STO:
 	begin
 		rFFLedEN     <= 1'b0;
