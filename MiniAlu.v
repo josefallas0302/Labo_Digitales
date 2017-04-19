@@ -214,7 +214,7 @@ begin
 		rResult      <= wResult16_IMUL1;
 	end
 	//-------------------------------------
-	/*`IMUL2_4:
+	`IMUL2_4:
 	begin
 		rFFLedEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
@@ -229,7 +229,7 @@ begin
 		rWriteEnable <= 1'b0;
 		rResult      <= wResult16_IMUL2;
 	end
-	//-------------------------------------*/
+	//-------------------------------------
 	`STO:
 	begin
 		rFFLedEN     <= 1'b0;
