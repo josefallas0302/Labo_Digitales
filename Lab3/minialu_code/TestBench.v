@@ -24,40 +24,40 @@
 
 module TestBench;
 
-	// Inputs
-	reg Clock;
-	reg Reset;
+   // Inputs
+   reg Clock;
+   reg Reset;
 
-	// Outputs
-	wire [7:0] oLed;
+   // Outputs
+   wire [7:0] oLed;
 
-	// Instantiate the Unit Under Test (UUT)
-	MiniAlu uut (
+   // Instantiate the Unit Under Test (UUT)
+   MiniAlu uut (
 		.Clock(Clock), 
 		.Reset(Reset), 
 		.oLed(oLed)
-	);
-	
-	always
-	begin
-		#5  Clock =  ! Clock;
+		);
+   
+   always
+      begin
+	 #5  Clock =  ! Clock;
 
-	end
+      end
 
-	initial begin
-		// Initialize Inputs
-		Clock = 0;
-		Reset = 0;
+   initial begin
+      // Initialize Inputs
+      Clock = 0;
+      Reset = 0;
 
-		// Wait 100 ns for global reset to finish
-		#100;
-		Reset = 1;
-		#50
-		Reset = 0;
-        
-		// Add stimulus here
-
-	end
+      // Wait 100 ns for global reset to finish
+      #100;
+      Reset = 1;
+      #50
+	 Reset = 0;
       
+      // Add stimulus here
+
+   end
+   
 endmodule
 
