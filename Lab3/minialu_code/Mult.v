@@ -142,7 +142,7 @@ endmodule // IMUL1_LOGIC
 
 
 //----------------------------------------------------
-/module IMUL2_LOGIC4
+module IMUL2_LOGIC4
    (
     input wire [3:0]  A,
     input wire [3:0]  B,
