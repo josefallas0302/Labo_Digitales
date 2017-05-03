@@ -230,7 +230,7 @@ begin
 		rFFLedEN     <= 1'b0;
 		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
-		rWriteEnable <= 1'b0;
+		rWriteEnable <= 1'b1;
 		rResult <= wSourceData0 << wSourceData1;
 	end
 	//-------------------------------------
