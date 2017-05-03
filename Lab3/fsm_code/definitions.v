@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `ifndef DEFINITIONS_V
  `define DEFINITIONS_V
-
+ 
 //Commands
  `define FUNCTION_SET 8'h28
  `define ENTRY_MODE_SET 8'h06
@@ -18,3 +18,5 @@
  `define U 8'h55
  `define N 8'h4E
  `define D 8'h44
+ 
+`endif
