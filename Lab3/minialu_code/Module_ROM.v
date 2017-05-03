@@ -17,12 +17,12 @@ module ROM
 	    3: oInstruction = {`STO , `R4, 16'd12};
 	    4: oInstruction = {`STO , `R5, 16'd130};
 	    5: oInstruction = {`STO , `R6, 16'd700};
-	    6: oInstruction = {`IMUL1_4 , `R7, `R2, `R3};
+	  /*6: oInstruction = {`IMUL1_4 , `R7, `R2, `R3};
 	    7: oInstruction = {`IMUL2_4 , `R7, `R3, `R4};
 	    8: oInstruction = {`IMUL1_16 , 8'b0, `R4, `R5};
 	    9: oInstruction = {`IMUL2_16 , 8'b0, `R5, `R6};
 	    10: oInstruction = {`LED, 8'b0,`R7, 8'b0};
-	    11: oInstruction = {`JMP ,  8'd6, 16'b0  };
+	    11: oInstruction = {`JMP ,  8'd6, 16'b0  };*/
 	    
 	    /*	0: oInstruction = { `NOP ,24'd4000      };
 	     1: oInstruction = { `STO , `R7,16'b0001 };
