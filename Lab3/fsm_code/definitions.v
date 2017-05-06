@@ -6,7 +6,8 @@
  `define FUNCTION_SET 8'h28
  `define ENTRY_MODE_SET 8'h06
  `define DISPLAY_ONOFF 8'h0C
- `define CLEAR_DISPLAY  8'h01
+ `define CLEAR_DISPLAY 8'h01
+ `define SET_ADDR 8'h80
 
 //Characters
  `define H 8'h48
