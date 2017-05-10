@@ -27,29 +27,32 @@ module Module_LCD_Control (
 			    ); 
 
    parameter TEXT_LENGTH  = 10;
+   wire [0:(8*TEXT_LENGTH-1)] rTextChars;
+   assign rTextChars = {`H,`O,`L,`A,`SPC,`M,`U,`N,`D,`O}; 
 
+   parameter CMD_LENGTH  = 5;
+   wire [0:(8*CMD_LENGTH-1)] rConfigCommands;
+   assign rConfigCommands  = {
+			      `FUNCTION_SET,
+			      `ENTRY_MODE_SET,
+			      `DISPLAY_ONOFF,
+			      `CLEAR_DISPLAY,
+			      `SET_ADDR 
+			      };
+
+   
    reg 					     rWrite_Enabled; 
    reg [7:0] 				     rCurrentState,rNextState; 
    reg [31:0] 				     rTimeCount; 
    reg 					     rTimeCountReset;
    reg [3:0] 				     rStepCount, rNextStepCount;
    reg 					     rNibbleSelect, rNextNibbleSelect; //Upper=0, Lower=1
-   reg 					     rFinishedStepWait;
+   reg [31:0] 				     rStepWait;
    
-   wire [31:0] 				     rConfigCommands; //WARNING: Check if bit direction is right
-   wire [(8*TEXT_LENGTH-1):0] 		     rTextChars; //WARNING: Check if bit direction is right
 
    assign oLCD_Enabled = rWrite_Enabled;
    assign oLCD_ReadWrite = 0;  //I only Write to the LCD display, never Read from it 
    assign oLCD_StrataFlashControl = 1; //StrataFlash disabled. Full read/write access to LCD 
-
-   assign rConfigCommands  = {`FUNCTION_SET,
-			      `ENTRY_MODE_SET,
-			      `DISPLAY_ONOFF,
-			      `CLEAR_DISPLAY
-			      };
-   
-   assign rTextChars  = {`H,`O,`L,`A,`SPC,`M,`U,`N,`D,`O};
 	
    //---------------------------------------------- 
    //Next State and delay logic 
@@ -67,7 +70,8 @@ module Module_LCD_Control (
 	    begin 
 	       if (rTimeCountReset) 
 		  rTimeCount <= 32'b0; 
-	       else rTimeCount <= rTimeCount + 32'b1; 
+	       else 
+		  rTimeCount <= rTimeCount + 32'b1; 
 	       
 	       rNibbleSelect <= rNextNibbleSelect;
 	       rStepCount    <= rNextStepCount;
@@ -83,7 +87,7 @@ module Module_LCD_Control (
 	 oLCD_Data 	    = 4'h0; 
 	 rNextStepCount     = rStepCount; 
 	 rNextNibbleSelect  = rNibbleSelect;
-	 rFinishedStepWait  = 1'b0;
+	 rStepWait 	    = 1'b0;
 	 
 	 case (rCurrentState) 
 	    //------------------------------------------ 
@@ -109,13 +113,13 @@ module Module_LCD_Control (
 		  rTimeCountReset      = 1'b0; 
 		  
 		  case (rStepCount)
-		     0: rFinishedStepWait    = rTimeCount > 32'd750000;
-		     1: rFinishedStepWait    = rTimeCount > 32'd205000;
-		     2: rFinishedStepWait    = rTimeCount > 32'd5000;
-		     3,4: rFinishedStepWait  = rTimeCount > 32'd2000;
+		     0: rStepWait    =  32'd750000;
+		     1: rStepWait    =  32'd205000;
+		     2: rStepWait    =  32'd5000;
+		     3,4: rStepWait  =  32'd2000;
 		  endcase 
 		  
-		  if (rFinishedStepWait) 
+		  if (rTimeCount > rStepWait) 
 		     begin
 			rTimeCountReset  = 1'b1;
 			if (rStepCount < 4)
@@ -136,14 +140,14 @@ module Module_LCD_Control (
 		  
 		  case (rStepCount)
 		     0,1,2: oLCD_Data  = 4'h3;
-		     3,4:	oLCD_Data 	 = 4'h2;
+		     3,4: oLCD_Data  = 4'h2;
 		  endcase 
 
 		  if (rTimeCount <= 32'd14) //(2 Setup + 12 Enable) cycles
 		     begin
 			rTimeCountReset        = 1'b0;
 			//Setup: rWrite_Enabled = 0 for 2 cycles
-			rWrite_Enabled 	       = (rTimeCount <= 32'd2) ? 1'b0 : 1'b1;
+			rWrite_Enabled 	       =  (rTimeCount < 32'd2) ? 1'b0 : 1'b1;
 			rNextState 	       = `STATE_POWERON_INIT_WRITE;
 		     end
 		  else
@@ -159,13 +163,13 @@ module Module_LCD_Control (
 	       begin
 		  oLCD_RegisterSelect  = 1'b0; //Command
 		  
-		  oLCD_Data = rConfigCommands[31-(8*rStepCount+4*rNibbleSelect) -: 4];
+		  oLCD_Data = rConfigCommands[(8*rStepCount+4*rNibbleSelect) +: 4];
 		  
-		  if (rTimeCount <= 32'd14) //(2 Setup + 12 Enable) cycles
+		  if (rTimeCount <= (32'd14)) //(2 Setup + 12 Enable) cycles
 		     begin
 			rTimeCountReset        = 1'b0;
 			//Setup: rWrite_Enabled = 0 for 2 cycles
-			rWrite_Enabled 	       = (rTimeCount <= 32'd2) ? 1'b0 : 1'b1;
+			rWrite_Enabled 	       = (rTimeCount < 32'd2) ? 1'b0 : 1'b1;
 			rNextState 	       = `STATE_CONFIG_INIT_WRITE;
 		     end
 		  else
@@ -192,9 +196,9 @@ module Module_LCD_Control (
 		  oLCD_Data 	       = 4'h0; 
 		  oLCD_RegisterSelect  = 1'b0; //Command
 		  rTimeCountReset      = 1'b0; 
-		  rFinishedStepWait    = rTimeCount > 32'd50; //1 us
+		  rStepWait 	       = (32'd50); //1 us
 		  
-		  if (rFinishedStepWait) 
+		  if (rTimeCount > rStepWait) 
 		     begin
 			rTimeCountReset  = 1'b1;
 			rNextState = `STATE_CONFIG_INIT_WRITE;
@@ -211,14 +215,15 @@ module Module_LCD_Control (
 		  rTimeCountReset      = 1'b0; 
 
 		  case (rStepCount)
-		     0,1,2: rFinishedStepWait  = rTimeCount > 32'd2000;  //40 us
-		     3: rFinishedStepWait      = rTimeCount > 32'd82000; //1.64 ms
+		     0,1,2: rStepWait  = 32'd2000;  //40 us
+		     3: rStepWait  = 32'd82000; //1.64 ms
+		     4: rStepWait  = 32'd2000;  //40 us
 		  endcase 
 
-		  if (rFinishedStepWait) 
+		  if (rTimeCount > rStepWait) 
 		     begin
 			rTimeCountReset  = 1'b1;
-			if (rStepCount < 3)
+			if (rStepCount < CMD_LENGTH-1)
 			   begin
 			      rNextStepCount  = rStepCount + 4'b1;
 			      rNextState      = `STATE_CONFIG_INIT_WRITE;
@@ -237,13 +242,13 @@ module Module_LCD_Control (
 	       begin
 		  oLCD_RegisterSelect  = 1'b1; //Data
 		  
-		  oLCD_Data = rTextChars[((8*TEXT_LENGTH-1)-(8*rStepCount + 4*rNibbleSelect)) -: 4];
+		  oLCD_Data = rTextChars[(8*rStepCount+4*rNibbleSelect) +: 4];
 		  
-		  if (rTimeCount <= 32'd14) //(2 Setup + 12 Enable) cycles
+		  if (rTimeCount <= (32'd14)) //(2 Setup + 12 Enable) cycles
 		     begin
 			rTimeCountReset        = 1'b0;
 			//Setup: rWrite_Enabled = 0 for 2 cycles
-			rWrite_Enabled 	       = (rTimeCount <= 32'd2) ? 1'b0 : 1'b1;
+			rWrite_Enabled 	       = (rTimeCount < 32'd2) ? 1'b0 : 1'b1;
 			rNextState 	       = `STATE_PRINT_WRITE;
 		     end
 		  else
@@ -254,12 +259,12 @@ module Module_LCD_Control (
 			if (rNibbleSelect == 1'b0)
 			   begin
 			      rNextNibbleSelect  = 1'b1;
-			      rNextState 	 = `STATE_CONFIG_INIT_HALF_WAIT;
+			      rNextState 	 = `STATE_PRINT_HALF_WAIT;
 			   end
 			else // rNibbleSelect == 1
 			   begin
 			      rNextNibbleSelect  = 1'b0;
-			      rNextState 	 = `STATE_CONFIG_INIT_WAIT;
+			      rNextState 	 = `STATE_PRINT_WAIT;
 			   end
 		     end
 
@@ -269,11 +274,11 @@ module Module_LCD_Control (
 	       begin
 		  rWrite_Enabled       = 1'b0; 
 		  oLCD_Data 	       = 4'h0; 
-		  oLCD_RegisterSelect  = 1'b0; // WARNING: Check if 0 or 1
+		  oLCD_RegisterSelect  = 1'b1; // WARNING: Check if 0 or 1
 		  rTimeCountReset      = 1'b0; 
-		  rFinishedStepWait    = rTimeCount > 32'd50; //1 us
+		  rStepWait    = 32'd50; //1 us
 		  
-		  if (rFinishedStepWait) 
+		  if (rTimeCount > rStepWait) 
 		     begin
 			rTimeCountReset  = 1'b1;
 			rNextState = `STATE_PRINT_WRITE;
@@ -288,13 +293,13 @@ module Module_LCD_Control (
 		  oLCD_Data 	       = 4'h0; 
 		  oLCD_RegisterSelect  = 1'b0; //Command
 		  rTimeCountReset      = 1'b0; 
-		  rFinishedStepWait    = rTimeCount > 32'd2000; //40 us
+		  rStepWait    = 32'd2000; //40 us
 
-		  if (rFinishedStepWait) 
+		  if (rTimeCount > rStepWait)
 		     begin
 			rTimeCountReset  = 1'b1;
 			
-			if (rStepCount < TEXT_LENGTH)
+			if (rStepCount < TEXT_LENGTH-1)
 			   begin
 			      rNextStepCount  = rStepCount + 4'b1;
 			      rNextState      = `STATE_PRINT_WRITE;
