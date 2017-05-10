@@ -8,7 +8,7 @@ module MiniAlu
  input wire Clock,
  input wire Reset,
  output wire [7:0] oLed,
- output wire [3:0] oLCD
+ //output wire [3:0] oLCD
 );
 
 wire [15:0]  wIP,wIP_temp;
@@ -107,6 +107,27 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRH
 );
 
 
+wire [3:0] wLCD_Data
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_LCD_DATA
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(wOperation == LCD),
+       .D(wSourceData1[7:4]),
+       .Q(wLCD_Data)
+       );
+
+wire [3:0] wLCD_Control
+    assign wLCD_Control[0] = 1'b0; //(LED_RW=0, siempre escritura)
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 2 ) FF_LCD_DATA
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(wOperation == LCD_CTL),
+       .D(wSourceData1[1:0]), //iLED_RS, iLED_E
+       .Q(wLCD_Control[2:1]) //oLED_RS, oLED_E
+       );
+
 reg rFFLedEN;
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 (
@@ -117,7 +138,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.Q( oLed    )
 );
 
-reg rFFLCDEN;
+/*reg rFFLCDEN;
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_LCD
 (
 	.Clock(Clock),
@@ -125,7 +146,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_LCD
 	.Enable( rFFLCDEN ),
 	.D( wSourceData1[7:4]),
 	.Q( oLCD    )
-);
+);*/
 
 
 //Mux selección registros RL, RH
