@@ -107,25 +107,29 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRH
 );
 
 
-wire [3:0] wLCD_Data
-   FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_LCD_DATA
+wire [5:0] wLCD_Info;
+wire wRS, wRW;
+assign wRS = wOperation == `LCD_CHAR;
+assign wRW = 1'b0;
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 6 ) FF_LCD_DATA
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(wOperation == LCD),
-       .D(wSourceData1[7:4]),
-       .Q(wLCD_Data)
+       .Enable(wOperation == `LCD_CHAR || wOperation == `LCD_CMD),
+       .D({RW,RS,wSourceData1[7:4]}),
+       .Q(wLCD_Info)
        );
 
-wire [3:0] wLCD_Control
-    assign wLCD_Control[0] = 1'b0; //(LED_RW=0, siempre escritura)
-   FFD_POSEDGE_SYNCRONOUS_RESET # ( 2 ) FF_LCD_DATA
+
+wire  wLCD_ENB;
+
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 1 ) FF_LCD_ENB
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(wOperation == LCD_CTL),
-       .D(wSourceData1[1:0]), //iLED_RS, iLED_E
-       .Q(wLCD_Control[2:1]) //oLED_RS, oLED_E
+       .Enable(wOperation == `LCD_ENB),
+       .D(~wLCD_ENB), //iLED_RS, iLED_E
+       .Q(wLCD_ENB) //oLED_RS, oLED_E
        );
 
 reg rFFLedEN;
@@ -138,15 +142,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.Q( oLed    )
 );
 
-/*reg rFFLCDEN;
-FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_LCD
-(
-	.Clock(Clock),
-	.Reset(Reset),
-	.Enable( rFFLCDEN ),
-	.D( wSourceData1[7:4]),
-	.Q( oLCD    )
-);*/
+
 
 
 //Mux selección registros RL, RH
@@ -163,7 +159,6 @@ begin
 	`NOP:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
@@ -172,7 +167,6 @@ begin
 	`ADD:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
 		rResult      <= wSourceData1 + wSourceData0;
@@ -181,7 +175,6 @@ begin
 	`SUB:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
 		rResult      <= wSourceData1 - wSourceData0;
@@ -200,7 +193,6 @@ begin
 	`STO:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rWriteEnable <= 1'b1;
 		rBranchTaken <= 1'b0;
 		rResult      <= wImmediateValue;
@@ -209,7 +201,6 @@ begin
 	`BLE:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
 		if (wSourceData1 <= wSourceData0 )
@@ -222,7 +213,6 @@ begin
 	`JMP:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
 		rBranchTaken <= 1'b1;
@@ -231,25 +221,39 @@ begin
 	`LED:
 	begin
 		rFFLedEN     <= 1'b1;
-		rFFLCDEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
 		rBranchTaken <= 1'b0;
 	end
 	//-------------------------------------
-	`LCD:
+	`LCD_CHAR:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b1;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
 		rBranchTaken <= 1'b0;
 	end	
 	//-------------------------------------
+	`LCD_CMD:
+	begin
+		rFFLedEN     <= 1'b0;
+		rWriteEnable <= 1'b0;
+		rResult      <= 0;
+		rBranchTaken <= 1'b0;
+	end	
+	//-------------------------------------
+	`LCD_ENB:
+	begin
+		rFFLedEN     <= 1'b0;
+		rWriteEnable <= 1'b0;
+		rResult      <= 0;
+		rBranchTaken <= 1'b0;
+	end	
+	//-------------------------------------
+
 	`SHL:
 	begin
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
 		rResult <= wSourceData0 << wSourceData1;
@@ -258,7 +262,6 @@ begin
 	default:
 	begin
 		rFFLedEN     <= 1'b1;
-		rFFLCDEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
 		rBranchTaken <= 1'b0;
