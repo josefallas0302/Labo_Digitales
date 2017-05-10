@@ -2,14 +2,15 @@
 `include "Defintions.v"
 `define LOOP1 8'd11
 `define LOOP2 8'd16
-`define JMP_O 8'd35
-`define JMP_L 8'd38
-`define JMP_A 8'd41
-`define JMP_SPC 8'd44
-`define JMP_M 8'd47
-`define JMP_U 8'd50
-`define JMP_N 8'd53
-`define JMP_D 8'd56
+`define JMP_O 8'd36
+`define JMP_L 8'd39
+`define JMP_A 8'd42
+`define JMP_SPC 8'd45
+`define JMP_M 8'd48
+`define JMP_U 8'd51
+`define JMP_N 8'd54
+`define JMP_D 8'd57
+
 module ROM
    (
     input wire [15:0] iAddress,
@@ -61,47 +62,51 @@ module ROM
 		 32: oInstruction = {`BLE , `JMP_D,`R8, `R7};
 		 33: oInstruction = {`SUB , `R8, `R8, `R3};
 		 34: oInstruction = {`BLE , `JMP_O,`R8, `R7};
+		 35: oInstruction = {`JMP , 8'd60 , 16'b0};
 		 
 		 
 		 //JMP_O:
-		 35: oInstruction = {`STO , `R1, `O};
-		 36: oInstruction = {`STO , `R8, 16'd10};
-		 37: oInstruction = {`JMP , 8'd10, 16'b0};
+		 36: oInstruction = {`STO , `R1, `O};
+		 37: oInstruction = {`STO , `R8, 16'd10};
+		 38: oInstruction = {`JMP , 8'd10, 16'b0};
+		 
 		 
 		 //JMP_L:
-		 38: oInstruction = {`STO , `R1, `L};
-		 39: oInstruction = {`STO , `R8, 16'd10};
-		 40: oInstruction = {`JMP , 8'd10, 16'b0};
+		 39: oInstruction = {`STO , `R1, `L};
+		 40: oInstruction = {`STO , `R8, 16'd10};
+		 41: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_A:
-		 41: oInstruction = {`STO , `R1, `A};
-		 42: oInstruction = {`STO , `R8, 16'd10};
-		 43: oInstruction = {`JMP , 8'd10, 16'b0};
+		 42: oInstruction = {`STO , `R1, `A};
+		 43: oInstruction = {`STO , `R8, 16'd10};
+		 44: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_SPC:
-		 44: oInstruction = {`STO , `R1, `SPC};
-		 45: oInstruction = {`STO , `R8, 16'd10};
-		 46: oInstruction = {`JMP , 8'd10, 16'b0};
+		 45: oInstruction = {`STO , `R1, `SPC};
+		 46: oInstruction = {`STO , `R8, 16'd10};
+		 47: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_M:
-		 47: oInstruction = {`STO , `R1, `M};
-		 48: oInstruction = {`STO , `R8, 16'd10};
-		 49: oInstruction = {`JMP , 8'd10, 16'b0};
+		 48: oInstruction = {`STO , `R1, `M};
+		 49: oInstruction = {`STO , `R8, 16'd10};
+		 50: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_U:
-		 50: oInstruction = {`STO , `R1, `U};
-		 51: oInstruction = {`STO , `R8, 16'd10};
-		 52: oInstruction = {`JMP , 8'd10, 16'b0};
+		 51: oInstruction = {`STO , `R1, `U};
+		 52: oInstruction = {`STO , `R8, 16'd10};
+		 53: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_N:
-		 53: oInstruction = {`STO , `R1, `N};
-		 54: oInstruction = {`STO , `R8, 16'd10};
-		 55: oInstruction = {`JMP , 8'd10, 16'b0};
+		 54: oInstruction = {`STO , `R1, `N};
+		 55: oInstruction = {`STO , `R8, 16'd10};
+		 56: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 		 //JMP_D:
-		 56: oInstruction = {`STO , `R1, `D};
-		 57: oInstruction = {`STO , `R8, 16'd10};
-		 58: oInstruction = {`JMP , 8'd10, 16'b0};
+		 57: oInstruction = {`STO , `R1, `D};
+		 58: oInstruction = {`STO , `R8, 16'd10};
+		 59: oInstruction = {`JMP , 8'd10, 16'b0};
+
+		 60: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 	    default:
