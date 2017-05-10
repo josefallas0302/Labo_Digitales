@@ -14,6 +14,16 @@
  `define LCD    4'd9
  `define SHL    4'd10
 
+ `define H 8'h48
+ `define O 8'h4F
+ `define L 8'h4C
+ `define A 8'h41
+ `define SPC 8'hA0
+ `define M 8'h4D
+ `define U 8'h55
+ `define N 8'h4E
+ `define D 8'h44
+
 
 
 
