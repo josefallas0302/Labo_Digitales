@@ -1,7 +1,15 @@
 `timescale 1ns / 1ps
 `include "Defintions.v"
-`define LOOP1 8'd10
-`define LOOP2 8'd7
+`define LOOP1 8'd11
+`define LOOP2 8'd16
+`define JMP_O 8'd35
+`define JMP_L 8'd38
+`define JMP_A 8'd41
+`define JMP_SPC 8'd44
+`define JMP_M 8'd47
+`define JMP_U 8'd50
+`define JMP_N 8'd53
+`define JMP_D 8'd56
 module ROM
    (
     input wire [15:0] iAddress,
@@ -95,10 +103,6 @@ module ROM
 		 57: oInstruction = {`STO , `R8, 16'd10};
 		 58: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
-		 //JMP_O:
-		 59: oInstruction = {`STO , `R1, `O};
-		 60: oInstruction = {`STO , `R8, 16'd10};
-		 61: oInstruction = {`JMP , 8'd10, 16'b0};
 		 
 	    default:
 	       oInstruction = { `LED ,  24'b10101010 };
