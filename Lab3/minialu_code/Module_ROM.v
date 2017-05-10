@@ -19,6 +19,22 @@ module ROM
    always @ ( iAddress )
       begin
 	 case (iAddress)
+		 1: oInstruction = {`STO , `R1, 16'd0};
+		 2: oInstruction = {`STO , `R2, 16'd1};
+		 3: oInstruction = {`STO , `R3, 16'd12};
+		 4: oInstruction = {`STO , `R4, 16'd62500};
+		 4: oInstruction = {`STO , `R5, 16'd0};
+		 //LOOP62500
+		 5: oInstruction = {`ADD , `R1, `R1, `R2}; 
+		 6: oInstruction = {`BLE , `LOOP62500,`R2, `R4};
+		 //LOOP12
+		 16: oInstruction = {`ADD , `R5, `R5, `R2}; 
+        	 1: oInstruction = {`STO , `R1, 16'd0};
+		 17: oInstruction = {`BLE , `LOOP62500,`R5, `R3};
+		 //POWER ON
+
+
+
 		 0: oInstruction = {`NOP , 24'd4000 };
 		 1: oInstruction = {`STO , `R2, 16'd0};
 		 2: oInstruction = {`STO , `R3, 16'd1};
