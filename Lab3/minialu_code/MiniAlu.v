@@ -8,7 +8,7 @@ module MiniAlu
  input wire Clock,
  input wire Reset,
  output wire [7:0] oLed,
- //output wire [3:0] oLCD
+ output wire [7:0] oLCD 
 );
 
 wire [15:0]  wIP,wIP_temp;
@@ -35,8 +35,8 @@ RAM_DUAL_READ_PORT DataRam
 	.iReadAddress1( wInstruction[15:8] ),
 	.iWriteAddress( wDestination ),
 	.iDataIn(       rResult[15:0]      ),
-	.oDataOut0(     wSourceDataRAM0 ),
-	.oDataOut1(     wSourceDataRAM1 )
+	.oDataOut1(     wSourceDataRAM1 ),
+	.oDataOut0(     wSourceDataRAM0 )
 );
 
 assign wIPInitialValue = (Reset) ? 8'b0 : wDestination;
@@ -86,6 +86,27 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FFD4
 	.Q(wDestination)
 );
 
+wire [15:0] wLastResult;
+
+FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FF_Result
+(
+	.Clock(Clock),
+	.Reset(Reset),
+	.Enable(1'b1),
+	.D(rResult),
+	.Q(wLastResult)
+);
+wire [7:0] wLastDestination;
+FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_Destination
+(
+	.Clock(Clock),
+	.Reset(Reset),
+	.Enable(1'b1),
+	.D(wDestination),
+	.Q(wLastDestination)
+);
+
+
 wire [15:0] wRL;
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFRL
 (
@@ -115,10 +136,11 @@ assign wRW = 1'b0;
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(wOperation == `LCD_CHAR || wOperation == `LCD_CMD),
-       .D({RW,RS,wSourceData1[7:4]}),
+       .Enable(wOperation == `LCD_CHAR | wOperation == `LCD_CMD),
+       .D({wRW,wRS,wSourceData1[7:4]}),
        .Q(wLCD_Info)
        );
+		 
 
 
 wire  wLCD_ENB;
@@ -131,6 +153,9 @@ wire  wLCD_ENB;
        .D(~wLCD_ENB), //iLED_RS, iLED_E
        .Q(wLCD_ENB) //oLED_RS, oLED_E
        );
+		 
+// oLCD DATA ARRAY
+assign oLCD = {1'b1,wLCD_Info[5],wLCD_Info[4],wLCD_ENB,wLCD_Info[3:0]};
 
 reg rFFLedEN;
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
@@ -147,8 +172,18 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 
 //Mux selección registros RL, RH
 assign wImmediateValue = {wSourceAddr1,wSourceAddr0};
-assign wSourceData0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : wSourceDataRAM0);
-assign wSourceData1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : wSourceDataRAM1);
+wire [15:0] wSourceDataMul0, wSourceDataMul1;
+
+assign wSourceDataMul0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : wSourceDataRAM0);
+assign wSourceDataMul1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : wSourceDataRAM1);
+
+assign wSourceData0 = ( wSourceAddr0 == wLastDestination) ? wLastResult : wSourceDataMul0;
+assign wSourceData1 = ( wSourceAddr1 == wLastDestination) ? wLastResult : wSourceDataMul1;
+
+
+
+//assign wSourceData0 = (wSourceAddr0 == `RL) ? wRL : (( wSourceAddr0 == `RH) ? wRH : (( wSourceAddr0 == wLastDestination) ? wLastResult : wSourceDataRAM0));
+//assign wSourceData1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : (( wSourceAddr1 == wLastDestination) ? wLastResult : wSourceDataRAM1));
 
 
 always @ ( * )
@@ -182,9 +217,8 @@ begin
 	//-------------------------------------
 	`SMUL:
 	begin
-	   $display("%d ns SMUL r: %d * %d = %d, RL = %d, RH = %d , oLED = %b", $time, wSourceData1, wSourceData0, rResult, wRL, wRH, oLed);
+//	   $display("%d ns SMUL r: %d * %d = %d, RL = %d, RH = %d , oLED = %b", $time, wSourceData1, wSourceData0, rResult, wRL, wRH, oLed);
 		rFFLedEN     <= 1'b0;
-		rFFLCDEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= wSourceData1 * wSourceData0;
