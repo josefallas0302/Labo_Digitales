@@ -1,8 +1,7 @@
 `timescale 1ns / 1ps
 `ifndef DEFINTIONS_V
  `define DEFINTIONS_V
-
-`default_nettype none	
+ `default_nettype none	
  `define NOP    4'd0
  `define LED    4'd2
  `define BLE    4'd3
@@ -11,9 +10,13 @@
  `define JMP    4'd6
  `define SUB    4'd7
  `define SMUL   4'd8
- `define LCD    4'd9
- `define SHL    4'd10
-
+ `define LCD_CHAR 4'd9
+ `define LCD_CMD 4'd10
+ `define LCD_ENB 4'd11
+ `define SHL 4'd12
+ `define CALL 4'd13
+ `define RET 4'd14
+   
  `define H 8'h48
  `define O 8'h4F
  `define L 8'h4C
@@ -23,9 +26,6 @@
  `define U 8'h55
  `define N 8'h4E
  `define D 8'h44
-
-
-
 
 
    //RAM registers
