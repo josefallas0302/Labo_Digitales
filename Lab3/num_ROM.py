@@ -17,13 +17,12 @@ def main(argv):
         if not comment:
             if ":" in line:
                 [left, right] = line.split(":")
-                print "left:" + "'" + left.strip() + "'"
-                print left.strip().isdigit()
-                print "right:" + right
+                #print "left:" + "'" + left.strip() + "'"
+                #print left.strip().isdigit()
+                #print "right:" + right
                         
                 if left.strip().isdigit():
                     writeline = str(i)+":"+right
-                    print "writeline: " + writeline
                     i+=1
 
         outfile.write(writeline)
