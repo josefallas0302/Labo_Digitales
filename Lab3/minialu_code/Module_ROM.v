@@ -11,7 +11,10 @@
 `define JMP_N 8'd54
 `define JMP_D 8'd57
 
-module ROM
+`define ADD_FN 8'd10
+`define EXIT 8'd100
+   
+   module ROM
    (
     input wire [15:0] iAddress,
     output reg [27:0] oInstruction
@@ -402,8 +405,28 @@ module ROM
 		 // 59: oInstruction = {`JMP , 8'd10, 16'b0};
 
 		 // 60: oInstruction = {`NOP , 24'd4000 };
+		 	
+
+		 	    /* Test CALL/RET
+	    0: oInstruction  = {`NOP , 24'd4000 };
+	    1: oInstruction  = {`STO , `R1, 16'd1};
+	    2: oInstruction  = {`STO , `R2, 16'd2};
+	    3: oInstruction  = {`STO , `R3, 16'd7};
+	    4: oInstruction  = {`CALL, `ADD_FN, 16'b0}; //R1 = R1 + R2
+	    5: oInstruction  = {`SUB, `R4, `R3, `R1};
+	    6: oInstruction  = {`NOP , 24'd4000 };
+	    7: oInstruction = {`NOP , 24'd4000 };
+	    8: oInstruction = {`NOP , 24'd4000 };
+	    9: oInstruction = {`JMP , 8'd100 , 16'b0};
+	    //ADD_FN:
+	    10: oInstruction  = {`ADD, `R1, `R1, `R2};
+	    11: oInstruction  = {`RET, 24'd4000 };
+	    
+	    //EXIT:
+	    100: oInstruction = {`NOP , 24'd4000 };
+	    */
 		 
-		 
+
 	    default:
 	       oInstruction = { `LED ,  24'b10101010 };
 	 endcase

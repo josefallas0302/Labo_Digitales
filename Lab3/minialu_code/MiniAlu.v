@@ -9,9 +9,10 @@ module MiniAlu
  input wire Reset,
  output wire [7:0] oLed,
  output wire [7:0] oLCD 
+
 );
 
-wire [15:0]  wIP,wIP_temp;
+wire [15:0]  wIP,wIP_temp, wIP_noRET;
 reg         rWriteEnable,rBranchTaken;
 wire [27:0] wInstruction;
 wire [3:0]  wOperation;
@@ -27,6 +28,8 @@ ROM InstructionRom
 	.oInstruction( wInstruction )
 );
 
+
+   
 RAM_DUAL_READ_PORT DataRam
 (
 	.Clock(         Clock        ),
@@ -39,17 +42,32 @@ RAM_DUAL_READ_PORT DataRam
 	.oDataOut0(     wSourceDataRAM0 )
 );
 
-assign wIPInitialValue = (Reset) ? 8'b0 : wDestination;
+
+wire [15:0] wRetIP;
+FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FF_RET_IP
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(wOperation == `CALL),
+       .D(wIP_temp), 
+       .Q(wRetIP)
+       );
+
+
+   
+assign wIPInitialValue = (Reset) ? 8'b0 : (wOperation == `RET) ? wRetIP : wDestination;
 UPCOUNTER_POSEDGE IP
 (
 .Clock(   Clock                ), 
 .Reset(   Reset | rBranchTaken ),
-.Initial( wIPInitialValue + 16'b1 ), // +1
+.Initial( wIPInitialValue + 16'b1 ),
 .Enable(  1'b1                 ),
 .Q(       wIP_temp             )
 );
-assign wIP = (rBranchTaken) ? wIPInitialValue : wIP_temp;
+assign wIP_noRET = (rBranchTaken) ? wIPInitialValue : wIP_temp;
+assign wIP = (wOperation == `RET) ? wRetIP : wIP_noRET;   
 
+   
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FFD1 // 8
 (
 	.Clock(Clock),
@@ -136,7 +154,7 @@ assign wRW = 1'b0;
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(wOperation == `LCD_CHAR | wOperation == `LCD_CMD),
+       .Enable(wOperation == `LCD_CHAR || wOperation == `LCD_CMD),
        .D({wRW,wRS,wSourceData1[7:4]}),
        .Q(wLCD_Info)
        );
@@ -166,6 +184,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_LEDS
 	.D( wSourceData1[7:0]),
 	.Q( oLed    )
 );
+
 
 
 
@@ -244,7 +263,7 @@ begin
 		
 	end
 	//-------------------------------------	
-	`JMP:
+	`JMP, `CALL, `RET:
 	begin
 		rFFLedEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
@@ -290,8 +309,9 @@ begin
 		rFFLedEN     <= 1'b0;
 		rBranchTaken <= 1'b0;
 		rWriteEnable <= 1'b1;
-		rResult <= wSourceData0 << wSourceData1;
+		rResult <= wSourceData1 << wSourceData0;
 	end
+
 	//-------------------------------------
 	default:
 	begin
