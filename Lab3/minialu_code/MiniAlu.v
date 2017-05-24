@@ -20,7 +20,7 @@ reg signed [31:0]   rResult;
 wire [7:0]  wSourceAddr0,wSourceAddr1,wDestination;
 wire signed [15:0] wSourceDataRAM0,wSourceDataRAM1;
 wire signed [15:0] wSourceData0,wSourceData1;
-wire [15:0] wIPInitialValue,wImmediateValue,wBranchDest;
+wire [15:0] wIPInitialValue,wImmediateValue;
 
 ROM InstructionRom 
 (
@@ -36,10 +36,8 @@ RAM_DUAL_READ_PORT DataRam
 	.iWriteEnable(  rWriteEnable ),
 	.iReadAddress0( wInstruction[7:0] ),
 	.iReadAddress1( wInstruction[15:8] ),
-	.iReadAddress2( wInstruction[23:16] ),
 	.iWriteAddress( wDestination ),
 	.iDataIn(       rResult[15:0]      ),
-	.oDataOut2(     wBranchDest ),
 	.oDataOut1(     wSourceDataRAM1 ),
 	.oDataOut0(     wSourceDataRAM0 )
 );
@@ -57,7 +55,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FF_RET_IP
 
 
    
-assign wIPInitialValue = (Reset) ? 16'b0 : (wOperation == `RET) ? wRetIP : wBranchDest;
+assign wIPInitialValue = (Reset) ? 16'b0 : (wOperation == `RET) ? wRetIP : wDestination;
 UPCOUNTER_POSEDGE IP
 (
 .Clock(   Clock                ), 
@@ -96,7 +94,6 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FFD3
 	.D(wInstruction[15:8]),
 	.Q(wSourceAddr1)
 );
-
 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FFD4
 (

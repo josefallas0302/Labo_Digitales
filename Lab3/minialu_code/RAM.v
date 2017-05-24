@@ -6,12 +6,10 @@ module RAM_DUAL_READ_PORT # ( parameter DATA_WIDTH= 16, parameter ADDR_WIDTH=8, 
     input wire 			iWriteEnable,
     input wire [ADDR_WIDTH-1:0] iReadAddress0,
     input wire [ADDR_WIDTH-1:0] iReadAddress1,
-    input wire [ADDR_WIDTH-1:0] iReadAddress2,
     input wire [ADDR_WIDTH-1:0] iWriteAddress,
     input wire [DATA_WIDTH-1:0] iDataIn,
     output reg [DATA_WIDTH-1:0] oDataOut0,
-    output reg [DATA_WIDTH-1:0] oDataOut1,
-    output reg [DATA_WIDTH-1:0] oDataOut2
+    output reg [DATA_WIDTH-1:0] oDataOut1
     );
 
    reg [DATA_WIDTH-1:0] 	Ram [MEM_SIZE:0];		
@@ -24,7 +22,6 @@ module RAM_DUAL_READ_PORT # ( parameter DATA_WIDTH= 16, parameter ADDR_WIDTH=8, 
 	 	 
 	 oDataOut0 <= Ram[iReadAddress0]; 
 	 oDataOut1 <= Ram[iReadAddress1]; 
-	 oDataOut2 <= Ram[iReadAddress2];
       end 
 endmodule
 
