@@ -37,6 +37,8 @@
 7: oInstruction = {`ADD , `R5, `R5, `R2}; 
 8: oInstruction = {`STO , `R1, 16'd0};
 9: oInstruction = {`BLE , 8'd5,`R5, `R3};
+
+
 		 //POWER ON
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		//ESCRIBIR 0x3
@@ -101,7 +103,7 @@
 
 		 //LOOP1
 43: oInstruction = {`ADD , `R1, `R1, `R2}; 
-44: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+44: oInstruction = {`BLE , 8'd43,`R1, `R4};
 
 		 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 		 //ESCRIBIR 0x3
@@ -130,7 +132,7 @@
 
 		 //LOOP1
 58: oInstruction = {`ADD , `R1, `R1, `R2}; 
-59: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+59: oInstruction = {`BLE , `8'd58,`R1, `R4};
 		 
 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,7 +163,7 @@
 
 		 //LOOP1
 73: oInstruction = {`ADD , `R1, `R1, `R2}; 
-74: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+74: oInstruction = {`BLE , 8'd73,`R1, `R4};
 
 
 		 
@@ -202,7 +204,7 @@
 
 		 //LOOP1
 88: oInstruction = {`ADD , `R1, `R1, `R2}; 
-89: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+89: oInstruction = {`BLE , 8'd88,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
@@ -235,7 +237,7 @@
 
 		 //LOOP1
 103: oInstruction = {`ADD , `R1, `R1, `R2}; 
-104: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+104: oInstruction = {`BLE , 8'd103,`R1, `R4};
 
 	
 	
@@ -267,7 +269,7 @@
 
 		 //LOOP1
 118: oInstruction = {`ADD , `R1, `R1, `R2}; 
-119: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+119: oInstruction = {`BLE , 8'd118,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
@@ -300,7 +302,7 @@
 
 		 //LOOP1
 133: oInstruction = {`ADD , `R1, `R1, `R2}; 
-134: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+134: oInstruction = {`BLE , 8'd133,`R1, `R4};
 	
 	
 			//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -331,7 +333,7 @@
 
 		 //LOOP1
 148: oInstruction = {`ADD , `R1, `R1, `R2}; 
-149: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+149: oInstruction = {`BLE , 8'd148,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
@@ -364,7 +366,7 @@
 
 		 //LOOP1
 163: oInstruction = {`ADD , `R1, `R1, `R2}; 
-164: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+164: oInstruction = {`BLE , 8'd163,`R1, `R4};
 
 
 		 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +397,7 @@
 
 		 //LOOP1
 178: oInstruction = {`ADD , `R1, `R1, `R2}; 
-179: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+179: oInstruction = {`BLE , 8'd178,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
@@ -429,11 +431,11 @@
 
 		 //LOOP1
 195: oInstruction = {`ADD , `R1, `R1, `R2}; 
-196: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+196: oInstruction = {`BLE , 8'd195,`R1, `R4};
 		 //LOOP1
 197: oInstruction = {`ADD , `R5, `R5, `R2}; 
 198: oInstruction = {`STO , `R1, 16'd0};
-199: oInstruction = {`BLE , `LOOP1,`R5, `R3};
+199: oInstruction = {`BLE , 8'd195,`R5, `R3};
 
 
 
@@ -444,7 +446,7 @@
 201: oInstruction = {`STO , `R6, 16'h0048}; //ENTRY MODE BYTE
 202: oInstruction = {`STO , `R3, 16'd12};
 
-203: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+203: oInstruction = {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
 204: oInstruction = {`NOP , 24'd4000 }; // SETUP TIME
 205: oInstruction = {`NOP , 24'd4000 };
 		 
@@ -465,7 +467,7 @@
 
 		 //LOOP1
 213: oInstruction = {`ADD , `R1, `R1, `R2}; 
-214: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+214: oInstruction = {`BLE , 8'd213,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
@@ -474,7 +476,7 @@
 215: oInstruction = {`STO , `R5, 16'd0};
 216: oInstruction = {`STO , `R3, 16'd12};
 217: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-218: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+218: oInstruction = {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
 219: oInstruction = {`NOP , 24'd4000 };
 220: oInstruction = {`NOP , 24'd4000 };
 		 
@@ -498,7 +500,7 @@
 
 		 //LOOP1
 228: oInstruction = {`ADD , `R1, `R1, `R2}; 
-229: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+229: oInstruction = {`BLE , 8'd228,`R1, `R4};
 
 
 
