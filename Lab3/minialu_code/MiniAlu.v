@@ -17,10 +17,10 @@ reg         rWriteEnable,rBranchTaken;
 wire [27:0] wInstruction;
 wire [3:0]  wOperation;
 reg signed [31:0]   rResult;
-wire [7:0]  wSourceAddr0,wSourceAddr1,wDestination;
+wire [7:0]  wSourceAddr0,wSourceAddr1;
 wire signed [15:0] wSourceDataRAM0,wSourceDataRAM1;
 wire signed [15:0] wSourceData0,wSourceData1;
-wire [15:0] wIPInitialValue,wImmediateValue;
+wire [15:0] wIPInitialValue,wImmediateValue,wDestination;
 
 ROM InstructionRom 
 (
@@ -36,8 +36,10 @@ RAM_DUAL_READ_PORT DataRam
 	.iWriteEnable(  rWriteEnable ),
 	.iReadAddress0( wInstruction[7:0] ),
 	.iReadAddress1( wInstruction[15:8] ),
+	.iReadAddress2( wInstruction[23:16] ),
 	.iWriteAddress( wDestination ),
 	.iDataIn(       rResult[15:0]      ),
+	.oDataOut2(     wDestination ),
 	.oDataOut1(     wSourceDataRAM1 ),
 	.oDataOut0(     wSourceDataRAM0 )
 );
@@ -95,15 +97,16 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FFD3
 	.Q(wSourceAddr1)
 );
 
-FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FFD4
+
+/*FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FFD4
 (
 	.Clock(Clock),
 	.Reset(Reset),
 	.Enable(1'b1),
-	.D(wInstruction[23:16]),
+	.D(wSourceDataRAM2),
 	.Q(wDestination)
 );
-
+*/
 wire [15:0] wLastResult;
 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FF_Result

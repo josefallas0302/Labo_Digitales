@@ -34,147 +34,147 @@ module ROM
    assign memoryROM[6] =  {`STO , `R7, 16'd4};
    
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[7] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[8] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[7] =  {`STO , `R9, 16'd8};
+   assign memoryROM[8] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[9] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
-   assign memoryROM[9] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[10] =  {`STO , `R1, 16'd0};
-   assign memoryROM[11] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[10] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[11] =  {`STO , `R1, 16'd0};
+   assign memoryROM[12] =  {`BLE , `R9,`R5, `R3};
 
 
    //POWER ON
    ////////////////////////////////////////////////////////////////////////////////////////////////
    //ESCRIBIR 0x3
    
-   assign memoryROM[12] =  {`STO , `R5, 16'd0};
-   assign memoryROM[13] =  {`STO , `R6, 16'h0030};
-   assign memoryROM[14] =  {`STO , `R3, 16'd12};
-   assign memoryROM[15] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[16] =  {`NOP , 24'd4000 };
+   assign memoryROM[13] =  {`STO , `R5, 16'd0};
+   assign memoryROM[14] =  {`STO , `R6, 16'h0030};
+   assign memoryROM[15] =  {`STO , `R3, 16'd12};
+   assign memoryROM[16] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
    assign memoryROM[17] =  {`NOP , 24'd4000 };
+   assign memoryROM[18] =  {`NOP , 24'd4000 };
    //ENABLE
-   assign memoryROM[18] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[19] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    //LOOP 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[19] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[20] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[20] =  {`STO , `R9, 16'd21};
+   assign memoryROM[21] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[22] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[21] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[23] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[22] =  {`NOP , 24'd4000 };
+   assign memoryROM[24] =  {`NOP , 24'd4000 };
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////  
    // LOOP 205000
-   assign memoryROM[23] =  {`STO , `R1, 16'd0};
-   assign memoryROM[24] =  {`STO , `R3, 16'd8};
-   assign memoryROM[25] =  {`STO , `R4, 16'd25625};
-   assign memoryROM[26] =  {`STO , `R5, 16'd0};
-   
+   assign memoryROM[25] =  {`STO , `R1, 16'd0};
+   assign memoryROM[26] =  {`STO , `R3, 16'd8};
+   assign memoryROM[27] =  {`STO , `R4, 16'd25625};
+   assign memoryROM[28] =  {`STO , `R5, 16'd0};
+  
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[27] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[28] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[29] =  {`STO , `R9, 16'd30};
+   assign memoryROM[30] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[31] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
-   assign memoryROM[29] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[30] =  {`STO , `R1, 16'd0};
-   assign memoryROM[31] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[32] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[33] =  {`STO , `R1, 16'd0};
+   assign memoryROM[34] =  {`BLE , `R9,`R5, `R3};
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////  
    // ESCRIBIR 0x3
-   assign memoryROM[32] =  {`STO , `R5, 16'd0};
-   assign memoryROM[33] =  {`STO , `R6, 16'h0030};
-   assign memoryROM[34] =  {`STO , `R3, 16'd12};
-   assign memoryROM[35] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[36] =  {`NOP , 24'd4000 };
-   assign memoryROM[37] =  {`NOP , 24'd4000 };
+   assign memoryROM[35] =  {`STO , `R5, 16'd0};
+   assign memoryROM[36] =  {`STO , `R6, 16'h0030};
+   assign memoryROM[37] =  {`STO , `R3, 16'd12};
+   assign memoryROM[38] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[39] =  {`NOP , 24'd4000 };
+   assign memoryROM[40] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[38] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[41] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[39] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[40] =  {`BLE , `R9,`R5, `R3}; //20?
+   assign memoryROM[42] =  {`STO , `R9, 16'd43};
+   assign memoryROM[43] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[44] =  {`BLE , `R9,`R5, `R3}; //20?
    
-   assign memoryROM[41] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[45] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[42] =  {`NOP , 24'd4000 };
+   assign memoryROM[46] =  {`NOP , 24'd4000 };
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 5000
-   assign memoryROM[43] =  {`STO , `R1, 16'd0};
-   assign memoryROM[44] =  {`STO , `R4, 16'd5000};
+   assign memoryROM[47] =  {`STO , `R1, 16'd0};
+   assign memoryROM[48] =  {`STO , `R4, 16'd5000};
    
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[45] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[46] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[49] =  {`STO , `R9, 16'd50};
+   assign memoryROM[50] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[51] =  {`BLE , `R9,`R1, `R4};
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////
    //ESCRIBIR 0x3
    
-   assign memoryROM[47] =  {`STO , `R5, 16'd0};
-   assign memoryROM[48] =  {`STO , `R6, 16'h0030};
-   assign memoryROM[49] =  {`STO , `R3, 16'd12};
-   assign memoryROM[50] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[51] =  {`NOP , 24'd4000 };
-   assign memoryROM[52] =  {`NOP , 24'd4000 };
-   
-   assign memoryROM[53] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[54] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[55] =  {`BLE , `R9,`R5, `R3};
-   
-   assign memoryROM[56] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
-   
+   assign memoryROM[52] =  {`STO , `R5, 16'd0};
+   assign memoryROM[53] =  {`STO , `R6, 16'h0030};
+   assign memoryROM[54] =  {`STO , `R3, 16'd12};
+   assign memoryROM[55] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[56] =  {`NOP , 24'd4000 };
    assign memoryROM[57] =  {`NOP , 24'd4000 };
+   
+   assign memoryROM[58] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+
+   assign memoryROM[59] =  {`STO , `R9, 16'd60};
+   assign memoryROM[60] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[61] =  {`BLE , `R9,`R5, `R3};
+   
+   assign memoryROM[62] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   
+   assign memoryROM[63] =  {`NOP , 24'd4000 };
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[58] =  {`STO , `R1, 16'd0};
-   assign memoryROM[59] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[64] =  {`STO , `R1, 16'd0};
+   assign memoryROM[65] =  {`STO , `R4, 16'd2000};
 
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[60] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[61] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[66] =  {`STO , `R9, 16'd67};
+   assign memoryROM[67] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[68] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //ESCRIBIR 0x2
    
-   assign memoryROM[62] =  {`STO , `R5, 16'd0};
-   assign memoryROM[63] =  {`STO , `R6, 16'h0020};
-   assign memoryROM[64] =  {`STO , `R3, 16'd12};
-   assign memoryROM[65] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[66] =  {`NOP , 24'd4000 };
-   assign memoryROM[67] =  {`NOP , 24'd4000 };
+   assign memoryROM[69] =  {`STO , `R5, 16'd0};
+   assign memoryROM[70] =  {`STO , `R6, 16'h0020};
+   assign memoryROM[71] =  {`STO , `R3, 16'd12};
+   assign memoryROM[72] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[73] =  {`NOP , 24'd4000 };
+   assign memoryROM[74] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[68] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[75] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[69] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[70] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[76] =  {`STO , `R9, 16'd77};
+   assign memoryROM[77] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[78] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[71] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[79] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[72] =  {`NOP , 24'd4000 };
+   assign memoryROM[80] =  {`NOP , 24'd4000 };
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[73] =  {`STO , `R1, 16'd0};
-   assign memoryROM[74] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[81] =  {`STO , `R1, 16'd0};
+   assign memoryROM[82] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[75] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[76] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[83] =  {`STO , `R9, 16'd84};
+   assign memoryROM[84] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[85] =  {`BLE , `R9,`R1, `R4};
 
 
    
@@ -190,276 +190,276 @@ module ROM
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //FUNCTION SET- FIRST NIBBLE 
    
-   assign memoryROM[77] =  {`STO , `R5, 16'd0};
-   assign memoryROM[78] =  {`STO , `R6, 16'h0028};
-   assign memoryROM[79] =  {`STO , `R3, 16'd12};
+   assign memoryROM[86] =  {`STO , `R5, 16'd0};
+   assign memoryROM[87] =  {`STO , `R6, 16'h0028};
+   assign memoryROM[88] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[80] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[81] =  {`NOP , 24'd4000 };
-   assign memoryROM[82] =  {`NOP , 24'd4000 };
+   assign memoryROM[89] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[90] =  {`NOP , 24'd4000 };
+   assign memoryROM[91] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[83] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[92] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[84] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[85] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[93] =  {`STO , `R9, 16'd94};
+   assign memoryROM[94] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[95] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[86] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[96] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[87] =  {`NOP , 24'd4000 };
+   assign memoryROM[97] =  {`NOP , 24'd4000 };
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[88] =  {`STO , `R1, 16'd0};
-   assign memoryROM[89] =  {`STO , `R4, 16'd50};
+   assign memoryROM[98] =  {`STO , `R1, 16'd0};
+   assign memoryROM[99] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[90] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[91] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[100] =  {`STO , `R9, 16'd101};
+   assign memoryROM[101] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[102] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[92] =  {`STO , `R5, 16'd0};
-   assign memoryROM[93] =  {`STO , `R3, 16'd12};
-   assign memoryROM[94] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[95] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[96] =  {`NOP , 24'd4000 };
-   assign memoryROM[97] =  {`NOP , 24'd4000 };
+   assign memoryROM[103] =  {`STO , `R5, 16'd0};
+   assign memoryROM[104] =  {`STO , `R3, 16'd12};
+   assign memoryROM[105] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[106] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[107] =  {`NOP , 24'd4000 };
+   assign memoryROM[108] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[98] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[109] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[99] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[100] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[110] =  {`STO , `R9, 16'd111};
+   assign memoryROM[111] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[112] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[101] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[113] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[102] =  {`NOP , 24'd4000 };
+   assign memoryROM[114] =  {`NOP , 24'd4000 };
    
    
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[103] =  {`STO , `R1, 16'd0};
-   assign memoryROM[104] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[115] =  {`STO , `R1, 16'd0};
+   assign memoryROM[116] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[105] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[106] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[117] =  {`STO , `R9, 16'd118};
+   assign memoryROM[118] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[119] =  {`BLE , `R9,`R1, `R4};
 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //ENTRY MODE- FIRST NIBBLE 
    
-   assign memoryROM[107] =  {`STO , `R5, 16'd0};
-   assign memoryROM[108] =  {`STO , `R6, 16'h0006}; //ENTRY MODE BYTE
-   assign memoryROM[109] =  {`STO , `R3, 16'd12};
+   assign memoryROM[120] =  {`STO , `R5, 16'd0};
+   assign memoryROM[121] =  {`STO , `R6, 16'h0006}; //ENTRY MODE BYTE
+   assign memoryROM[122] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[110] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[111] =  {`NOP , 24'd4000 };
-   assign memoryROM[112] =  {`NOP , 24'd4000 };
+   assign memoryROM[123] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[124] =  {`NOP , 24'd4000 };
+   assign memoryROM[125] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[113] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[126] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[114] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[115] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[127] =  {`STO , `R9, 16'd128};
+   assign memoryROM[128] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[129] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[116] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[130] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[117] =  {`NOP , 24'd4000 };
+   assign memoryROM[131] =  {`NOP , 24'd4000 };
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[118] =  {`STO , `R1, 16'd0};
-   assign memoryROM[119] =  {`STO , `R4, 16'd50};
+   assign memoryROM[132] =  {`STO , `R1, 16'd0};
+   assign memoryROM[133] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[120] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[121] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[134] =  {`STO , `R9, 16'd135};
+   assign memoryROM[135] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[136] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[122] =  {`STO , `R5, 16'd0};
-   assign memoryROM[123] =  {`STO , `R3, 16'd12};
-   assign memoryROM[124] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[125] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[126] =  {`NOP , 24'd4000 };
-   assign memoryROM[127] =  {`NOP , 24'd4000 };
-   
-   assign memoryROM[128] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[129] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[130] =  {`BLE , `R9,`R5, `R3};
-   
-   assign memoryROM[131] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
-   
-   assign memoryROM[132] =  {`NOP , 24'd4000 };
-   
-   
-   
-   
-   //////////////////////////////////////////////////////////////////////////////////////////////////
-   //LOOP 2000
-   assign memoryROM[133] =  {`STO , `R1, 16'd0};
-   assign memoryROM[134] =  {`STO , `R4, 16'd2000};
-
-   //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[135] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[136] =  {`BLE , `R9,`R1, `R4};
-   
-   
-   //////////////////////////////////////////////////////////////////////////////////////////////////
-   //DISPLAY ON-OFF / FIRST NIBBLE 
-   
    assign memoryROM[137] =  {`STO , `R5, 16'd0};
-   assign memoryROM[138] =  {`STO , `R6, 16'h000C}; //ENTRY MODE BYTE
-   assign memoryROM[139] =  {`STO , `R3, 16'd12};
-
+   assign memoryROM[138] =  {`STO , `R3, 16'd12};
+   assign memoryROM[139] =  {`SHL , `R6 ,`R6, `R7 };
    assign memoryROM[140] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
    assign memoryROM[141] =  {`NOP , 24'd4000 };
    assign memoryROM[142] =  {`NOP , 24'd4000 };
    
    assign memoryROM[143] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[144] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[145] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[144] =  {`STO , `R9, 16'd145};
+   assign memoryROM[145] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[146] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[146] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[147] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[147] =  {`NOP , 24'd4000 };
-   
-   
-   //////////////////////////////////////////////////////////////////////////////////////////////////
-   //NIBBLE WAIT
-   assign memoryROM[148] =  {`STO , `R1, 16'd0};
-   assign memoryROM[149] =  {`STO , `R4, 16'd50};
-
-   //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[150] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[151] =  {`BLE , `R9,`R1, `R4};
-   
-
-   //////////////////////////////////////////////////////////////////////////
-   //SECOND NIBBLE
-   
-   assign memoryROM[152] =  {`STO , `R5, 16'd0};
-   assign memoryROM[153] =  {`STO , `R3, 16'd12};
-   assign memoryROM[154] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[155] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[156] =  {`NOP , 24'd4000 };
-   assign memoryROM[157] =  {`NOP , 24'd4000 };
-   
-   assign memoryROM[158] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[159] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[160] =  {`BLE , `R9,`R5, `R3};
-   
-   assign memoryROM[161] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
-   
-   assign memoryROM[162] =  {`NOP , 24'd4000 };
+   assign memoryROM[148] =  {`NOP , 24'd4000 };
    
    
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[163] =  {`STO , `R1, 16'd0};
-   assign memoryROM[164] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[149] =  {`STO , `R1, 16'd0};
+   assign memoryROM[150] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[165] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[166] =  {`BLE , `R9,`R1, `R4};
-
-
-   /////////////////////////////////////////////////////////////////////////////////////////////////
-   //CLEAR DISPLAY - FIRST NIBBLE 
+   assign memoryROM[151] =  {`STO , `R9, 16'd152};
+   assign memoryROM[152] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[153] =  {`BLE , `R9,`R1, `R4};
    
-   assign memoryROM[167] =  {`STO , `R5, 16'd0};
-   assign memoryROM[168] =  {`STO , `R6, 16'h0001}; //ENTRY MODE BYTE
-   assign memoryROM[169] =  {`STO , `R3, 16'd12};
+   
+   //////////////////////////////////////////////////////////////////////////////////////////////////
+   //DISPLAY ON-OFF / FIRST NIBBLE 
+   
+   assign memoryROM[154] =  {`STO , `R5, 16'd0};
+   assign memoryROM[155] =  {`STO , `R6, 16'h000C}; //ENTRY MODE BYTE
+   assign memoryROM[156] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[170] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[171] =  {`NOP , 24'd4000 };
-   assign memoryROM[172] =  {`NOP , 24'd4000 };
+   assign memoryROM[157] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[158] =  {`NOP , 24'd4000 };
+   assign memoryROM[159] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[173] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[160] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[174] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[175] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[161] =  {`STO , `R9, 16'd162};
+   assign memoryROM[162] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[163] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[176] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[164] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[177] =  {`NOP , 24'd4000 };
+   assign memoryROM[165] =  {`NOP , 24'd4000 };
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[178] =  {`STO , `R1, 16'd0};
-   assign memoryROM[179] =  {`STO , `R4, 16'd50};
+   assign memoryROM[166] =  {`STO , `R1, 16'd0};
+   assign memoryROM[167] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[180] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[181] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[168] =  {`STO , `R9, 16'd169};
+   assign memoryROM[169] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[170] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[182] =  {`STO , `R5, 16'd0};
-   assign memoryROM[183] =  {`STO , `R3, 16'd12};
-   assign memoryROM[184] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[185] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[186] =  {`NOP , 24'd4000 };
-   assign memoryROM[187] =  {`NOP , 24'd4000 };
+   assign memoryROM[171] =  {`STO , `R5, 16'd0};
+   assign memoryROM[172] =  {`STO , `R3, 16'd12};
+   assign memoryROM[173] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[174] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[175] =  {`NOP , 24'd4000 };
+   assign memoryROM[176] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[188] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[177] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[189] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[190] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[178] =  {`STO , `R9, 16'd179};
+   assign memoryROM[179] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[180] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[191] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   assign memoryROM[181] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
+   assign memoryROM[182] =  {`NOP , 24'd4000 };
+   
+   
+   
+   
+   //////////////////////////////////////////////////////////////////////////////////////////////////
+   //LOOP 2000
+   assign memoryROM[183] =  {`STO , `R1, 16'd0};
+   assign memoryROM[184] =  {`STO , `R4, 16'd2000};
+
+   //LOOP1
+   assign memoryROM[185] =  {`STO , `R9, 16'd186};
+   assign memoryROM[186] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[187] =  {`BLE , `R9,`R1, `R4};
+
+
+   /////////////////////////////////////////////////////////////////////////////////////////////////
+   //CLEAR DISPLAY - FIRST NIBBLE 
+   
+   assign memoryROM[188] =  {`STO , `R5, 16'd0};
+   assign memoryROM[189] =  {`STO , `R6, 16'h0001}; //ENTRY MODE BYTE
+   assign memoryROM[190] =  {`STO , `R3, 16'd12};
+
+   assign memoryROM[191] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
    assign memoryROM[192] =  {`NOP , 24'd4000 };
+   assign memoryROM[193] =  {`NOP , 24'd4000 };
+   
+   assign memoryROM[194] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+
+   assign memoryROM[195] =  {`STO , `R9, 16'd196};
+   assign memoryROM[196] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[197] =  {`BLE , `R9,`R5, `R3};
+   
+   assign memoryROM[198] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   
+   assign memoryROM[199] =  {`NOP , 24'd4000 };
+   
+   
+   //////////////////////////////////////////////////////////////////////////////////////////////////
+   //NIBBLE WAIT
+   assign memoryROM[200] =  {`STO , `R1, 16'd0};
+   assign memoryROM[201] =  {`STO , `R4, 16'd50};
+
+   //LOOP1
+   assign memoryROM[202] =  {`STO , `R9, 16'd203};
+   assign memoryROM[203] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[204] =  {`BLE , `R9,`R1, `R4};
+   
+
+   //////////////////////////////////////////////////////////////////////////
+   //SECOND NIBBLE
+   
+   assign memoryROM[205] =  {`STO , `R5, 16'd0};
+   assign memoryROM[206] =  {`STO , `R3, 16'd12};
+   assign memoryROM[207] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[208] =  {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[209] =  {`NOP , 24'd4000 };
+   assign memoryROM[210] =  {`NOP , 24'd4000 };
+   
+   assign memoryROM[211] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+
+   assign memoryROM[212] =  {`STO , `R9, 16'd213};
+   assign memoryROM[213] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[214] =  {`BLE , `R9,`R5, `R3};
+   
+   assign memoryROM[215] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+   
+   assign memoryROM[216] =  {`NOP , 24'd4000 };
    
    
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 82000
-   assign memoryROM[193] =  {`STO , `R1, 16'd0};
-   assign memoryROM[194] =  {`STO , `R3, 16'd8};
-   assign memoryROM[195] =  {`STO , `R4, 16'd10250};
-   assign memoryROM[196] =  {`STO , `R5, 16'd0};
+   assign memoryROM[217] =  {`STO , `R1, 16'd0};
+   assign memoryROM[218] =  {`STO , `R3, 16'd8};
+   assign memoryROM[219] =  {`STO , `R4, 16'd10250};
+   assign memoryROM[220] =  {`STO , `R5, 16'd0};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[197] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[198] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[221] =  {`STO , `R9, 16'd222};
+   assign memoryROM[222] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[223] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
-   assign memoryROM[199] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[200] =  {`STO , `R1, 16'd0};
-   assign memoryROM[201] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[224] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[225] =  {`STO , `R1, 16'd0};
+   assign memoryROM[225] =  {`BLE , `R9,`R5, `R3};
 
 
 
@@ -469,612 +469,612 @@ module ROM
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //H 
    //FIRST NIBBLE 
-   assign memoryROM[202] =  {`STO , `R5, 16'd0};
-   assign memoryROM[203] =  {`STO , `R6, 8'h00,`H}; //ENTRY MODE BYTE
-   assign memoryROM[204] =  {`STO , `R3, 16'd12};
+   assign memoryROM[226] =  {`STO , `R5, 16'd0};
+   assign memoryROM[227] =  {`STO , `R6, 8'h00,`H}; //ENTRY MODE BYTE
+   assign memoryROM[228] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[205] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[206] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[207] =  {`NOP , 24'd4000 };
+   assign memoryROM[229] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[230] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[231] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[208] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[232] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[209] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[210] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[233] =  {`STO , `R9, 16'd234};
+   assign memoryROM[234] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[235] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[211] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[236] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[212] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[237] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[213] =  {`STO , `R1, 16'd0};
-   assign memoryROM[214] =  {`STO , `R4, 16'd50};
+   assign memoryROM[238] =  {`STO , `R1, 16'd0};
+   assign memoryROM[239] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[215] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[216] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[240] =  {`STO , `R9, 16'd241};
+   assign memoryROM[241] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[242] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[217] =  {`STO , `R5, 16'd0};
-   assign memoryROM[218] =  {`STO , `R3, 16'd12};
-   assign memoryROM[219] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[220] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[221] =  {`NOP , 24'd4000 };
-   assign memoryROM[222] =  {`NOP , 24'd4000 };
-   assign memoryROM[223] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[243] =  {`STO , `R5, 16'd0};
+   assign memoryROM[244] =  {`STO , `R3, 16'd12};
+   assign memoryROM[245] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[246] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[247] =  {`NOP , 24'd4000 };
+   assign memoryROM[248] =  {`NOP , 24'd4000 };
+   assign memoryROM[249] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[224] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[225] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[250] =  {`STO , `R9, 16'd251};
+   assign memoryROM[251] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[252] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[226] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[227] =  {`NOP , 24'd4000 };  
+   assign memoryROM[253] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[254] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[228] =  {`STO , `R1, 16'd0};
-   assign memoryROM[229] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[255] =  {`STO , `R1, 16'd0};
+   assign memoryROM[256] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[230] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[231] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[257] =  {`STO , `R9, 16'd258};
+   assign memoryROM[258] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[259] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //O 
    //FIRST NIBBLE 
-   assign memoryROM[232] =  {`STO , `R5, 16'd0};
-   assign memoryROM[233] =  {`STO , `R6, 8'h00,`O}; //ENTRY MODE BYTE
-   assign memoryROM[234] =  {`STO , `R3, 16'd12};
+   assign memoryROM[260] =  {`STO , `R5, 16'd0};
+   assign memoryROM[261] =  {`STO , `R6, 8'h00,`O}; //ENTRY MODE BYTE
+   assign memoryROM[262] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[235] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[236] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[237] =  {`NOP , 24'd4000 };
+   assign memoryROM[263] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[264] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[265] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[238] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[266] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[239] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[240] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[267] =  {`STO , `R9, 16'd268};
+   assign memoryROM[268] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[269] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[241] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[270] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[242] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[271] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[243] =  {`STO , `R1, 16'd0};
-   assign memoryROM[244] =  {`STO , `R4, 16'd50};
+   assign memoryROM[272] =  {`STO , `R1, 16'd0};
+   assign memoryROM[273] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[245] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[246] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[274] =  {`STO , `R9, 16'd275};
+   assign memoryROM[276] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[277] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[247] =  {`STO , `R5, 16'd0};
-   assign memoryROM[248] =  {`STO , `R3, 16'd12};
+   assign memoryROM[278] =  {`STO , `R5, 16'd0};
+   assign memoryROM[279] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[249] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[250] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[251] =  {`NOP , 24'd4000 };
-   assign memoryROM[252] =  {`NOP , 24'd4000 };
+   assign memoryROM[280] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[281] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[282] =  {`NOP , 24'd4000 };
+   assign memoryROM[283] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[253] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[284] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[254] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[255] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[285] =  {`STO , `R9, 16'd286};
+   assign memoryROM[286] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[287] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[256] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[257] =  {`NOP , 24'd4000 };  
+   assign memoryROM[288] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[289] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[258] =  {`STO , `R1, 16'd0};
-   assign memoryROM[259] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[290] =  {`STO , `R1, 16'd0};
+   assign memoryROM[291] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[260] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[261] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[292] =  {`STO , `R9, 16'd293};
+   assign memoryROM[293] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[294] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //L 
    //FIRST NIBBLE 
-   assign memoryROM[262] =  {`STO , `R5, 16'd0};
-   assign memoryROM[263] =  {`STO , `R6, 8'h00,`L}; //ENTRY MODE BYTE
-   assign memoryROM[264] =  {`STO , `R3, 16'd12};
+   assign memoryROM[295] =  {`STO , `R5, 16'd0};
+   assign memoryROM[296] =  {`STO , `R6, 8'h00,`L}; //ENTRY MODE BYTE
+   assign memoryROM[297] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[265] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[266] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[267] =  {`NOP , 24'd4000 };
+   assign memoryROM[298] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[299] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[300] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[268] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[301] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[269] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[270] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[302] =  {`STO , `R9, 16'd303};
+   assign memoryROM[303] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[304] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[271] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[305] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[272] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[306] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[273] =  {`STO , `R1, 16'd0};
-   assign memoryROM[274] =  {`STO , `R4, 16'd50};
+   assign memoryROM[307] =  {`STO , `R1, 16'd0};
+   assign memoryROM[308] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[275] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[276] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[309] =  {`STO , `R9, 16'd1};
+   assign memoryROM[310] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[311] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[277] =  {`STO , `R5, 16'd0};
-   assign memoryROM[278] =  {`STO , `R3, 16'd12};
+   assign memoryROM[312] =  {`STO , `R5, 16'd0};
+   assign memoryROM[313] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[279] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[280] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[281] =  {`NOP , 24'd4000 };
-   assign memoryROM[282] =  {`NOP , 24'd4000 };
-   assign memoryROM[283] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[314] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[315] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[316] =  {`NOP , 24'd4000 };
+   assign memoryROM[317] =  {`NOP , 24'd4000 };
+   assign memoryROM[318] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[284] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[285] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[319] =  {`STO , `R9, 16'd320};
+   assign memoryROM[320] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[321] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[286] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[287] =  {`NOP , 24'd4000 };  
+   assign memoryROM[322] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[323] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[288] =  {`STO , `R1, 16'd0};
-   assign memoryROM[289] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[324] =  {`STO , `R1, 16'd0};
+   assign memoryROM[325] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[290] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[291] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[326] =  {`STO , `R9, 16'd327};
+   assign memoryROM[327] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[328] =  {`BLE , `R9,`R1, `R4};
 
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //A 
    //FIRST NIBBLE 
-   assign memoryROM[292] =  {`STO , `R5, 16'd0};
-   assign memoryROM[293] =  {`STO , `R6, 8'h00,`A}; //ENTRY MODE BYTE
-   assign memoryROM[294] =  {`STO , `R3, 16'd12};
+   assign memoryROM[329] =  {`STO , `R5, 16'd0};
+   assign memoryROM[330] =  {`STO , `R6, 8'h00,`A}; //ENTRY MODE BYTE
+   assign memoryROM[331] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[295] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[296] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[297] =  {`NOP , 24'd4000 };
+   assign memoryROM[332] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[333] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[334] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[298] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[335] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[299] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[300] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[336] =  {`STO , `R9, 16'd337};
+   assign memoryROM[338] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[339] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[301] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[340] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[302] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[341] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[303] =  {`STO , `R1, 16'd0};
-   assign memoryROM[304] =  {`STO , `R4, 16'd50};
+   assign memoryROM[342] =  {`STO , `R1, 16'd0};
+   assign memoryROM[343] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[305] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[306] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[344] =  {`STO , `R9, 16'd345};
+   assign memoryROM[345] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[346] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[307] =  {`STO , `R5, 16'd0};
-   assign memoryROM[308] =  {`STO , `R3, 16'd12};
+   assign memoryROM[347] =  {`STO , `R5, 16'd0};
+   assign memoryROM[348] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[309] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[310] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[311] =  {`NOP , 24'd4000 };
-   assign memoryROM[312] =  {`NOP , 24'd4000 };
-   assign memoryROM[313] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[349] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[350] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[351] =  {`NOP , 24'd4000 };
+   assign memoryROM[352] =  {`NOP , 24'd4000 };
+   assign memoryROM[353] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[314] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[315] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[354] =  {`STO , `R9, 16'd355};
+   assign memoryROM[355] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[356] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[316] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[317] =  {`NOP , 24'd4000 };  
+   assign memoryROM[357] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[358] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[318] =  {`STO , `R1, 16'd0};
-   assign memoryROM[319] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[359] =  {`STO , `R1, 16'd0};
+   assign memoryROM[360] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[320] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[321] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[361] =  {`STO , `R9, 16'd362};
+   assign memoryROM[362] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[363] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //SPC 
    //FIRST NIBBLE 
-   assign memoryROM[322] =  {`STO , `R5, 16'd0};
-   assign memoryROM[323] =  {`STO , `R6, 8'h00,`SPC}; //ENTRY MODE BYTE
-   assign memoryROM[324] =  {`STO , `R3, 16'd12};
+   assign memoryROM[364] =  {`STO , `R5, 16'd0};
+   assign memoryROM[365] =  {`STO , `R6, 8'h00,`SPC}; //ENTRY MODE BYTE
+   assign memoryROM[366] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[325] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[326] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[327] =  {`NOP , 24'd4000 };
+   assign memoryROM[367] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[368] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[369] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[328] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[370] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[329] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[330] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[371] =  {`STO , `R9, 16'd371};
+   assign memoryROM[372] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[373] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[331] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[374] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[332] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[375] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[333] =  {`STO , `R1, 16'd0};
-   assign memoryROM[334] =  {`STO , `R4, 16'd50};
+   assign memoryROM[376] =  {`STO , `R1, 16'd0};
+   assign memoryROM[377] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[335] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[336] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[378] =  {`STO , `R9, 16'd379};
+   assign memoryROM[379] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[380] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[337] =  {`STO , `R5, 16'd0};
-   assign memoryROM[338] =  {`STO , `R3, 16'd12};
+   assign memoryROM[381] =  {`STO , `R5, 16'd0};
+   assign memoryROM[382] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[339] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[340] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[341] =  {`NOP , 24'd4000 };
-   assign memoryROM[342] =  {`NOP , 24'd4000 };
-   assign memoryROM[343] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[383] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[384] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[385] =  {`NOP , 24'd4000 };
+   assign memoryROM[386] =  {`NOP , 24'd4000 };
+   assign memoryROM[387] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[344] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[345] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[388] =  {`STO , `R9, 16'd389};
+   assign memoryROM[389] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[390] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[346] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[347] =  {`NOP , 24'd4000 };  
+   assign memoryROM[391] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[392] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[348] =  {`STO , `R1, 16'd0};
-   assign memoryROM[349] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[393] =  {`STO , `R1, 16'd0};
+   assign memoryROM[394] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[350] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[351] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[395] =  {`STO , `R9, 16'd396};
+   assign memoryROM[396] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[397] =  {`BLE , `R9,`R1, `R4};
    
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //M 
    //FIRST NIBBLE 
-   assign memoryROM[352] =  {`STO , `R5, 16'd0};
-   assign memoryROM[353] =  {`STO , `R6, 8'h00,`M}; //ENTRY MODE BYTE
-   assign memoryROM[354] =  {`STO , `R3, 16'd12};
+   assign memoryROM[398] =  {`STO , `R5, 16'd0};
+   assign memoryROM[399] =  {`STO , `R6, 8'h00,`M}; //ENTRY MODE BYTE
+   assign memoryROM[400] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[355] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[356] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[357] =  {`NOP , 24'd4000 };
+   assign memoryROM[401] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[402] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[403] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[358] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[404] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[359] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[360] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[405] =  {`STO , `R9, 16'd406};
+   assign memoryROM[406] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[407] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[361] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[408] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[362] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[409] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[363] =  {`STO , `R1, 16'd0};
-   assign memoryROM[364] =  {`STO , `R4, 16'd50};
+   assign memoryROM[410] =  {`STO , `R1, 16'd0};
+   assign memoryROM[411] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[365] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[366] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[412] =  {`STO , `R9, 16'd413};
+   assign memoryROM[413] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[414] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[367] =  {`STO , `R5, 16'd0};
-   assign memoryROM[368] =  {`STO , `R3, 16'd12};
+   assign memoryROM[415] =  {`STO , `R5, 16'd0};
+   assign memoryROM[416] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[369] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[370] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[371] =  {`NOP , 24'd4000 };
-   assign memoryROM[372] =  {`NOP , 24'd4000 };
-   assign memoryROM[373] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[417] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[418] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[419] =  {`NOP , 24'd4000 };
+   assign memoryROM[420] =  {`NOP , 24'd4000 };
+   assign memoryROM[421] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[374] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[375] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[422] =  {`STO , `R9, 16'd423};
+   assign memoryROM[423] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[424] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[376] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[377] =  {`NOP , 24'd4000 };  
+   assign memoryROM[425] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[426] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[378] =  {`STO , `R1, 16'd0};
-   assign memoryROM[379] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[427] =  {`STO , `R1, 16'd0};
+   assign memoryROM[428] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[380] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[381] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[429] =  {`STO , `R9, 16'd430};
+   assign memoryROM[430] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[431] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //U 
    //FIRST NIBBLE 
-   assign memoryROM[382] =  {`STO , `R5, 16'd0};
-   assign memoryROM[383] =  {`STO , `R6, 8'h00,`U}; //ENTRY MODE BYTE
-   assign memoryROM[384] =  {`STO , `R3, 16'd12};
+   assign memoryROM[432] =  {`STO , `R5, 16'd0};
+   assign memoryROM[433] =  {`STO , `R6, 8'h00,`U}; //ENTRY MODE BYTE
+   assign memoryROM[434] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[385] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[386] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[387] =  {`NOP , 24'd4000 };
+   assign memoryROM[435] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[436] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[437] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[388] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[438] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[389] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[390] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[439] =  {`STO , `R9, 16'd440};
+   assign memoryROM[440] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[441] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[391] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[442] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[392] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[443] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[393] =  {`STO , `R1, 16'd0};
-   assign memoryROM[394] =  {`STO , `R4, 16'd50};
+   assign memoryROM[444] =  {`STO , `R1, 16'd0};
+   assign memoryROM[445] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[395] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[396] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[446] =  {`STO , `R9, 16'd447};
+   assign memoryROM[447] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[448] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[397] =  {`STO , `R5, 16'd0};
-   assign memoryROM[398] =  {`STO , `R3, 16'd12};
+   assign memoryROM[449] =  {`STO , `R5, 16'd0};
+   assign memoryROM[450] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[399] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[400] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[401] =  {`NOP , 24'd4000 };
-   assign memoryROM[402] =  {`NOP , 24'd4000 };
-   assign memoryROM[403] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[451] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[452] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[453] =  {`NOP , 24'd4000 };
+   assign memoryROM[454] =  {`NOP , 24'd4000 };
+   assign memoryROM[455] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[404] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[405] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[456] =  {`STO , `R9, 16'd457};
+   assign memoryROM[457] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[458] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[406] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[407] =  {`NOP , 24'd4000 };  
+   assign memoryROM[459] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[460] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[408] =  {`STO , `R1, 16'd0};
-   assign memoryROM[409] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[461] =  {`STO , `R1, 16'd0};
+   assign memoryROM[462] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[410] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[411] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[463] =  {`STO , `R9, 16'd464};
+   assign memoryROM[464] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[465] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //N 
    //FIRST NIBBLE 
-   assign memoryROM[412] =  {`STO , `R5, 16'd0};
-   assign memoryROM[413] =  {`STO , `R6, 8'h00,`N}; //ENTRY MODE BYTE
-   assign memoryROM[414] =  {`STO , `R3, 16'd12};
+   assign memoryROM[466] =  {`STO , `R5, 16'd0};
+   assign memoryROM[467] =  {`STO , `R6, 8'h00,`N}; //ENTRY MODE BYTE
+   assign memoryROM[468] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[415] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[416] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[417] =  {`NOP , 24'd4000 };
+   assign memoryROM[469] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[470] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[471] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[418] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[472] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[419] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[420] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[473] =  {`STO , `R9, 16'd474};
+   assign memoryROM[474] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[475] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[421] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[476] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[422] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[477] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[423] =  {`STO , `R1, 16'd0};
-   assign memoryROM[424] =  {`STO , `R4, 16'd50};
+   assign memoryROM[478] =  {`STO , `R1, 16'd0};
+   assign memoryROM[479] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[425] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[426] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[480] =  {`STO , `R9, 16'd481};
+   assign memoryROM[481] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[482] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[427] =  {`STO , `R5, 16'd0};
-   assign memoryROM[428] =  {`STO , `R3, 16'd12};
+   assign memoryROM[483] =  {`STO , `R5, 16'd0};
+   assign memoryROM[484] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[429] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[430] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[431] =  {`NOP , 24'd4000 };
-   assign memoryROM[432] =  {`NOP , 24'd4000 };
-   assign memoryROM[433] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[485] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[486] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[487] =  {`NOP , 24'd4000 };
+   assign memoryROM[488] =  {`NOP , 24'd4000 };
+   assign memoryROM[489] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[434] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[435] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[490] =  {`STO , `R9, 16'd491};
+   assign memoryROM[491] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[492] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[436] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[437] =  {`NOP , 24'd4000 };  
+   assign memoryROM[493] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[494] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[438] =  {`STO , `R1, 16'd0};
-   assign memoryROM[439] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[495] =  {`STO , `R1, 16'd0};
+   assign memoryROM[496] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[440] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[441] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[497] =  {`STO , `R9, 16'd498};
+   assign memoryROM[498] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[499] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //D 
    //FIRST NIBBLE 
-   assign memoryROM[442] =  {`STO , `R5, 16'd0};
-   assign memoryROM[443] =  {`STO , `R6, 8'h00,`D}; //ENTRY MODE BYTE
-   assign memoryROM[444] =  {`STO , `R3, 16'd12};
+   assign memoryROM[500] =  {`STO , `R5, 16'd0};
+   assign memoryROM[501] =  {`STO , `R6, 8'h00,`D}; //ENTRY MODE BYTE
+   assign memoryROM[502] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[445] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[446] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[447] =  {`NOP , 24'd4000 };
+   assign memoryROM[503] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[504] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[505] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[448] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[506] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[449] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[450] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[507] =  {`STO , `R9, 16'd508};
+   assign memoryROM[508] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[509] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[451] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[510] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[452] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[511] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[453] =  {`STO , `R1, 16'd0};
-   assign memoryROM[454] =  {`STO , `R4, 16'd50};
+   assign memoryROM[512] =  {`STO , `R1, 16'd0};
+   assign memoryROM[513] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[455] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[456] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[514] =  {`STO , `R9, 16'd515};
+   assign memoryROM[515] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[516] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[457] =  {`STO , `R5, 16'd0};
-   assign memoryROM[458] =  {`STO , `R3, 16'd12};
+   assign memoryROM[517] =  {`STO , `R5, 16'd0};
+   assign memoryROM[518] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[459] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[460] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[461] =  {`NOP , 24'd4000 };
-   assign memoryROM[462] =  {`NOP , 24'd4000 };
-   assign memoryROM[463] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[519] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[520] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[521] =  {`NOP , 24'd4000 };
+   assign memoryROM[522] =  {`NOP , 24'd4000 };
+   assign memoryROM[523] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[464] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[465] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[524] =  {`STO , `R9, 16'd525};
+   assign memoryROM[525] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[526] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[466] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[467] =  {`NOP , 24'd4000 };  
+   assign memoryROM[527] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[528] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[468] =  {`STO , `R1, 16'd0};
-   assign memoryROM[469] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[529] =  {`STO , `R1, 16'd0};
+   assign memoryROM[530] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[470] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[471] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[531] =  {`STO , `R9, 16'd532};
+   assign memoryROM[532] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[533] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //O 
    //FIRST NIBBLE 
-   assign memoryROM[472] =  {`STO , `R5, 16'd0};
-   assign memoryROM[473] =  {`STO , `R6, 8'h00,`O}; //ENTRY MODE BYTE
-   assign memoryROM[474] =  {`STO , `R3, 16'd12};
+   assign memoryROM[534] =  {`STO , `R5, 16'd0};
+   assign memoryROM[535] =  {`STO , `R6, 8'h00,`O}; //ENTRY MODE BYTE
+   assign memoryROM[536] =  {`STO , `R3, 16'd12};
 
-   assign memoryROM[475] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[476] =  {`NOP , 24'd4000 }; // SETUP TIME
-   assign memoryROM[477] =  {`NOP , 24'd4000 };
+   assign memoryROM[537] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[538] =  {`NOP , 24'd4000 }; // SETUP TIME
+   assign memoryROM[539] =  {`NOP , 24'd4000 };
    
-   assign memoryROM[478] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+   assign memoryROM[540] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[479] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[480] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[541] =  {`STO , `R9, 16'd542};
+   assign memoryROM[542] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[543] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[481] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+   assign memoryROM[544] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
-   assign memoryROM[482] =  {`NOP , 24'd4000 }; // HOLD TIME 
+   assign memoryROM[545] =  {`NOP , 24'd4000 }; // HOLD TIME 
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //NIBBLE WAIT
-   assign memoryROM[483] =  {`STO , `R1, 16'd0};
-   assign memoryROM[484] =  {`STO , `R4, 16'd50};
+   assign memoryROM[546] =  {`STO , `R1, 16'd0};
+   assign memoryROM[547] =  {`STO , `R4, 16'd50};
 
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[485] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[486] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[548] =  {`STO , `R9, 16'd549};
+   assign memoryROM[549] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[550] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
    
-   assign memoryROM[487] =  {`STO , `R5, 16'd0};
-   assign memoryROM[488] =  {`STO , `R3, 16'd12};
+   assign memoryROM[551] =  {`STO , `R5, 16'd0};
+   assign memoryROM[552] =  {`STO , `R3, 16'd12};
    
-   assign memoryROM[489] =  {`SHL , `R6 ,`R6, `R7 };
-   assign memoryROM[490] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-   assign memoryROM[491] =  {`NOP , 24'd4000 };
-   assign memoryROM[492] =  {`NOP , 24'd4000 };
-   assign memoryROM[493] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[553] =  {`SHL , `R6 ,`R6, `R7 };
+   assign memoryROM[554] =  {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+   assign memoryROM[555] =  {`NOP , 24'd4000 };
+   assign memoryROM[556] =  {`NOP , 24'd4000 };
+   assign memoryROM[557] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[494] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[495] =  {`BLE , `R9,`R5, `R3};
+   assign memoryROM[558] =  {`STO , `R9, 16'd559};
+   assign memoryROM[559] =  {`ADD , `R5, `R5, `R2}; 
+   assign memoryROM[560] =  {`BLE , `R9,`R5, `R3};
    
-   assign memoryROM[496] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   assign memoryROM[497] =  {`NOP , 24'd4000 };  
+   assign memoryROM[561] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+   assign memoryROM[562] =  {`NOP , 24'd4000 };  
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //LOOP 2000
-   assign memoryROM[498] =  {`STO , `R1, 16'd0};
-   assign memoryROM[499] =  {`STO , `R4, 16'd2000};
+   assign memoryROM[563] =  {`STO , `R1, 16'd0};
+   assign memoryROM[564] =  {`STO , `R4, 16'd2000};
    //LOOP1
-   assign memoryROM[1] =  {`STO , `R9, 16'd1};
-   assign memoryROM[500] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[501] =  {`BLE , `R9,`R1, `R4};
+   assign memoryROM[565] =  {`STO , `R9, 16'd566};
+   assign memoryROM[566] =  {`ADD , `R1, `R1, `R2}; 
+   assign memoryROM[567] =  {`BLE , `R9,`R1, `R4};
       
 
    
