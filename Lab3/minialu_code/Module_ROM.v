@@ -34,12 +34,13 @@ module ROM
    assign memoryROM[6] =  {`STO , `R7, 16'd4};
    
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[7] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[8] =  {`BLE , 8'd7,`R1, `R4};
+   assign memoryROM[8] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
    assign memoryROM[9] =  {`ADD , `R5, `R5, `R2}; 
    assign memoryROM[10] =  {`STO , `R1, 16'd0};
-   assign memoryROM[11] =  {`BLE , 8'd7,`R5, `R3};
+   assign memoryROM[11] =  {`BLE , `R9,`R5, `R3};
 
 
    //POWER ON
@@ -55,8 +56,9 @@ module ROM
    //ENABLE
    assign memoryROM[18] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    //LOOP 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[19] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[20] =  {`BLE , 8'd19,`R5, `R3};
+   assign memoryROM[20] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[21] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -72,12 +74,13 @@ module ROM
    
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[27] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[28] =  {`BLE , 8'd27,`R1, `R4};
+   assign memoryROM[28] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
    assign memoryROM[29] =  {`ADD , `R5, `R5, `R2}; 
    assign memoryROM[30] =  {`STO , `R1, 16'd0};
-   assign memoryROM[31] =  {`BLE , 8'd27,`R5, `R3};
+   assign memoryROM[31] =  {`BLE , `R9,`R5, `R3};
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////  
@@ -91,8 +94,9 @@ module ROM
    
    assign memoryROM[38] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[39] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[40] =  {`BLE , 8'd39,`R5, `R3}; //20?
+   assign memoryROM[40] =  {`BLE , `R9,`R5, `R3}; //20?
    
    assign memoryROM[41] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -105,8 +109,9 @@ module ROM
    
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[45] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[46] =  {`BLE , 8'd45,`R1, `R4};
+   assign memoryROM[46] =  {`BLE , `R9,`R1, `R4};
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////
    //ESCRIBIR 0x3
@@ -120,8 +125,9 @@ module ROM
    
    assign memoryROM[53] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[54] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[55] =  {`BLE , 8'd54,`R5, `R3};
+   assign memoryROM[55] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[56] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -134,8 +140,9 @@ module ROM
 
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[60] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[61] =  {`BLE , 8'd60,`R1, `R4};
+   assign memoryROM[61] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +157,9 @@ module ROM
    
    assign memoryROM[68] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[69] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[70] =  {`BLE , 8'd69,`R5, `R3};
+   assign memoryROM[70] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[71] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -164,8 +172,9 @@ module ROM
    assign memoryROM[74] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[75] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[76] =  {`BLE , 8'd75,`R1, `R4};
+   assign memoryROM[76] =  {`BLE , `R9,`R1, `R4};
 
 
    
@@ -191,8 +200,9 @@ module ROM
    
    assign memoryROM[83] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[84] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[85] =  {`BLE , 8'd84,`R5, `R3};
+   assign memoryROM[85] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[86] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -205,8 +215,9 @@ module ROM
    assign memoryROM[89] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[90] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[91] =  {`BLE , 8'd90,`R1, `R4};
+   assign memoryROM[91] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
@@ -221,8 +232,9 @@ module ROM
    
    assign memoryROM[98] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[99] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[100] =  {`BLE , 8'd99,`R5, `R3};
+   assign memoryROM[100] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[101] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -237,8 +249,9 @@ module ROM
    assign memoryROM[104] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[105] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[106] =  {`BLE , 8'd105,`R1, `R4};
+   assign memoryROM[106] =  {`BLE , `R9,`R1, `R4};
 
    
    
@@ -255,8 +268,9 @@ module ROM
    
    assign memoryROM[113] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[114] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[115] =  {`BLE , 8'd114,`R5, `R3};
+   assign memoryROM[115] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[116] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -269,8 +283,9 @@ module ROM
    assign memoryROM[119] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[120] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[121] =  {`BLE , 8'd120,`R1, `R4};
+   assign memoryROM[121] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
@@ -285,8 +300,9 @@ module ROM
    
    assign memoryROM[128] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[129] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[130] =  {`BLE , 8'd129,`R5, `R3};
+   assign memoryROM[130] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[131] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -301,8 +317,9 @@ module ROM
    assign memoryROM[134] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[135] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[136] =  {`BLE , 8'd135,`R1, `R4};
+   assign memoryROM[136] =  {`BLE , `R9,`R1, `R4};
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,8 +335,9 @@ module ROM
    
    assign memoryROM[143] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[144] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[145] =  {`BLE , 8'd144,`R5, `R3};
+   assign memoryROM[145] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[146] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -332,8 +350,9 @@ module ROM
    assign memoryROM[149] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[150] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[151] =  {`BLE , 8'd150,`R1, `R4};
+   assign memoryROM[151] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
@@ -348,8 +367,9 @@ module ROM
    
    assign memoryROM[158] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[159] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[160] =  {`BLE , 8'd159,`R5, `R3};
+   assign memoryROM[160] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[161] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -364,8 +384,9 @@ module ROM
    assign memoryROM[164] =  {`STO , `R4, 16'd2000};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[165] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[166] =  {`BLE , 8'd165,`R1, `R4};
+   assign memoryROM[166] =  {`BLE , `R9,`R1, `R4};
 
 
    /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +402,9 @@ module ROM
    
    assign memoryROM[173] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[174] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[175] =  {`BLE , 8'd174,`R5, `R3};
+   assign memoryROM[175] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[176] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -395,8 +417,9 @@ module ROM
    assign memoryROM[179] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[180] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[181] =  {`BLE , 8'd180,`R1, `R4};
+   assign memoryROM[181] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////
@@ -411,8 +434,9 @@ module ROM
    
    assign memoryROM[188] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[189] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[190] =  {`BLE , 8'd189,`R5, `R3};
+   assign memoryROM[190] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[191] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
    
@@ -429,12 +453,13 @@ module ROM
    assign memoryROM[196] =  {`STO , `R5, 16'd0};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[197] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[198] =  {`BLE , 8'd197,`R1, `R4};
+   assign memoryROM[198] =  {`BLE , `R9,`R1, `R4};
    //LOOP1
    assign memoryROM[199] =  {`ADD , `R5, `R5, `R2}; 
    assign memoryROM[200] =  {`STO , `R1, 16'd0};
-   assign memoryROM[201] =  {`BLE , 8'd197,`R5, `R3};
+   assign memoryROM[201] =  {`BLE , `R9,`R5, `R3};
 
 
 
@@ -454,8 +479,9 @@ module ROM
    
    assign memoryROM[208] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[209] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[210] =  {`BLE , 8'd209,`R5, `R3};
+   assign memoryROM[210] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[211] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -468,8 +494,9 @@ module ROM
    assign memoryROM[214] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[215] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[216] =  {`BLE , 8'd214,`R1, `R4};
+   assign memoryROM[216] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -481,8 +508,11 @@ module ROM
    assign memoryROM[221] =  {`NOP , 24'd4000 };
    assign memoryROM[222] =  {`NOP , 24'd4000 };
    assign memoryROM[223] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[224] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[225] =  {`BLE , 8'd224,`R5, `R3};
+   assign memoryROM[225] =  {`BLE , `R9,`R5, `R3};
+   
    assign memoryROM[226] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[227] =  {`NOP , 24'd4000 };  
    
@@ -491,8 +521,9 @@ module ROM
    assign memoryROM[228] =  {`STO , `R1, 16'd0};
    assign memoryROM[229] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[230] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[231] =  {`BLE , 8'd230,`R1, `R4};
+   assign memoryROM[231] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -508,8 +539,9 @@ module ROM
    
    assign memoryROM[238] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[239] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[240] =  {`BLE , 8'd239,`R5, `R3};
+   assign memoryROM[240] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[241] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -522,8 +554,9 @@ module ROM
    assign memoryROM[244] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[245] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[246] =  {`BLE , 8'd245,`R1, `R4};
+   assign memoryROM[246] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -537,9 +570,10 @@ module ROM
    assign memoryROM[252] =  {`NOP , 24'd4000 };
    
    assign memoryROM[253] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[254] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[255] =  {`BLE , 8'd254,`R5, `R3};
+   assign memoryROM[255] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[256] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[257] =  {`NOP , 24'd4000 };  
@@ -549,8 +583,9 @@ module ROM
    assign memoryROM[258] =  {`STO , `R1, 16'd0};
    assign memoryROM[259] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[260] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[261] =  {`BLE , 8'd260,`R1, `R4};
+   assign memoryROM[261] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -566,8 +601,9 @@ module ROM
    
    assign memoryROM[268] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[269] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[270] =  {`BLE , 8'd269,`R5, `R3};
+   assign memoryROM[270] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[271] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -580,8 +616,9 @@ module ROM
    assign memoryROM[274] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[275] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[276] =  {`BLE , 8'd275,`R1, `R4};
+   assign memoryROM[276] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -594,9 +631,10 @@ module ROM
    assign memoryROM[281] =  {`NOP , 24'd4000 };
    assign memoryROM[282] =  {`NOP , 24'd4000 };
    assign memoryROM[283] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[284] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[285] =  {`BLE , 8'd284,`R5, `R3};
+   assign memoryROM[285] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[286] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[287] =  {`NOP , 24'd4000 };  
@@ -606,8 +644,9 @@ module ROM
    assign memoryROM[288] =  {`STO , `R1, 16'd0};
    assign memoryROM[289] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[290] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[291] =  {`BLE , 8'd290,`R1, `R4};
+   assign memoryROM[291] =  {`BLE , `R9,`R1, `R4};
 
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -623,8 +662,9 @@ module ROM
    
    assign memoryROM[298] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[299] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[300] =  {`BLE , 8'd299,`R5, `R3};
+   assign memoryROM[300] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[301] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -637,8 +677,9 @@ module ROM
    assign memoryROM[304] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[305] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[306] =  {`BLE , 8'd305,`R1, `R4};
+   assign memoryROM[306] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -651,9 +692,10 @@ module ROM
    assign memoryROM[311] =  {`NOP , 24'd4000 };
    assign memoryROM[312] =  {`NOP , 24'd4000 };
    assign memoryROM[313] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[314] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[315] =  {`BLE , 8'd314,`R5, `R3};
+   assign memoryROM[315] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[316] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[317] =  {`NOP , 24'd4000 };  
@@ -663,8 +705,9 @@ module ROM
    assign memoryROM[318] =  {`STO , `R1, 16'd0};
    assign memoryROM[319] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[320] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[321] =  {`BLE , 8'd320,`R1, `R4};
+   assign memoryROM[321] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -680,8 +723,9 @@ module ROM
    
    assign memoryROM[328] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[329] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[330] =  {`BLE , 8'd239,`R5, `R3};
+   assign memoryROM[330] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[331] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -694,8 +738,9 @@ module ROM
    assign memoryROM[334] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[335] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[336] =  {`BLE , 8'd214,`R1, `R4};
+   assign memoryROM[336] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -708,9 +753,10 @@ module ROM
    assign memoryROM[341] =  {`NOP , 24'd4000 };
    assign memoryROM[342] =  {`NOP , 24'd4000 };
    assign memoryROM[343] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[344] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[345] =  {`BLE , 8'd344,`R5, `R3};
+   assign memoryROM[345] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[346] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[347] =  {`NOP , 24'd4000 };  
@@ -720,8 +766,9 @@ module ROM
    assign memoryROM[348] =  {`STO , `R1, 16'd0};
    assign memoryROM[349] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[350] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[351] =  {`BLE , 8'd350,`R1, `R4};
+   assign memoryROM[351] =  {`BLE , `R9,`R1, `R4};
    
    
 
@@ -738,8 +785,9 @@ module ROM
    
    assign memoryROM[358] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[359] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[360] =  {`BLE , 8'd359,`R5, `R3};
+   assign memoryROM[360] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[361] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -752,8 +800,9 @@ module ROM
    assign memoryROM[364] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[365] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[366] =  {`BLE , 8'd365,`R1, `R4};
+   assign memoryROM[366] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -766,9 +815,10 @@ module ROM
    assign memoryROM[371] =  {`NOP , 24'd4000 };
    assign memoryROM[372] =  {`NOP , 24'd4000 };
    assign memoryROM[373] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[374] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[375] =  {`BLE , 8'd374,`R5, `R3};
+   assign memoryROM[375] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[376] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[377] =  {`NOP , 24'd4000 };  
@@ -778,8 +828,9 @@ module ROM
    assign memoryROM[378] =  {`STO , `R1, 16'd0};
    assign memoryROM[379] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[380] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[381] =  {`BLE , 8'd380,`R1, `R4};
+   assign memoryROM[381] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -795,8 +846,9 @@ module ROM
    
    assign memoryROM[388] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[389] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[390] =  {`BLE , 8'd389,`R5, `R3};
+   assign memoryROM[390] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[391] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -809,8 +861,9 @@ module ROM
    assign memoryROM[394] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[395] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[396] =  {`BLE , 8'd395,`R1, `R4};
+   assign memoryROM[396] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -823,9 +876,10 @@ module ROM
    assign memoryROM[401] =  {`NOP , 24'd4000 };
    assign memoryROM[402] =  {`NOP , 24'd4000 };
    assign memoryROM[403] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[404] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[405] =  {`BLE , 8'd404,`R5, `R3};
+   assign memoryROM[405] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[406] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[407] =  {`NOP , 24'd4000 };  
@@ -835,8 +889,9 @@ module ROM
    assign memoryROM[408] =  {`STO , `R1, 16'd0};
    assign memoryROM[409] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[410] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[411] =  {`BLE , 8'd410,`R1, `R4};
+   assign memoryROM[411] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -852,8 +907,9 @@ module ROM
    
    assign memoryROM[418] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[419] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[420] =  {`BLE , 8'd419,`R5, `R3};
+   assign memoryROM[420] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[421] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -866,8 +922,9 @@ module ROM
    assign memoryROM[424] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[425] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[426] =  {`BLE , 8'd425,`R1, `R4};
+   assign memoryROM[426] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -880,9 +937,10 @@ module ROM
    assign memoryROM[431] =  {`NOP , 24'd4000 };
    assign memoryROM[432] =  {`NOP , 24'd4000 };
    assign memoryROM[433] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[434] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[435] =  {`BLE , 8'd434,`R5, `R3};
+   assign memoryROM[435] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[436] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[437] =  {`NOP , 24'd4000 };  
@@ -892,8 +950,9 @@ module ROM
    assign memoryROM[438] =  {`STO , `R1, 16'd0};
    assign memoryROM[439] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[440] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[441] =  {`BLE , 8'd440,`R1, `R4};
+   assign memoryROM[441] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -909,8 +968,9 @@ module ROM
    
    assign memoryROM[448] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[449] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[450] =  {`BLE , 8'd449,`R5, `R3};
+   assign memoryROM[450] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[451] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -923,8 +983,9 @@ module ROM
    assign memoryROM[454] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[455] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[456] =  {`BLE , 8'd455,`R1, `R4};
+   assign memoryROM[456] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -937,9 +998,10 @@ module ROM
    assign memoryROM[461] =  {`NOP , 24'd4000 };
    assign memoryROM[462] =  {`NOP , 24'd4000 };
    assign memoryROM[463] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[464] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[465] =  {`BLE , 8'd464,`R5, `R3};
+   assign memoryROM[465] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[466] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[467] =  {`NOP , 24'd4000 };  
@@ -949,8 +1011,9 @@ module ROM
    assign memoryROM[468] =  {`STO , `R1, 16'd0};
    assign memoryROM[469] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[470] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[471] =  {`BLE , 8'd470,`R1, `R4};
+   assign memoryROM[471] =  {`BLE , `R9,`R1, `R4};
    
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -966,8 +1029,9 @@ module ROM
    
    assign memoryROM[478] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[479] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[480] =  {`BLE , 8'd479,`R5, `R3};
+   assign memoryROM[480] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[481] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
    
@@ -980,8 +1044,9 @@ module ROM
    assign memoryROM[484] =  {`STO , `R4, 16'd50};
 
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[485] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[486] =  {`BLE , 8'd485,`R1, `R4};
+   assign memoryROM[486] =  {`BLE , `R9,`R1, `R4};
    
    //////////////////////////////////////////////////////////////////////////
    //SECOND NIBBLE
@@ -994,9 +1059,10 @@ module ROM
    assign memoryROM[491] =  {`NOP , 24'd4000 };
    assign memoryROM[492] =  {`NOP , 24'd4000 };
    assign memoryROM[493] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
-   
+
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[494] =  {`ADD , `R5, `R5, `R2}; 
-   assign memoryROM[495] =  {`BLE , 8'd494,`R5, `R3};
+   assign memoryROM[495] =  {`BLE , `R9,`R5, `R3};
    
    assign memoryROM[496] =  {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
    assign memoryROM[497] =  {`NOP , 24'd4000 };  
@@ -1006,8 +1072,9 @@ module ROM
    assign memoryROM[498] =  {`STO , `R1, 16'd0};
    assign memoryROM[499] =  {`STO , `R4, 16'd2000};
    //LOOP1
+   assign memoryROM[1] =  {`STO , `R9, 16'd1};
    assign memoryROM[500] =  {`ADD , `R1, `R1, `R2}; 
-   assign memoryROM[501] =  {`BLE , 8'd500,`R1, `R4};
+   assign memoryROM[501] =  {`BLE , `R9,`R1, `R4};
       
 
    
