@@ -18,7 +18,7 @@
 `define CMD 8'd66
 `define CHAR 8'd77
 
-`define EXIT 8'd112
+`define EXIT 8'd137
 
 module ROM
    (
@@ -38,194 +38,242 @@ module ROM
 ///POWER ON 
 4: oInstruction    = {`STO , `R3, 16'd24};	 // PRIMER LOOP LONG(EXTERNO) y SHORT
 5: oInstruction    = {`STO , `R4, 16'd31250};// SEGUNDO LOOP LONG(INTERNO)
-8: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; /// LOOP 750000
+6: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; /// LOOP 750000
 
-9: oInstruction   = {`STO , `R6, 16'h0030};
-10: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
+7: oInstruction   = {`STO , `R6, 16'h0030};
+8: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
 
-11: oInstruction   = {`STO , `R3, 16'd8};
-12: oInstruction   = {`STO , `R4, 16'd25625};
-13: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; // LOOP 205000
+9: oInstruction   = {`STO , `R3, 16'd8};
+10: oInstruction   = {`STO , `R4, 16'd25625};
+11: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; // LOOP 205000
 
-14: oInstruction   = {`STO , `R6, 16'h0030};
-15: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
+12: oInstruction   = {`STO , `R6, 16'h0030};
+13: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
 
-16: oInstruction   = {`STO , `R4, 16'd5000};
-17: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 5000
+14: oInstruction   = {`STO , `R4, 16'd5000};
+15: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 5000
 
-18: oInstruction   = {`STO , `R6, 16'h0030};
-19: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
+16: oInstruction   = {`STO , `R6, 16'h0030};
+17: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
 		    
-20: oInstruction   = {`STO , `R4, 16'd2000};
-21: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
+18: oInstruction   = {`STO , `R4, 16'd2000};
+19: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 
-22: oInstruction   = {`STO , `R6, 16'h0020};
-23: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
+20: oInstruction   = {`STO , `R6, 16'h0020};
+21: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR 0x3
 
-24: oInstruction   = {`STO , `R4, 16'd2000};
-25: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
+22: oInstruction   = {`STO , `R4, 16'd2000};
+23: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 
 //CONFIGURATION
 		// FUCTION SET
 
-26: oInstruction   = {`STO , `R6, 16'h0028};
-27: oInstruction  = {`CALL, `NIBBLE_CMD, 16'b0}; /// 
+24: oInstruction   = {`STO , `R6, 16'h0028};
+25: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+26: oInstruction   = {`STO , `R4, 16'd50}; 
+27: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+28: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+29: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+30: oInstruction  = {`STO , `R4, 16'd2000};
+31: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
+
 
 	     // ENTRY MODE
 
-28: oInstruction   = {`STO , `R6, 16'h0006};
-29: oInstruction  = {`CALL, `NIBBLE_CMD, 16'b0}; /// 
+33: oInstruction   = {`STO , `R6, 16'h0006};
+34: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+35: oInstruction   = {`STO , `R4, 16'd50}; 
+36: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+37: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+38: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+39: oInstruction  = {`STO , `R4, 16'd2000};
+40: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
+
 
 	     // DISPLAY ON/OFF
 
-30: oInstruction   = {`STO , `R6, 16'h000C};
-31: oInstruction  = {`CALL, `NIBBLE_CMD, 16'b0}; /// 
+42: oInstruction   = {`STO , `R6, 16'h000C};
+43: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+44: oInstruction   = {`STO , `R4, 16'd50}; 
+45: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+46: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+47: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+48: oInstruction  = {`STO , `R4, 16'd2000};
+49: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
+
 
 
 	     // CLEAR DISPLAY
 
-32: oInstruction   = {`STO , `R6, 16'h0001};
-33: oInstruction  = {`CALL, `CMD, 16'b0}; /// 
+51: oInstruction   = {`STO , `R6, 16'h0001};
+52: oInstruction  = {`CALL, `CMD, 16'b0}; /// 
 
-34: oInstruction   = {`STO , `R4, 16'd50}; 
-35: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+53: oInstruction   = {`STO , `R4, 16'd50}; 
+54: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
 
-36: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
-37: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+55: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+56: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
 
-38: oInstruction  = {`STO , `R3, 16'd8};
-39: oInstruction  = {`STO , `R4, 16'd10250};
-40: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; // LOOP 82000
+57: oInstruction  = {`STO , `R3, 16'd8};
+58: oInstruction  = {`STO , `R4, 16'd10250};
+59: oInstruction  = {`CALL, `LONG_WAIT, 16'b0}; // LOOP 82000
 // PRINT ROUTINE
 	     
 		//H
 
-41: oInstruction   = {`STO , `R6, `H};
-42: oInstruction  = {`CALL, `NIBBLE_CHAR, 16'b0}; /// 
+60: oInstruction   = {`STO , `R6, `H};
+61: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+62: oInstruction  = {`STO , `R4, 16'd50}; 
+63: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+64: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+65: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+66: oInstruction  = {`STO , `R4, 16'd2000};
+67: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 		
 		//O
 
-43: oInstruction   = {`STO , `R6, `O};
-44: oInstruction  = {`CALL, `NIBBLE_CHAR, 16'b0}; /// 
+68: oInstruction   = {`STO , `R6, `O};
+69: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+70: oInstruction  = {`STO , `R4, 16'd50}; 
+71: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+72: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+73: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+74: oInstruction  = {`STO , `R4, 16'd2000};
+75: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000 
 
 		//L
 
-45: oInstruction   = {`STO , `R6, `L};
-46: oInstruction  = {`CALL, `NIBBLE_CHAR, 16'b0}; /// 
+76: oInstruction   = {`STO , `R6, `L};
+77: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+78: oInstruction  = {`STO , `R4, 16'd50}; 
+79: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+80: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+81: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+82: oInstruction  = {`STO , `R4, 16'd2000};
+83: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 
 		//A
 
-47: oInstruction   = {`STO , `R6, `A};
-48: oInstruction  = {`CALL, `NIBBLE_CHAR, 16'b0}; /// 
+84: oInstruction   = {`STO , `R6, `A};
+85: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+86: oInstruction  = {`STO , `R4, 16'd50}; 
+87: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+88: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+89: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+90: oInstruction  = {`STO , `R4, 16'd2000};
+91: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 
 		//SPC
 
-49: oInstruction   = {`STO , `R6, `SPC};
-50: oInstruction  = {`CALL, `NIBBLE_CHAR, 16'b0}; /// 
+92: oInstruction   = {`STO , `R6, `SPC};
+93: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
+
+94: oInstruction  = {`STO , `R4, 16'd50}; 
+95: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
+
+96: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
+97: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
+
+98: oInstruction  = {`STO , `R4, 16'd2000};
+99: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
 
 
 
-51: oInstruction = {`NOP , 24'd4000 };
-52: oInstruction = {`NOP , 24'd4000 };
-53: oInstruction = {`JMP , 8'd100 , 16'b0};
+100: oInstruction = {`NOP , 24'd4000 };
+101: oInstruction = {`NOP , 24'd4000 };
+102: oInstruction = {`JMP , 8'd100 , 16'b0};
 
 
 
 
 //LONG_WAIT: //R4 LOOP INTERNO  // R3 LOOP EXTERNO
 
-54: oInstruction    = {`STO , `R1, 16'd0};	 
-55: oInstruction    = {`STO , `R5, 16'd0};	 
+103: oInstruction    = {`STO , `R1, 16'd0};	 
+104: oInstruction    = {`STO , `R5, 16'd0};	 
 		    //LOOP INTERNO
-56: oInstruction    = {`ADD , `R1, `R1, `R2}; 
-57: oInstruction    = {`BLE , 8'd56,`R1, `R4};
+105: oInstruction    = {`ADD , `R1, `R1, `R2}; 
+106: oInstruction    = {`BLE , 8'd105,`R1, `R4};
 		    //LOOP EXTERNO
-58: oInstruction    = {`ADD , `R5, `R5, `R2}; 
-59: oInstruction    = {`STO , `R1, 16'd0};
-60: oInstruction   = {`BLE , 8'd56,`R5, `R3};
-61: oInstruction  = {`RET, 24'd4000 };
+107: oInstruction    = {`ADD , `R5, `R5, `R2}; 
+108: oInstruction    = {`STO , `R1, 16'd0};
+109: oInstruction   = {`BLE , 8'd105,`R5, `R3};
+110: oInstruction  = {`RET, 24'd4000 };
 
 		
 
 //SHORT_WAIT
 	
-62: oInstruction    = {`STO , `R1, 16'd0};	 
+111: oInstruction    = {`STO , `R1, 16'd0};	 
 
-63: oInstruction  = {`ADD , `R1, `R1, `R2}; 
-64: oInstruction  = {`BLE , 8'd87,`R1, `R4};
-65: oInstruction  = {`RET, 24'd4000 };
+112: oInstruction  = {`ADD , `R1, `R1, `R2}; 
+113: oInstruction  = {`BLE , 8'd112,`R1, `R4};
+114: oInstruction  = {`RET, 24'd4000 };
 
 
 
 //CMD:
-66: oInstruction   = {`STO , `R5, 16'd0};
-67: oInstruction   = {`STO , `R3, 16'd12};
+115: oInstruction   = {`STO , `R5, 16'd0};
+116: oInstruction   = {`STO , `R3, 16'd12};
 
-68: oInstruction   = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-69: oInstruction   = {`NOP , 24'd4000 };
-70: oInstruction   = {`NOP , 24'd4000 };
+117: oInstruction   = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+118: oInstruction   = {`NOP , 24'd4000 };
+119: oInstruction   = {`NOP , 24'd4000 };
 		    //ENABLE
-71: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+120: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 		    //LOOP 
-72: oInstruction   = {`ADD , `R5, `R5, `R2}; 
-73: oInstruction   = {`BLE , 8'd72,`R5, `R3};
+121: oInstruction   = {`ADD , `R5, `R5, `R2}; 
+122: oInstruction   = {`BLE , 8'd121,`R5, `R3};
 		    
-74: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+123: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		    
-75: oInstruction   = {`NOP , 24'd4000 };
-76: oInstruction  = {`RET, 24'd4000 };
+124: oInstruction   = {`NOP , 24'd4000 };
+125: oInstruction  = {`RET, 24'd4000 };
 
 
 
 //CHAR:
-77: oInstruction   = {`STO , `R5, 16'd0};
-78: oInstruction   = {`STO , `R3, 16'd12};
+126: oInstruction   = {`STO , `R5, 16'd0};
+127: oInstruction   = {`STO , `R3, 16'd12};
 
-79: oInstruction   = {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
-80: oInstruction   = {`NOP , 24'd4000 };
-81: oInstruction   = {`NOP , 24'd4000 };
+128: oInstruction   = {`LCD_CHAR ,8'd0 ,`R6, 8'd0 };
+129: oInstruction   = {`NOP , 24'd4000 };
+130: oInstruction   = {`NOP , 24'd4000 };
 		    //ENABLE
-82: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+131: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 		    //LOOP 
-83: oInstruction   = {`ADD , `R5, `R5, `R2}; 
-84: oInstruction   = {`BLE , 8'd83,`R5, `R3};
+132: oInstruction   = {`ADD , `R5, `R5, `R2}; 
+133: oInstruction   = {`BLE , 8'd132,`R5, `R3};
 		    
-85: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+134: oInstruction   = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		    
-86: oInstruction   = {`NOP , 24'd4000 };
-87: oInstruction  = {`RET, 24'd4000 };
+135: oInstruction   = {`NOP , 24'd4000 };
+136: oInstruction  = {`RET, 24'd4000 };
 
-//NIBBLE_CMD:
-
-88: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR FIRST NIBBLE
-
-89: oInstruction   = {`STO , `R4, 16'd50}; 
-90: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
-
-91: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
-92: oInstruction  = {`CALL, `CMD, 16'b0}; /// ESCRIBIR SECOND NIBBLE
-
-93: oInstruction   = {`STO , `R4, 16'd2000};
-94: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
-95: oInstruction  = {`RET, 24'd4000 };
-
-//NIBBLE_CHAR:
-
-96: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR FIRST NIBBLE
-
-97: oInstruction   = {`STO , `R4, 16'd50}; 
-98: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; //NIBBLE WAIT
-
-99: oInstruction   = {`SHL , `R6 ,`R6, `R7 };
-100: oInstruction  = {`CALL, `CHAR, 16'b0}; /// ESCRIBIR SECOND NIBBLE
-
-101: oInstruction   = {`STO , `R4, 16'd2000};
-102: oInstruction  = {`CALL, `SHORT_WAIT, 16'b0}; // LOOP 2000
-103: oInstruction  = {`RET, 24'd4000 };
 
 	     
 	     //EXIT:
-104: oInstruction = {`NOP , 24'd4000 };
+137: oInstruction = {`NOP , 24'd4000 };
 	     
 	    
 
