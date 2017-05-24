@@ -265,7 +265,6 @@ begin
 	//-------------------------------------	
 	`JMP, `CALL, `RET:
 	begin
-	end
 		rFFLedEN     <= 1'b0;
 		rWriteEnable <= 1'b0;
 		rResult      <= 0;
