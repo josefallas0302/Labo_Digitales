@@ -24,144 +24,144 @@
 	 case (iAddress)
 		 /////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 750000 
-		 1: oInstruction = {`STO , `R1, 16'd0};
-		 2: oInstruction = {`STO , `R2, 16'd1};
-		 3: oInstruction = {`STO , `R3, 16'd24};
-		 4: oInstruction = {`STO , `R4, 16'd31250};
-		 5: oInstruction = {`STO , `R5, 16'd0};
+0: oInstruction = {`STO , `R1, 16'd0};
+1: oInstruction = {`STO , `R2, 16'd1};
+2: oInstruction = {`STO , `R3, 16'd24};
+3: oInstruction = {`STO , `R4, 16'd31250};
+4: oInstruction = {`STO , `R5, 16'd0};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+5: oInstruction = {`ADD , `R1, `R1, `R2}; 
+6: oInstruction = {`BLE , 8'd5,`R1, `R4};
 		 //LOOP1
-		 10: oInstruction = {`ADD , `R5, `R5, `R2}; 
-       11: oInstruction = {`STO , `R1, 16'd0};
-		 12: oInstruction = {`BLE , `LOOP1,`R5, `R3};
+7: oInstruction = {`ADD , `R5, `R5, `R2}; 
+8: oInstruction = {`STO , `R1, 16'd0};
+9: oInstruction = {`BLE , 8'd5,`R5, `R3};
 		 //POWER ON
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		//ESCRIBIR 0x3
 		
-	    13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0030};
-		 15: oInstruction = {`STO , `R3, 16'd12};
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+10: oInstruction = {`STO , `R5, 16'd0};
+11: oInstruction = {`STO , `R6, 16'h0030};
+12: oInstruction = {`STO , `R3, 16'd12};
+13: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+14: oInstruction = {`NOP , 24'd4000 };
+15: oInstruction = {`NOP , 24'd4000 };
 		 //ENABLE
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+16: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 		 //LOOP 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+17: oInstruction = {`ADD , `R5, `R5, `R2}; 
+18: oInstruction = {`BLE , 8'd17,`R5, `R3};
 		 
-		 22: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 23: oInstruction = {`NOP , 24'd4000 };
+20: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////  
 		 // LOOP 205000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 25: oInstruction = {`STO , `R3, 16'd8};
-		 26: oInstruction = {`STO , `R4, 16'd25625};
-		 27: oInstruction = {`STO , `R5, 16'd0};
+21: oInstruction = {`STO , `R1, 16'd0};
+22: oInstruction = {`STO , `R3, 16'd8};
+23: oInstruction = {`STO , `R4, 16'd25625};
+24: oInstruction = {`STO , `R5, 16'd0};
 		 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+25: oInstruction = {`ADD , `R1, `R1, `R2}; 
+26: oInstruction = {`BLE , 8'd25,`R1, `R4};
 		 //LOOP1
-		 10: oInstruction = {`ADD , `R5, `R5, `R2}; 
-       11: oInstruction = {`STO , `R1, 16'd0};
-		 12: oInstruction = {`BLE , `LOOP1,`R5, `R3};
+27: oInstruction = {`ADD , `R5, `R5, `R2}; 
+28: oInstruction = {`STO , `R1, 16'd0};
+29: oInstruction = {`BLE , 8'd25,`R5, `R3};
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////  
 		 // ESCRIBIR 0x3
-	    13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0030};
-		 15: oInstruction = {`STO , `R3, 16'd12};
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+30: oInstruction = {`STO , `R5, 16'd0};
+31: oInstruction = {`STO , `R6, 16'h0030};
+32: oInstruction = {`STO , `R3, 16'd12};
+33: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+34: oInstruction = {`NOP , 24'd4000 };
+35: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+36: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+37: oInstruction = {`ADD , `R5, `R5, `R2}; 
+38: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+39: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+40: oInstruction = {`NOP , 24'd4000 };
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 5000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd5000};
+41: oInstruction = {`STO , `R1, 16'd0};
+42: oInstruction = {`STO , `R4, 16'd5000};
 		 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+43: oInstruction = {`ADD , `R1, `R1, `R2}; 
+44: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 
 		 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 		 //ESCRIBIR 0x3
 		 
-	    13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0030};
-		 15: oInstruction = {`STO , `R3, 16'd12};
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+45: oInstruction = {`STO , `R5, 16'd0};
+46: oInstruction = {`STO , `R6, 16'h0030};
+47: oInstruction = {`STO , `R3, 16'd12};
+48: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+49: oInstruction = {`NOP , 24'd4000 };
+50: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+51: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+52: oInstruction = {`ADD , `R5, `R5, `R2}; 
+53: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+54: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+55: oInstruction = {`NOP , 24'd4000 };
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+56: oInstruction = {`STO , `R1, 16'd0};
+57: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+58: oInstruction = {`ADD , `R1, `R1, `R2}; 
+59: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 		 
 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //ESCRIBIR 0x2
 		 
-	    13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0020};
-		 15: oInstruction = {`STO , `R3, 16'd12};
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+60: oInstruction = {`STO , `R5, 16'd0};
+61: oInstruction = {`STO , `R6, 16'h0020};
+62: oInstruction = {`STO , `R3, 16'd12};
+63: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+64: oInstruction = {`NOP , 24'd4000 };
+65: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+66: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+67: oInstruction = {`ADD , `R5, `R5, `R2}; 
+68: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+69: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+70: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+71: oInstruction = {`STO , `R1, 16'd0};
+72: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+73: oInstruction = {`ADD , `R1, `R1, `R2}; 
+74: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 
 
 		 
@@ -177,328 +177,328 @@
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //FUNCTION SET- FIRST NIBBLE 
 		 
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0028};
-		 15: oInstruction = {`STO , `R3, 16'd12};
+75: oInstruction = {`STO , `R5, 16'd0};
+76: oInstruction = {`STO , `R6, 16'h0028};
+77: oInstruction = {`STO , `R3, 16'd12};
 
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+78: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+79: oInstruction = {`NOP , 24'd4000 };
+80: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+81: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+82: oInstruction = {`ADD , `R5, `R5, `R2}; 
+83: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+84: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+85: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //NIBBLE WAIT
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd50};
+86: oInstruction = {`STO , `R1, 16'd0};
+87: oInstruction = {`STO , `R4, 16'd50};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+88: oInstruction = {`ADD , `R1, `R1, `R2}; 
+89: oInstruction = {`BLE , `LOOP1,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
 		//SECOND NIBBLE
 	
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 15: oInstruction = {`STO , `R3, 16'd12};
-	  	 16: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-	  	 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+90: oInstruction = {`STO , `R5, 16'd0};
+91: oInstruction = {`STO , `R3, 16'd12};
+92: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
+93: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+94: oInstruction = {`NOP , 24'd4000 };
+95: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+96: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+97: oInstruction = {`ADD , `R5, `R5, `R2}; 
+98: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+99: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 	
-		 18: oInstruction = {`NOP , 24'd4000 };
+100: oInstruction = {`NOP , 24'd4000 };
 	
 	
 	
 	
 	     //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+101: oInstruction = {`STO , `R1, 16'd0};
+102: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+103: oInstruction = {`ADD , `R1, `R1, `R2}; 
+104: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 
 	
 	
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		 //ENTRY MODE- FIRST NIBBLE 
 		 
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0006}; //ENTRY MODE BYTE
-		 15: oInstruction = {`STO , `R3, 16'd12};
+105: oInstruction = {`STO , `R5, 16'd0};
+106: oInstruction = {`STO , `R6, 16'h0006}; //ENTRY MODE BYTE
+107: oInstruction = {`STO , `R3, 16'd12};
 
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+108: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+109: oInstruction = {`NOP , 24'd4000 };
+110: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+111: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+112: oInstruction = {`ADD , `R5, `R5, `R2}; 
+113: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+114: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+115: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //NIBBLE WAIT
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd50};
+116: oInstruction = {`STO , `R1, 16'd0};
+117: oInstruction = {`STO , `R4, 16'd50};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+118: oInstruction = {`ADD , `R1, `R1, `R2}; 
+119: oInstruction = {`BLE , `LOOP1,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
 		//SECOND NIBBLE
 	
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 15: oInstruction = {`STO , `R3, 16'd12};
-	  	 16: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-	  	 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+120: oInstruction = {`STO , `R5, 16'd0};
+121: oInstruction = {`STO , `R3, 16'd12};
+122: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
+123: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+124: oInstruction = {`NOP , 24'd4000 };
+125: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+126: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+127: oInstruction = {`ADD , `R5, `R5, `R2}; 
+128: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+129: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 	
-		 18: oInstruction = {`NOP , 24'd4000 };
+130: oInstruction = {`NOP , 24'd4000 };
 	
 	
 	
 	
 	     //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+131: oInstruction = {`STO , `R1, 16'd0};
+132: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+133: oInstruction = {`ADD , `R1, `R1, `R2}; 
+134: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 	
 	
 			//////////////////////////////////////////////////////////////////////////////////////////////////
 		 //DISPLAY ON-OFF / FIRST NIBBLE 
 		 
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h000C}; //ENTRY MODE BYTE
-		 15: oInstruction = {`STO , `R3, 16'd12};
+135: oInstruction = {`STO , `R5, 16'd0};
+136: oInstruction = {`STO , `R6, 16'h000C}; //ENTRY MODE BYTE
+137: oInstruction = {`STO , `R3, 16'd12};
 
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+138: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+139: oInstruction = {`NOP , 24'd4000 };
+140: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+141: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+142: oInstruction = {`ADD , `R5, `R5, `R2}; 
+143: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+144: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+145: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //NIBBLE WAIT
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd50};
+146: oInstruction = {`STO , `R1, 16'd0};
+147: oInstruction = {`STO , `R4, 16'd50};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+148: oInstruction = {`ADD , `R1, `R1, `R2}; 
+149: oInstruction = {`BLE , `LOOP1,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
 		//SECOND NIBBLE
 	
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 15: oInstruction = {`STO , `R3, 16'd12};
-	  	 16: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-	  	 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+150: oInstruction = {`STO , `R5, 16'd0};
+151: oInstruction = {`STO , `R3, 16'd12};
+152: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
+153: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+154: oInstruction = {`NOP , 24'd4000 };
+155: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+156: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+157: oInstruction = {`ADD , `R5, `R5, `R2}; 
+158: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+159: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 	
-		 18: oInstruction = {`NOP , 24'd4000 };
+160: oInstruction = {`NOP , 24'd4000 };
 	
 	
 	
 	
 	     //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+161: oInstruction = {`STO , `R1, 16'd0};
+162: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+163: oInstruction = {`ADD , `R1, `R1, `R2}; 
+164: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 
 
 		 /////////////////////////////////////////////////////////////////////////////////////////////////
 		 //CLEAR DISPLAY - FIRST NIBBLE 
 		 
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0001}; //ENTRY MODE BYTE
-		 15: oInstruction = {`STO , `R3, 16'd12};
+165: oInstruction = {`STO , `R5, 16'd0};
+166: oInstruction = {`STO , `R6, 16'h0001}; //ENTRY MODE BYTE
+167: oInstruction = {`STO , `R3, 16'd12};
 
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+168: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+169: oInstruction = {`NOP , 24'd4000 };
+170: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+171: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+172: oInstruction = {`ADD , `R5, `R5, `R2}; 
+173: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+174: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 };
+175: oInstruction = {`NOP , 24'd4000 };
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //NIBBLE WAIT
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd50};
+176: oInstruction = {`STO , `R1, 16'd0};
+177: oInstruction = {`STO , `R4, 16'd50};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+178: oInstruction = {`ADD , `R1, `R1, `R2}; 
+179: oInstruction = {`BLE , `LOOP1,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
 		//SECOND NIBBLE
 	
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 15: oInstruction = {`STO , `R3, 16'd12};
-	  	 16: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-	  	 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+180: oInstruction = {`STO , `R5, 16'd0};
+181: oInstruction = {`STO , `R3, 16'd12};
+182: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
+183: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+184: oInstruction = {`NOP , 24'd4000 };
+185: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+186: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+187: oInstruction = {`ADD , `R5, `R5, `R2}; 
+188: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+189: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 	
-		 18: oInstruction = {`NOP , 24'd4000 };
+190: oInstruction = {`NOP , 24'd4000 };
 	
 	
 	
 	
 	     //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 82000
-		 1: oInstruction = {`STO , `R1, 16'd0};
-		 3: oInstruction = {`STO , `R3, 16'd8};
-		 4: oInstruction = {`STO , `R4, 16'd10250};
-		 5: oInstruction = {`STO , `R5, 16'd0};
+191: oInstruction = {`STO , `R1, 16'd0};
+192: oInstruction = {`STO , `R3, 16'd8};
+193: oInstruction = {`STO , `R4, 16'd10250};
+194: oInstruction = {`STO , `R5, 16'd0};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+195: oInstruction = {`ADD , `R1, `R1, `R2}; 
+196: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 		 //LOOP1
-		 10: oInstruction = {`ADD , `R5, `R5, `R2}; 
-         11: oInstruction = {`STO , `R1, 16'd0};
-		 12: oInstruction = {`BLE , `LOOP1,`R5, `R3};
+197: oInstruction = {`ADD , `R5, `R5, `R2}; 
+198: oInstruction = {`STO , `R1, 16'd0};
+199: oInstruction = {`BLE , `LOOP1,`R5, `R3};
 
 
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LETTER ROUTINE / FIRST NIBBLE 
 		 
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 14: oInstruction = {`STO , `R6, 16'h0048}; //ENTRY MODE BYTE
-		 15: oInstruction = {`STO , `R3, 16'd12};
+200: oInstruction = {`STO , `R5, 16'd0};
+201: oInstruction = {`STO , `R6, 16'h0048}; //ENTRY MODE BYTE
+202: oInstruction = {`STO , `R3, 16'd12};
 
- 		 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 }; // SETUP TIME
-		 18: oInstruction = {`NOP , 24'd4000 };
+203: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+204: oInstruction = {`NOP , 24'd4000 }; // SETUP TIME
+205: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
+206: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB ON
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+207: oInstruction = {`ADD , `R5, `R5, `R2}; 
+208: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
+209: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; // ENB OFF //REVISAR BAJAR EL DATO 
 		 
-		 18: oInstruction = {`NOP , 24'd4000 }; // HOLD TIME 
+210: oInstruction = {`NOP , 24'd4000 }; // HOLD TIME 
 		 
 		 
 		 //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //NIBBLE WAIT
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd50};
+211: oInstruction = {`STO , `R1, 16'd0};
+212: oInstruction = {`STO , `R4, 16'd50};
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+213: oInstruction = {`ADD , `R1, `R1, `R2}; 
+214: oInstruction = {`BLE , `LOOP1,`R1, `R4};
  
 
 		//////////////////////////////////////////////////////////////////////////
 		//SECOND NIBBLE
 	
-	     13: oInstruction = {`STO , `R5, 16'd0};
-		 15: oInstruction = {`STO , `R3, 16'd12};
-	  	 16: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
-	  	 16: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
-		 17: oInstruction = {`NOP , 24'd4000 };
-		 18: oInstruction = {`NOP , 24'd4000 };
+215: oInstruction = {`STO , `R5, 16'd0};
+216: oInstruction = {`STO , `R3, 16'd12};
+217: oInstruction = {`SHL ,8'd0 ,`R6, 8'd4 };
+218: oInstruction = {`LCD_CMD ,8'd0 ,`R6, 8'd0 };
+219: oInstruction = {`NOP , 24'd4000 };
+220: oInstruction = {`NOP , 24'd4000 };
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
+221: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 };
 
- 		 20: oInstruction = {`ADD , `R5, `R5, `R2}; 
-		 21: oInstruction = {`BLE , 8'd20,`R5, `R3};
+222: oInstruction = {`ADD , `R5, `R5, `R2}; 
+223: oInstruction = {`BLE , 8'd20,`R5, `R3};
 		 
-		 19: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
+224: oInstruction = {`LCD_ENB ,8'd0 ,8'b0, 8'd0 }; //REVISAR BAJAR EL DATO 
 	
-		 18: oInstruction = {`NOP , 24'd4000 };
+225: oInstruction = {`NOP , 24'd4000 };
 	
 	
 	
 	
 	     //////////////////////////////////////////////////////////////////////////////////////////////////
 		 //LOOP 2000
-		 24: oInstruction = {`STO , `R1, 16'd0};
-		 26: oInstruction = {`STO , `R4, 16'd2000};
+226: oInstruction = {`STO , `R1, 16'd0};
+227: oInstruction = {`STO , `R4, 16'd2000};
 
 
 		 //LOOP1
-		 8: oInstruction = {`ADD , `R1, `R1, `R2}; 
-		 9: oInstruction = {`BLE , `LOOP1,`R1, `R4};
+228: oInstruction = {`ADD , `R1, `R1, `R2}; 
+229: oInstruction = {`BLE , `LOOP1,`R1, `R4};
 
 
 
