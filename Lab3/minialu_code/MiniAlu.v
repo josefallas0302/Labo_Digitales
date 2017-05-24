@@ -55,7 +55,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 16 ) FF_RET_IP
 
 
    
-assign wIPInitialValue = (Reset) ? 8'b0 : (wOperation == `RET) ? wRetIP : wDestination;
+assign wIPInitialValue = (Reset) ? 16'b0 : (wOperation == `RET) ? wRetIP : wDestination;
 UPCOUNTER_POSEDGE IP
 (
 .Clock(   Clock                ), 
