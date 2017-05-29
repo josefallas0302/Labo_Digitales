@@ -41,10 +41,10 @@
 
  //Video Memory parameters
  `define VMEM_DATA_WIDTH 3
- `define VMEM_X_WIDTH 9 //10
+ `define VMEM_X_WIDTH 10
  `define VMEM_Y_WIDTH 9
- `define VMEM_X_SIZE 440 //640
- `define VMEM_Y_SIZE 280 //480
+ `define VMEM_X_SIZE 390 //340 //640
+ `define VMEM_Y_SIZE 230 //180 //480
     
   //RAM registers
  `define R0 8'd0
