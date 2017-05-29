@@ -30,15 +30,22 @@
  `define D 16'h0044
 
   //VGA Colors
- `define COLOR_BLACK 3'b000
- `define COLOR_BLUE 3'b001 
- `define COLOR_GREEN 3'b010 
- `define COLOR_CYAN 3'b011 
- `define COLOR_RED 3'b100 
- `define COLOR_MAGENTA 3'b101 
- `define COLOR_YELLOW 3'b110 
- `define COLOR_WHITE 3'b111
+ `define COLOR_BLACK 8'd0
+ `define COLOR_BLUE 8'd1 
+ `define COLOR_GREEN 8'd2
+ `define COLOR_CYAN 8'd3
+ `define COLOR_RED 8'd4
+ `define COLOR_MAGENTA 8'd5
+ `define COLOR_YELLOW 8'd6
+ `define COLOR_WHITE 8'd7
 
+ //Video Memory parameters
+ `define VMEM_DATA_WIDTH 3
+ `define VMEM_X_WIDTH 9 //10
+ `define VMEM_Y_WIDTH 9
+ `define VMEM_X_SIZE 440 //640
+ `define VMEM_Y_SIZE 280 //480
+    
   //RAM registers
  `define R0 8'd0
  `define R1 8'd1

@@ -9,7 +9,7 @@ module MiniAlu
     input wire 	      Reset,
     output wire [7:0] oLed,
     output wire [7:0] oLCD,
-    output wire [4:0] oVGA,
+    output wire [4:0] oVGA
     );
 
    wire [15:0] 	      wIP,wIP_temp, wIP_noRET;
@@ -45,21 +45,42 @@ module MiniAlu
    // VGA Display Logic
    //--------------------------------------------------------------------
    
-   wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS;
-
+   wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS; 
+   wire [`VMEM_X_WIDTH-1:0] wCurrentCol;
+   wire [`VMEM_Y_WIDTH-1:0] wCurrentRow;
    
-   RAM_SINGLE_READ_PORT # (3,24,640*480) VideoMemory 
-      ( 
-	.Clock(Clock), 
-	.iWriteEnable(wOperation == `VGA), 
-	.iReadAddress(24'b0), //FIXME: Handle by VGA Controller 
-	.iWriteAddress({wSourceData1[7:0],wSourceData0}), //FIXME: Check address stride
-	.iDataIn(wInstruction[23:21]),
-	.oDataOut({oVGA_R,oVGA_G,oVGA_B}) 
-	);
+
+   RAM_SINGLE_READ_PORT_2D # (`VMEM_DATA_WIDTH,
+			      `VMEM_X_WIDTH,
+			      `VMEM_Y_WIDTH,
+			      `VMEM_X_SIZE,
+			      `VMEM_Y_SIZE) VideoMemory //FIXME: Check reset value for RAM
+      (
+       .Clock(Clock),
+       .iWriteEnable(wOperation == `VGA),
+       .iReadAddressX(wCurrentCol),
+       .iReadAddressY(wCurrentRow),
+       .iWriteAddressX(wSourceData0[`VMEM_X_WIDTH-1:0]),
+       .iWriteAddressY(wSourceData1[`VMEM_Y_WIDTH-1:0]),
+       .iDataIn(wInstruction[18:16]),
+       .oDataOut({oVGA_R,oVGA_G,oVGA_B}) 
+       );
+   
+   VGA_CONTROLLER #(`VMEM_X_WIDTH,
+		    `VMEM_Y_WIDTH,
+		    `VMEM_X_SIZE, 
+		    `VMEM_Y_SIZE) VGA_Control
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .oVideoMemCol(wCurrentCol),
+       .oVideoMemRow(wCurrentRow),
+       .oVGAHorizontalSync(oVGA_HS),
+       .oVGAVerticalSync(oVGA_VS)
+       );
+
 
    assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
-   
    
 
 
