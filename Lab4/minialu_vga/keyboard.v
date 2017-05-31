@@ -20,7 +20,7 @@ module keyboard
 	reg  [7:0] rTempData;
 	wire [7:0] wData;
 
-	assign oData = wData;
+assign oData = wData;
 
 assign wTempData [contador] = PS2_DATA; 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
@@ -31,7 +31,6 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
        .D(rTempData), 
        .Q(wData)
        );
-
 
 
 always @ (posedge Clock)
@@ -98,8 +97,10 @@ always @ (*)
 						end
 				default:
 					rCurrentState <= `STATE_IDLE;
+
 		
 		endcase
 	end
 endmodule
+
 
