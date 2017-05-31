@@ -45,6 +45,18 @@
  `define VMEM_Y_WIDTH 9
  `define VMEM_X_SIZE 400 //390 //340 //640
  `define VMEM_Y_SIZE 240 //230 //180 //480
+
+    
+ `define HSYNC_BP_T 16'd47
+ `define HSYNC_FP_T 16'd47
+ `define HSYNC_DISP_T 16'd384000
+ `define HSYNC_PULSE_T 16'd95
+
+ `define VSYNC_BP_T 32'd23200
+ `define VSYNC_FP_T 32'd8000
+ `define VSYNC_DISP_T 32'd384000
+ `define VSYNC_PULSE_T 32'd1600
+
     
   //RAM registers
  `define R0 8'd0
