@@ -27,7 +27,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(rCurrentState == contador = 4'h9),
+       .Enable(contador == 4'h9),
        .D(rTempData), 
        .Q(wData)
        );
@@ -47,29 +47,35 @@ always @ (posedge Clock)
 		begin
 			case (rCurrentState)
 				`STATE_IDLE:
+					begin
 					contador <= 4'h0;
 					rCurrentState <= rNextState;
-
+					end
+					
 				`STATE_CONCATENATE:
+					begin
 					contador <= contador + 1'b1;
 					rCurrentState <= rNextState;
-
+					end
+					
 				default:
 					rCurrentState <= `STATE_IDLE;
 
 			endcase
 		end
+	end
 
-always @ (negedge CLK)
+always @ (negedge Clock)
+	begin
 		if(contador < 4'd8)
 			rTempData[contador] <= PS2_DATA;
 		
 		else
 			rTempData <= rTempData;
-
+	end
 
 always @ (*)
-
+	begin
 		case (rCurrentState)
 				`STATE_IDLE:
 					if(PS2_DATA)
@@ -92,39 +98,8 @@ always @ (*)
 						end
 				default:
 					rCurrentState <= `STATE_IDLE;
-
+		
 		endcase
-
-
-
-
-
-
-
-
-
-
-
-
-
-			if (PS2_DATA == 1'b0 && contador == 4'h0) // Estoy en Estado IDLE y me llegó un cero 
-				begin 
-					rNextState <= `STATE_CONCATENATE;
-				end
-			if (PS2_DATA == 1'b0 && contador == 4'h0) // Estoy en Estado IDLE y me llegó un cero 
-				begin 
-					rNextState <= `STATE_CONCATENATE;
-				end
-
-
-			else if (PS2_DATA == 1 && contador == 10)
-				begin
-					rNextState <= `STATE_IDLE;
-				end
-			else
-				begin 
-					rNextState <=
-				end
-
-
+	end
+endmodule
 
