@@ -95,36 +95,7 @@ always @ (*)
 
 		endcase
 
-
-
-
-
-
-
-
-
-
-
-
-
-			if (PS2_DATA == 1'b0 && contador == 4'h0) // Estoy en Estado IDLE y me llegó un cero 
-				begin 
-					rNextState <= `STATE_CONCATENATE;
-				end
-			if (PS2_DATA == 1'b0 && contador == 4'h0) // Estoy en Estado IDLE y me llegó un cero 
-				begin 
-					rNextState <= `STATE_CONCATENATE;
-				end
-
-
-			else if (PS2_DATA == 1 && contador == 10)
-				begin
-					rNextState <= `STATE_IDLE;
-				end
-			else
-				begin 
-					rNextState <=
-				end
+endmodule
 
 
 
