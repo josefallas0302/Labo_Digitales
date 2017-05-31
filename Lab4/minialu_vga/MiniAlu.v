@@ -50,19 +50,23 @@ module MiniAlu
    wire [`VMEM_Y_WIDTH-1:0] wCurrentRow;
 
    wire [23:0] 		    wCurrentVideoReadAddr;
-   assign wCurrentVideoReadAddr  = (`VMEM_X_SIZE)*wCurrentRow + wCurrentCol;
-
    wire [23:0] 		    wVideoWriteAddr;
-   assign wVideoWriteAddr  = (`VMEM_X_SIZE)*wSourceAddr1 + wSourceAddr0;
+   wire [2:0] 		    wWriteColor;
+   
+   assign wCurrentVideoReadAddr  = (`VMEM_X_SIZE)*wCurrentRow + wCurrentCol;
+   assign wVideoWriteAddr  = (`VMEM_X_SIZE)*wSourceData1 + wSourceData0;
 
       
-   RAM_SINGLE_READ_PORT #(`VMEM_DATA_WIDTH, 24,`VMEM_X_SIZE*`VMEM_Y_SIZE) VideoMemory
+   RAM_SINGLE_READ_PORT #(`VMEM_DATA_WIDTH, 
+			  `VMEM_X_WIDTH+`VMEM_Y_WIDTH,
+			  `VMEM_X_SIZE*`VMEM_Y_SIZE,
+			  `COLOR_BLACK) VideoMemory
       (
        .Clock(Clock),
        .iWriteEnable(wOperation == `VGA),
        .iReadAddress(wCurrentVideoReadAddr),
        .iWriteAddress(wVideoWriteAddr),
-       .iDataIn(wInstruction[18:16]),
+       .iDataIn(wWriteColor),
        .oDataOut({oVGA_R,oVGA_G,oVGA_B}) 
        );
 
@@ -156,7 +160,16 @@ module MiniAlu
        .Q(wDestination)
        );
 
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 3 ) FFD5
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(1'b1),
+       .D(wInstruction[18:16]),
+       .Q(wWriteColor)
+       );
 
+   
    
    //--------------------------------------------------------------------
    // Read after Write registers
@@ -181,6 +194,15 @@ module MiniAlu
        .Q(wLastDestination)
        );
 
+   wire 	      wLastWriteEnable;
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 1 ) FF_WriteEnable
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(1'b1),
+       .D(rWriteEnable),
+       .Q(wLastWriteEnable)
+       );
 
    
    //--------------------------------------------------------------------
@@ -262,8 +284,8 @@ module MiniAlu
    assign wSourceDataMul1 = (wSourceAddr1 == `RL) ? wRL : (( wSourceAddr1 == `RH) ? wRH : wSourceDataRAM1);
 
    //Muxes Read after Write
-   assign wSourceData0 = ( wSourceAddr0 == wLastDestination) ? wLastResult : wSourceDataMul0;
-   assign wSourceData1 = ( wSourceAddr1 == wLastDestination) ? wLastResult : wSourceDataMul1;
+   assign wSourceData0 = ((wSourceAddr0 == wLastDestination) && (wLastWriteEnable == 1'b1)) ? wLastResult : wSourceDataMul0;
+   assign wSourceData1 = ((wSourceAddr1 == wLastDestination) && (wLastWriteEnable == 1'b1)) ? wLastResult : wSourceDataMul1;
    
 
    
@@ -367,8 +389,8 @@ module MiniAlu
 		  rResult      <= 0;
 		  rBranchTaken <= 1'b0;
 	       end	
+	    
 	    //-------------------------------------
-
 	    `SHL:
 	       begin
 		  rFFLedEN     <= 1'b0;
@@ -376,7 +398,15 @@ module MiniAlu
 		  rWriteEnable <= 1'b1;
 		  rResult <= wSourceData1 << wSourceData0;
 	       end
-
+	    //-------------------------------------
+	    `VGA:
+	       begin
+		  rFFLedEN     <= 1'b0;
+		  rBranchTaken <= 1'b0;
+		  rWriteEnable <= 1'b0;
+		  rResult      <= 1'b0;
+	       end
+	    
 	    //-------------------------------------
 	    default:
 	       begin

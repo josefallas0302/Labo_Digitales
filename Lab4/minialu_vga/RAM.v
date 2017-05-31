@@ -25,7 +25,10 @@ module RAM_DUAL_READ_PORT # ( parameter DATA_WIDTH= 16, parameter ADDR_WIDTH=8, 
       end 
 endmodule
 
-module RAM_SINGLE_READ_PORT # ( parameter DATA_WIDTH= 16, parameter ADDR_WIDTH=8, parameter MEM_SIZE=8 ) 
+module RAM_SINGLE_READ_PORT # ( parameter DATA_WIDTH= 16, 
+				parameter ADDR_WIDTH=8, 
+				parameter MEM_SIZE=8, 
+				parameter MEM_INIT=0) 
    ( 
      input wire 		 Clock, 
      input wire 		 iWriteEnable, 
@@ -37,6 +40,13 @@ module RAM_SINGLE_READ_PORT # ( parameter DATA_WIDTH= 16, parameter ADDR_WIDTH=8
    
    reg [DATA_WIDTH-1:0] 	 Ram [MEM_SIZE:0]; 
 
+   integer 				 i;
+   
+   // initial 
+   //    begin
+   // 	 for (i = 0; i < MEM_SIZE; i=i+1) Ram[i] = MEM_INIT; 
+   //    end
+   
    always @(posedge Clock) 
       begin 
 	 if (iWriteEnable) 
