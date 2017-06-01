@@ -40,7 +40,7 @@ module TestBench;
 
 always
       begin
-	 #25  PS2_DATA =  ! PS2_DATA;
+	 #17  PS2_DATA =  ! PS2_DATA;
 
       end
 

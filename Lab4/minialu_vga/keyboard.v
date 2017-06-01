@@ -14,21 +14,22 @@ module keyboard
 	);
 
 	reg rCurrentState,rNextState;
-	reg contador [3:0] = 4'h0;
+	reg contador [3:0];
 
 
-	reg  [7:0] rTempData;
+	reg  [7:0] wTempData;
 	wire [7:0] wData;
 
 assign oData = wData;
 
-assign wTempData [contador] = PS2_DATA; 
+
+
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(contador == 4'h9),
-       .D(rTempData), 
+       .Enable(contador == 4'd9),
+       .D(wTempData), 
        .Q(wData)
        );
 
