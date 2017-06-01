@@ -25,10 +25,9 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
 
    
 
-   VGA_CONTROL_HS_FSM #(X_WIDTH,
-			Y_WIDTH, 
-			X_SIZE, 
-			Y_SIZE) vga_hs_fsm
+   VGA_CONTROL_HS_FSM #(X_WIDTH,Y_WIDTH, 
+			X_SIZE, Y_SIZE) 
+   vga_hs_fsm
       (
        .Clock(Clock),
        .Reset(Reset),
@@ -38,10 +37,13 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
        .oDisplay(oDisplay)
        );
    
-   VGA_CONTROL_VS_FSM vga_vs_fsm
+   VGA_CONTROL_VS_FSM #(X_WIDTH, Y_WIDTH) 
+   vga_vs_fsm 
       (
        .Clock(Clock),
        .Reset(Reset),
+       .iCurrentCol(oVideoMemCol),
+       .iCurrentRow(oVideoMemRow),
        .oVGAVerticalSync(oVGAVerticalSync)
        );
 
@@ -184,38 +186,29 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
 endmodule
 
 
-module VGA_CONTROL_VS_FSM
+module VGA_CONTROL_VS_FSM # (parameter X_WIDTH=8, parameter Y_WIDTH=8)
    (
     input wire 		     Clock,
     input wire 		     Reset,
+    input wire [X_WIDTH-1:0] iCurrentCol,
+    input wire [Y_WIDTH-1:0] iCurrentRow,
     output reg 		     oVGAVerticalSync
     );
 
    reg [3:0] 		     rCurrentState, rNextState;
+   reg [31:0] 		     rTimeCount, rNextTimeCount;
 
-   reg [31:0] 		     rVSyncCount;
-   reg 			     rVSyncCountReset;
-
-   reg 			     rCountEnable;
    
    always @(posedge Clock)
       begin
 	 if (Reset)
 	    begin
 	       rCurrentState <= `STATE_RESET;
-	       rVSyncCount   <= 32'b0;
-	       rCountEnable  <= 1'b1;
+	       rTimeCount    <= 32'b0;
 	    end
 	 else
 	    begin
-	       if (rVSyncCountReset)
-		  rVSyncCount <= 32'b0;
-	       else
-		  begin
-		     if (rCountEnable) rVSyncCount <= rVSyncCount + 16'b1;
-		  end
-
-	       rCountEnable  <= ~rCountEnable;
+	       rTimeCount    <= rNextTimeCount;
 	       rCurrentState <= rNextState;
 	    end
       end
@@ -224,61 +217,60 @@ module VGA_CONTROL_VS_FSM
      begin
       //Default values
 	oVGAVerticalSync  = 1'b1;
-	rVSyncCountReset  = 1'b0;
-        
+	rNextTimeCount 	  = rTimeCount + 32'd1;
 	
 	case (rCurrentState)
 	   //-----------------------------------
 	   `STATE_RESET:
 	      begin
-		 rNextState  = `STATE_DISPLAY; //`STATE_PULSE;
+		 rNextState  = `STATE_DISPLAY;
+	      end
+	   //-----------------------------------
+	   `STATE_DISPLAY:
+	      begin
+		 rNextTimeCount  = rTimeCount;
+		 
+		 if (iCurrentRow < 479 || (iCurrentRow == 479 && iCurrentCol < 639))
+		    rNextState  = `STATE_DISPLAY;
+		 else
+		    rNextState  = `STATE_FRONT_PORCH;
+	      end
+	   //-----------------------------------
+	   `STATE_FRONT_PORCH:
+	      begin
+		 if (rTimeCount < 32'd16000)
+		    rNextState  = `STATE_FRONT_PORCH;
+		 else
+		    begin
+		       rNextTimeCount  = 1'b0;
+		       rNextState      = `STATE_PULSE;
+		    end
 	      end
 	   //-----------------------------------
 	   `STATE_PULSE:
 	      begin
 		 oVGAVerticalSync  = 1'b0;
 
-		 if (rVSyncCount < 32'd1600 || rCountEnable == 1'b0)
-		    rNextState  = `STATE_PULSE;
+		 if (rTimeCount < 32'd3200)
+		    rNextState 	= `STATE_PULSE;
 		 else
 		    begin
-		       rVSyncCountReset = 1'b1;
-		       rNextState  = `STATE_BACK_PORCH;
+		       rNextTimeCount  = 1'b0;
+		       rNextState      = `STATE_BACK_PORCH;
 		    end
 	      end
 	   //-----------------------------------
 	   `STATE_BACK_PORCH:
 	      begin
-		 if (rVSyncCount < 32'd23200 || rCountEnable == 1'b0)
+		 if (rTimeCount < 32'd46400)
 		    rNextState  = `STATE_BACK_PORCH;
 		 else
 		    begin
-		       rVSyncCountReset = 1'b1;
-		       rNextState  = `STATE_DISPLAY;
+		       rNextTimeCount  = 1'b0;
+		       rNextState      = `STATE_DISPLAY;
 		    end
 	      end
-	   //-----------------------------------
-	   `STATE_DISPLAY:
-	      begin
-		 if (rVSyncCount < `VSYNC_DISP_T || rCountEnable == 1'b0)
-		    rNextState  = `STATE_DISPLAY;
-		 else
-		    begin
-		       rVSyncCountReset  = 1'b1;
-		       rNextState 	 = `STATE_FRONT_PORCH;
-		    end
-	      end
-	   //-----------------------------------
-	   `STATE_FRONT_PORCH:
-	      begin
-		 if (rVSyncCount < 32'd8000 || rCountEnable == 1'b0)
-		    rNextState  = `STATE_FRONT_PORCH;
-		 else
-		    begin
-		       rVSyncCountReset = 1'b1;
-		       rNextState  = `STATE_PULSE;
-		    end
-	      end
+	   
 	endcase
 	
      end
