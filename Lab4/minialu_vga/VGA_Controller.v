@@ -249,7 +249,7 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_BACK_PORCH:
 	      begin
-		 if (rVSyncCount < 32'd24800 || rCountEnable == 1'b0)
+		 if (rVSyncCount < 32'd23200 || rCountEnable == 1'b0)
 		    rNextState  = `STATE_BACK_PORCH;
 		 else
 		    begin
@@ -271,7 +271,7 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_FRONT_PORCH:
 	      begin
-		 if (rVSyncCount < 32'd8800 || rCountEnable == 1'b0)
+		 if (rVSyncCount < 32'd8000 || rCountEnable == 1'b0)
 		    rNextState  = `STATE_FRONT_PORCH;
 		 else
 		    begin
