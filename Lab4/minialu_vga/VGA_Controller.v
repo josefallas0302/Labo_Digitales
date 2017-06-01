@@ -19,9 +19,11 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
     output wire [X_WIDTH-1:0] oVideoMemCol,
     output wire [Y_WIDTH-1:0] oVideoMemRow,
     output wire 	      oVGAHorizontalSync,
-    output wire 	      oVGAVerticalSync
+    output wire 	      oVGAVerticalSync,
+    output wire 	      oDisplay
     );
 
+   
 
    VGA_CONTROL_HS_FSM #(X_WIDTH,
 			Y_WIDTH, 
@@ -32,7 +34,8 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
        .Reset(Reset),
        .oVideoMemCol(oVideoMemCol),
        .oVideoMemRow(oVideoMemRow),
-       .oVGAHorizontalSync(oVGAHorizontalSync)
+       .oVGAHorizontalSync(oVGAHorizontalSync),
+       .oDisplay(oDisplay)
        );
    
    VGA_CONTROL_VS_FSM vga_vs_fsm
@@ -56,7 +59,8 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
     input wire 		     Reset,
     output reg [X_WIDTH-1:0] oVideoMemCol,
     output reg [Y_WIDTH-1:0] oVideoMemRow,
-    output reg 		     oVGAHorizontalSync
+    output reg 		     oVGAHorizontalSync,
+    output reg 		     oDisplay
     );
 
    reg [3:0] 		     rCurrentState, rNextState;
@@ -67,24 +71,30 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
    reg [X_WIDTH-1:0] 	     rNextVideoMemCol;
    reg [Y_WIDTH-1:0] 	     rNextVideoMemRow;
 
+   reg 			     rCountEnable;
    
    always @(posedge Clock)
       begin
 	 if (Reset)
 	    begin
 	       rCurrentState <= `STATE_RESET;
-	       rHSyncCount <= 16'b0;
+	       rHSyncCount   <= 16'b0;
+	       rCountEnable  <= 1'b1;
 	    end
 	 else
 	    begin
 	       if (rHSyncCountReset)
 		  rHSyncCount <= 16'b0;
 	       else
-		  rHSyncCount <= rHSyncCount + 16'b1;
-
-	       rCurrentState  <= rNextState;
-	       oVideoMemCol   <= rNextVideoMemCol;
-	       oVideoMemRow   <= rNextVideoMemRow;
+		  begin
+		     if (rCountEnable) 
+			rHSyncCount <= rHSyncCount + 16'b1;
+		  end
+		     
+	       rCountEnable  <= ~rCountEnable;
+	       rCurrentState <= rNextState;
+	       oVideoMemCol  <= rNextVideoMemCol;
+	       oVideoMemRow  <= rNextVideoMemRow;
 	    end
       end
 
@@ -94,11 +104,12 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
 	 //Default values
 	 oVGAHorizontalSync  = 1'b1;
 	 rHSyncCountReset    = 1'b0;
+	 oDisplay 	     = 1'b0;
 	 
-	 //Keep row and col value if not in STATE_DISPLAY
+	 //Keep row and col value by default
 	 rNextVideoMemCol    = oVideoMemCol; 
 	 rNextVideoMemRow    = oVideoMemRow;
-	 
+
 	 
 	 case (rCurrentState)
 	    //-----------------------------------
@@ -113,39 +124,43 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
 	       begin
 		  oVGAHorizontalSync  = 1'b0;
 
-		  if (rHSyncCount < 16'd96)
+		  if (rHSyncCount < 16'd95 || rCountEnable == 1'b0)
 		     rNextState  = `STATE_PULSE;
 		  else
 		     begin
-			rHSyncCountReset = 1'b1;
-			rNextState  = `STATE_BACK_PORCH;
+			rNextState 	  = `STATE_BACK_PORCH;
+			rHSyncCountReset  = 1'b1;
 		     end
 	       end
 	    //-----------------------------------
 	    `STATE_BACK_PORCH:
 	       begin
-		  if (rHSyncCount < 16'd48)
+		  if (rHSyncCount < 16'd47 || rCountEnable == 1'b0)
 		     rNextState  = `STATE_BACK_PORCH;
 		  else
 		     begin
-			rHSyncCountReset = 1'b1;
-			rNextState  = `STATE_DISPLAY;
+			rHSyncCountReset  = 1'b1;
+			rNextState 	  = `STATE_DISPLAY;
 		     end
 	       end
 	    //-----------------------------------
 	    `STATE_DISPLAY:
 	       begin
-		  rNextVideoMemCol = oVideoMemCol + 1;
-
-		  if (rHSyncCount < X_SIZE-1)
+		  oDisplay  = 1'b1;
+		  if(rCountEnable) rNextVideoMemCol = oVideoMemCol + 1;
+		  
+		  if (rHSyncCount < X_SIZE-1 || rCountEnable == 1'b0)
 		     rNextState  = `STATE_DISPLAY;
 		  else
 		     begin
-			if (oVideoMemRow < Y_SIZE-1)
-			   rNextVideoMemRow  = oVideoMemRow + 1;
-			else
-			   rNextVideoMemRow = 0;
-			
+			if (rCountEnable)
+			   begin
+			      if (oVideoMemRow < Y_SIZE-1)
+				 rNextVideoMemRow  = oVideoMemRow + 1;
+			      else
+				 rNextVideoMemRow  = 0;
+			   end
+
 			rNextVideoMemCol  = 0;
 			rHSyncCountReset  = 1'b1;
 			rNextState 	  = `STATE_FRONT_PORCH;
@@ -154,12 +169,12 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
 	    //-----------------------------------
 	    `STATE_FRONT_PORCH:
 	       begin
-		  if (rHSyncCount < 16'd48)
+		  if (rHSyncCount < 16'd47 || rCountEnable == 1'b0)
 		     rNextState  = `STATE_FRONT_PORCH;
 		  else
 		     begin
-			rHSyncCountReset = 1'b1;
-			rNextState  = `STATE_PULSE;
+			rHSyncCountReset  = 1'b1;
+			rNextState 	  = `STATE_PULSE;
 		     end
 	       end
 	 endcase
@@ -180,22 +195,28 @@ module VGA_CONTROL_VS_FSM
 
    reg [31:0] 		     rVSyncCount;
    reg 			     rVSyncCountReset;
+
+   reg 			     rCountEnable;
    
    always @(posedge Clock)
       begin
 	 if (Reset)
 	    begin
 	       rCurrentState <= `STATE_RESET;
-	       rVSyncCount <= 32'b0;
+	       rVSyncCount   <= 32'b0;
+	       rCountEnable  <= 1'b1;
 	    end
 	 else
 	    begin
 	       if (rVSyncCountReset)
 		  rVSyncCount <= 32'b0;
 	       else
-		  rVSyncCount <= rVSyncCount + 32'b1;
-	    
-	       rCurrentState  <= rNextState;
+		  begin
+		     if (rCountEnable) rVSyncCount <= rVSyncCount + 16'b1;
+		  end
+
+	       rCountEnable  <= ~rCountEnable;
+	       rCurrentState <= rNextState;
 	    end
       end
    
@@ -210,14 +231,14 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_RESET:
 	      begin
-		 rNextState  = `STATE_PULSE;
+		 rNextState  = `STATE_DISPLAY; //`STATE_PULSE;
 	      end
 	   //-----------------------------------
 	   `STATE_PULSE:
 	      begin
 		 oVGAVerticalSync  = 1'b0;
 
-		 if (rVSyncCount < 32'd1600)
+		 if (rVSyncCount < 32'd1600 || rCountEnable == 1'b0)
 		    rNextState  = `STATE_PULSE;
 		 else
 		    begin
@@ -228,7 +249,7 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_BACK_PORCH:
 	      begin
-		 if (rVSyncCount < 32'd23200)
+		 if (rVSyncCount < 32'd23200 || rCountEnable == 1'b0)
 		    rNextState  = `STATE_BACK_PORCH;
 		 else
 		    begin
@@ -239,7 +260,7 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_DISPLAY:
 	      begin
-		 if (rVSyncCount < 32'd384000)
+		 if (rVSyncCount < `VSYNC_DISP_T || rCountEnable == 1'b0)
 		    rNextState  = `STATE_DISPLAY;
 		 else
 		    begin
@@ -250,7 +271,7 @@ module VGA_CONTROL_VS_FSM
 	   //-----------------------------------
 	   `STATE_FRONT_PORCH:
 	      begin
-		 if (rVSyncCount < 32'd8000)
+		 if (rVSyncCount < 32'd8000 || rCountEnable == 1'b0)
 		    rNextState  = `STATE_FRONT_PORCH;
 		 else
 		    begin
