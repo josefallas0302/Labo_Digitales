@@ -9,7 +9,7 @@ module Detector
 	input 	wire Clock,
 	input 	wire [7:0]  iData,
 	output  [3:0] oNextPositionX,
-	output  [3:0] oNextPositionX
+	output  [3:0] oNextPositionY
 	);
 
 reg [3:0] wCurrentPositionX ;
