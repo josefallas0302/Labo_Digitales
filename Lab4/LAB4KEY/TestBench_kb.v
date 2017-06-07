@@ -17,7 +17,6 @@
 module TestBench;
 
    // Inputs
-	reg oData;
 	
    // Outputs
 	reg PS2_DATA;	
@@ -48,12 +47,13 @@ always
       // Initialize Inputs
       Clock = 0;
       Reset = 0;
+		PS2_DATA = 0;
 
       // Wait 100 ns for global reset to finish
       #100;
       Reset = 1;
       #50
-	  Reset = 0;
+	   Reset = 0;
       
       // Add stimulus here
 

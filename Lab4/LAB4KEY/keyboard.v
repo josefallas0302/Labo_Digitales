@@ -1,5 +1,4 @@
 `timescale 1us / 1ns
-`include "Defintions.v"
 `include "Collaterals.v"
 
 `define STATE_IDLE 0 
@@ -7,30 +6,26 @@
 
 module keyboard 
 	(
-	input 	wire Reset,
-	input 	wire Clock,
-	input 	wire [10:0] PS2_DATA,
+	input 		wire Reset,
+	input 		wire Clock,
+	input 	   wire [10:0] PS2_DATA,
 	output 	wire [7:0]  oData
 	);
 
 	reg rCurrentState,rNextState;
-	reg contador [3:0];
+	reg [3:0] contador = 4'h0;
 
 
 	reg  [7:0] wTempData;
-	wire [7:0] wData;
-
-assign oData = wData;
-
 
 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
       (
        .Clock(Clock),
        .Reset(Reset),
-       .Enable(contador == 4'd9),
+       .Enable(contador == 4'd8),
        .D(wTempData), 
-       .Q(wData)
+       .Q(oData)
        );
 
 
@@ -68,10 +63,10 @@ always @ (posedge Clock)
 always @ (negedge Clock)
 	begin
 		if(contador < 4'd8)
-			rTempData[contador] <= PS2_DATA;
+			wTempData[contador] <= PS2_DATA;
 		
 		else
-			rTempData <= rTempData;
+			wTempData <= wTempData;
 	end
 
 always @ (*)
@@ -94,7 +89,7 @@ always @ (*)
 						end
 					else
 						begin
-							rNextState = rCurrent_State;	//
+							rNextState = rCurrentState;	//
 						end
 				default:
 					rCurrentState <= `STATE_IDLE;
