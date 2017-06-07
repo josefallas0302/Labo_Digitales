@@ -75,5 +75,13 @@
  `define RL 8'd10
  `define RH 8'd11
 
+  //Keyboard Chars
+ `define A 8'h1C
+ `define S 8'h1B
+ `define W 8'h1D
+ `define D 8'h23
+
+
+    
 `endif
 

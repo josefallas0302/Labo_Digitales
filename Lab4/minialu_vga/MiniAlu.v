@@ -95,6 +95,8 @@ module MiniAlu
    
    wire 	      oVGA_HS, oVGA_VS;
    wire [2:0] 	      wColor;
+
+   wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
    
    VGA_CHECKBOARD_PIXEL_GEN #(`VMEM_X_WIDTH,
    			       `VMEM_Y_WIDTH,
@@ -105,8 +107,8 @@ module MiniAlu
       (
        .Clock(Clock),
        .Reset(Reset),
-       .iMarkedBlockPosX(3'd4),
-       .iMarkedBlockPosY(3'd3),
+       .iMarkedBlockPosX(wMarkedBlockPosX),
+       .iMarkedBlockPosY(wMarkedBlockPosY),
        .oVGAColor(wColor),
        .oVGAHorizontalSync(oVGA_HS),
        .oVGAVerticalSync(oVGA_VS)
@@ -115,6 +117,30 @@ module MiniAlu
    assign oVGA = {wColor, oVGA_HS, oVGA_VS};
 
 
+   //--------------------------------------------------------------------
+   // Keyboard
+   //--------------------------------------------------------------------
+   wire 	      PS2_CLK, PS2_DATA, wKeyboardData;
+   
+   keyboard kb
+      (
+       .Clock(PS2_CLK),
+       .Reset(Reset),
+       .PS2_DATA(PS2_DATA),
+       .oData(wKeyboardData)
+       );
+
+   Detector dtr
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .iData(wKeyboardData),
+       .oNextPositionX(wMarkedBlockPosX),
+       .oNextPositionY(wMarkedBlockPosY)
+       );
+
+
+   
    //--------------------------------------------------------------------
    // Instruction Pointer (IP) Logic  
    //--------------------------------------------------------------------
