@@ -230,7 +230,8 @@ module VGA_CONTROL_VS_FSM # (parameter X_WIDTH=8, parameter Y_WIDTH=8)
 	      begin
 		 rNextTimeCount  = rTimeCount;
 		 
-		 if (iCurrentRow < 479 || (iCurrentRow == 479 && iCurrentCol < 639))
+		 if (iCurrentRow < `VGA_Y_RES-1 ||
+		     (iCurrentRow == `VGA_Y_RES-1 && iCurrentCol < `VGA_X_RES-1))
 		    rNextState  = `STATE_DISPLAY;
 		 else
 		    rNextState  = `STATE_FRONT_PORCH;
@@ -274,6 +275,6 @@ module VGA_CONTROL_VS_FSM # (parameter X_WIDTH=8, parameter Y_WIDTH=8)
 	endcase
 	
      end
-   
 
+   
 endmodule

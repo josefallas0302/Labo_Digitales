@@ -43,9 +43,10 @@
  `define VMEM_DATA_WIDTH 3
  `define VMEM_X_WIDTH 10
  `define VMEM_Y_WIDTH 9
- `define VMEM_X_SIZE 400 //390 //340 //640
- `define VMEM_Y_SIZE 240 //230 //180 //480
-
+ `define VMEM_X_SIZE 400
+ `define VMEM_Y_SIZE 240
+ `define VGA_X_RES 640
+ `define VGA_Y_RES 480
     
  `define HSYNC_BP_T 16'd47
  `define HSYNC_FP_T 16'd47
