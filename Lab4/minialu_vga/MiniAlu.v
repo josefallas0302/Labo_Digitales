@@ -97,11 +97,11 @@ module MiniAlu
    wire [2:0] 	      wColor;
    
    VGA_CHECKBOARD_PIXEL_GEN #(`VMEM_X_WIDTH,
-   			      `VMEM_Y_WIDTH,
-   			      `VGA_X_RES,
-   			      `VGA_Y_RES,
-			      64, 
-			      64) VGA_Control
+   			       `VMEM_Y_WIDTH,
+   			       `VGA_X_RES,
+   			       `VGA_Y_RES,
+			       64, 
+			       64) VGA_Control
       (
        .Clock(Clock),
        .Reset(Reset),

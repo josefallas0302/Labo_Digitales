@@ -142,6 +142,7 @@ module VGA_CONTROL_HS_FSM # (parameter X_WIDTH=8,
 		  else
 		     begin
 			rHSyncCountReset  = 1'b1;
+			oDisplay  = 1'b1; //FIXME: Check sync
 			rNextState 	  = `STATE_DISPLAY;
 		     end
 	       end
