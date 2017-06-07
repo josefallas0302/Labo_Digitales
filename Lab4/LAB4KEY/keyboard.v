@@ -92,7 +92,7 @@ always @ (*)
 							rNextState = rCurrentState;	//
 						end
 				default:
-					rCurrentState <= `STATE_IDLE;
+					rNextState <= `STATE_IDLE;
 
 		
 		endcase

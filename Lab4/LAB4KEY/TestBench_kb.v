@@ -14,21 +14,26 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module TestBench;
+module TestBench(
+	output 		reg Reset,
+	output 		reg Clock,
+	output 	   reg [10:0] PS2_DATA,
+	input    		wire [7:0]  oData
+);
 
    // Inputs
 	
    // Outputs
-	reg PS2_DATA;	
-	reg Clock;
-	reg Reset;
+	//reg PS2_DATA;	
+	//reg Clock;
+	//reg Reset;
    
    // Instantiate the Unit Under Test (UUT)
    keyboard uut (
 		.Clock(Clock), 
 		.Reset(Reset), 
 		.PS2_DATA(PS2_DATA),
-		.oData(oData)
+		.oData(wData)
 		);
    
    always
