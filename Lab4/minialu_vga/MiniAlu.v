@@ -20,24 +20,6 @@ module MiniAlu
    wire signed [15:0] wSourceDataRAM0,wSourceDataRAM1;
    wire signed [15:0] wSourceData0,wSourceData1;
    wire [15:0] 	      wIPInitialValue,wImmediateValue;
-
-
-   // wire 	      Clk_25mhz;
-   // wire 	      DCM_Clk0;
-   // DCM_SP #(
-   // 	    .CLKDV_DIVIDE(2.0), // Divide by: 1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5,6.0,6.5
-   // 	    .CLKIN_PERIOD(20.0),  // Specify period of input clock
-   // 	    .CLKOUT_PHASE_SHIFT("NONE"), // Specify phase shift of NONE, FIXED or VARIABLE
-   // 	    .CLK_FEEDBACK("1X"),  // Specify clock feedback of NONE, 1X or 2X
-   // 	    .DUTY_CYCLE_CORRECTION("TRUE"), // Duty cycle correction, TRUE or FALSE
-   // 	    .STARTUP_WAIT("FALSE")   // Delay configuration DONE until DCM LOCK, TRUE/FALSE
-   // 	    ) DCM_SP_inst (
-   // 			   .CLK0(DCM_Clk0),     // 0 degree DCM CLK output
-   // 			   .CLKDV(Clk_25mhz),   // Divided DCM CLK out (CLKDV_DIVIDE)
-   // 			   .CLKFB(DCM_Clk0),   // DCM clock feedback
-   // 			   .CLKIN(Clock),   // Clock input (from IBUFG, BUFG or DCM)
-   // 			   .RST(Reset)        // DCM asynchronous reset input
-   // 			   );   
    
 
    ROM InstructionRom 
@@ -103,7 +85,7 @@ module MiniAlu
        .oDisplay(wDisplayOn)
        );
 
-   assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol < 120 || wCurrentCol >= 520 || wCurrentRow < 120 || wCurrentRow >= 360 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
+   assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol <= 120 || wCurrentCol >= 520 || wCurrentRow < 120 || wCurrentRow >= 360 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
 
    
    assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
