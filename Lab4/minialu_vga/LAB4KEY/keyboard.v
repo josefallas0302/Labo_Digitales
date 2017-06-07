@@ -6,9 +6,9 @@
 
 module keyboard 
 	(
-	input 	wire Reset,
-	input 	wire Clock,
-	input 	wire [10:0] PS2_DATA,
+	input 		wire Reset,
+	input 		wire Clock,
+	input 	   wire [10:0] PS2_DATA,
 	output 	wire [7:0]  oData
 	);
 
@@ -17,10 +17,6 @@ module keyboard
 
 
 	reg  [7:0] wTempData;
-	wire [7:0] wData;
-
-assign oData = wData;
-
 
 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
@@ -29,7 +25,7 @@ FFD_POSEDGE_SYNCRONOUS_RESET # ( 8 ) FF_DATA
        .Reset(Reset),
        .Enable(contador == 4'd8),
        .D(wTempData), 
-       .Q(wData)
+       .Q(oData)
        );
 
 

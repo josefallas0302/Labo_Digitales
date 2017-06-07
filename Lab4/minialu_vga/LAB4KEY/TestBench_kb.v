@@ -17,7 +17,6 @@
 module TestBench;
 
    // Inputs
-	reg oData;
 	
    // Outputs
 	reg PS2_DATA;	
@@ -29,7 +28,7 @@ module TestBench;
 		.Clock(Clock), 
 		.Reset(Reset), 
 		.PS2_DATA(PS2_DATA),
-		.oData(wData)
+		.oData(oData)
 		);
    
    always
@@ -54,7 +53,7 @@ always
       #100;
       Reset = 1;
       #50
-	  Reset = 0;
+	   Reset = 0;
       
       // Add stimulus here
 
