@@ -87,28 +87,37 @@ always @(*) begin
 			case (oData)
 
 				`D:
+				begin
 					wNextPositionX = wCurrentPositionX + 1;
 					wNextPositionY = wCurrentPositionY;
-
+				end
+				
 				`A:
+					begin
 					wNextPositionX = wCurrentPositionX - 1;
 					wNextPositionY = wCurrentPositionY;
+					end
 				
 				`W:
+					begin
 					wNextPositionX = wCurrentPositionX;
 					wNextPositionY = wCurrentPositionY + 1;
+					end
 				
 				`S:
+					begin
 					wNextPositionX = wCurrentPositionX;
 					wNextPositionY = wCurrentPositionY - 1;
-				
+					end
+					
 				default:
+					begin
 					wNextPositionX = wCurrentPositionX;
 					wNextPositionY = wCurrentPositionY;
-
+					end
 					
 			endcase
 	end
-end
 
+endmodule 
 endmodule 
