@@ -19,8 +19,8 @@ wire [3:0] wNextPositionY ;
 wire [3:0] oNextPositionX ;
 wire [3:0] oNextPositionY ;
 reg [6:0] wUpCounter	;
-
-wire wEnableCounter;
+wire wNextEnableCounter;
+reg wEnableCounter;
 
 FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_DATA_X
       (
@@ -51,28 +51,38 @@ always @(posedge Clock) begin
 		wUpCounter <= 7'b0;
 
 	end
+	else begin
+
+	wEnableCounter <= wNextEnableCounter;
 
 	wCurrentPositionY <= oNextPositionY;
 	wCurrentPositionX <= oNextPositionX;
 
 
-    if (wEnableCounter && wUpCounter<7'd200) begin
+    if (wEnableCounter) begin
 
     	wUpCounter <= wUpCounter + 1;
 	end
 	else begin
 		wUpCounter <= 7'b0;
-		wEnableCounter <= 0
-		//EARING ON 	
+
+		end
 	end
 end
+
+
 always @(*) begin
 			if (oData == `W || `A || `S || `D) begin
-				wEnableCounter = 1'b1;
+				wNextEnableCounter = 1'b1;
+			end
+			else if (wUpcounter == 7'd200) begin
+				wNextEnableCounter = 1'b0;
 			end
 			else begin
-				wEnableCounter = 1'b0;
+				wNextEnableCounter = 1'b0;
 			end
+
+
 
 			case (oData)
 
