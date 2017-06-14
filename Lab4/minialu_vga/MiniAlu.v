@@ -122,14 +122,15 @@ module MiniAlu
    //--------------------------------------------------------------------
    // Keyboard
    //--------------------------------------------------------------------
-   wire 	      wKeyboardData;
+   wire [7:0]	      wKeyboardData;
+   wire 	      wKeyboardFlag;
    
    keyboard kb
       (
-       .Clock(Clock),
-       .Reset(Reset),
-       .PS2_DATA(PS2_DATA),
-       .oData(wKeyboardData)
+       .clk_kb(PS2_CLK),
+       .data_kb(PS2_DATA),
+       .out_reg(wKeyboardData),
+       .out_flag(wKeyboardFlag)
        );
 
    Detector dtr
@@ -137,8 +138,9 @@ module MiniAlu
        .Clock(Clock),
        .Reset(Reset),
        .iData(wKeyboardData),
-       .oNextPositionX(wMarkedBlockPosX),
-       .oNextPositionY(wMarkedBlockPosY)
+       .iKeyboardFlag(wKeyboardFlag),
+       .oCurrentPositionX(wMarkedBlockPosX),
+       .oCurrentPositionY(wMarkedBlockPosY)
        );
 
 

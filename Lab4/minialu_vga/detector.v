@@ -4,115 +4,128 @@
 module Detector
 
 	(
-	input 	wire Reset,
-	input 	wire Clock,
-	input 	wire [7:0]  iData,
-	output  wire [3:0] oNextPositionX,
-	output  wire [3:0] oNextPositionY
+	input wire 	 Reset,
+	input wire 	 Clock,
+	input wire [7:0] iData,
+	input wire 	 iKeyboardFlag,
+	output reg 	 oKeyboardReset,
+	output reg [3:0] oCurrentPositionX,
+	output reg [3:0] oCurrentPositionY
 	);
 
-reg [3:0] wCurrentPositionX;
-reg [3:0] wCurrentPositionY;
-reg [3:0] wNextPositionX;
-reg [3:0] wNextPositionY;
-reg [6:0] wUpCounter;
-reg wNextEnableCounter;
-reg wEnableCounter;
+   reg [3:0] 		 rNextPositionX;
+   reg [3:0] 		 rNextPositionY;
 
-FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_DATA_X
-      (
-       .Clock(Clock),
-       .Reset(Reset),
-       .Enable(wUpCounter == 4'd0),
-       .D(wNextPositionX), 
-       .Q(oNextPositionX)
-       );
+   reg [31:0] 		 rUpCounter;
+   reg 			 rCounterEnable;
 
+   wire [7:0] 		 wCurrentData;
+   
+   assign wCurrentData = (iKeyboardFlag == 1'b1) ? iData : 8'hf0;
+   
+   
+   always @(posedge Clock) begin
+      if (Reset) 
+	 begin
+	    oCurrentPositionX <= 4'd2;
+	    oCurrentPositionY <= 4'd2;
+	    rUpCounter 	      <= 32'b0;
+	    rCounterEnable    <= 1'b0;
+	 end
+      else 
+	 begin
 
-FFD_POSEDGE_SYNCRONOUS_RESET # ( 4 ) FF_DATA_Y
-      (
-       .Clock(Clock),
-       .Reset(Reset),
-       .Enable(wUpCounter == 4'd0),
-       .D(wNextPositionY), 
-       .Q(oNextPositionY)
-       );
-
-
-always @(posedge Clock) begin
-	if (Reset) begin
-		wCurrentPositionY <= 4'd2;
-		wCurrentPositionY <= 4'd2;
-		wUpCounter <= 7'b0;
-
-	end
-	else begin
-
-	wEnableCounter <= wNextEnableCounter;
-
-	wCurrentPositionY <= oNextPositionY;
-	wCurrentPositionX <= oNextPositionX;
+	    if ((rUpCounter == 1'b0) &&
+		((wCurrentData == `W) 
+		 || (wCurrentData == `A) 
+		 || (wCurrentData == `S) 
+		 || (wCurrentData == `D))) 
+	       begin
+		  rCounterEnable <= 1'b1;
+		  oKeyboardReset <= 1'b1;
+	       end
+	    else
+	       begin
+		  oKeyboardReset <= 1'b0;
+		  if (rUpCounter >= 32'd10000000) 
+		     rCounterEnable <= 1'b0;
+	       end
 
 
-    if (wEnableCounter) begin
-
-    	wUpCounter <= wUpCounter + 1;
-	end
-	else begin
-		wUpCounter <= 7'b0;
-
-		end
-	end
-end
-
-
-always @(*) begin
-			if (iData == `W || `A || `S || `D) begin
-				wNextEnableCounter = 1'b1;
-			end
-			else if (wUpCounter == 7'd200) begin
-				wNextEnableCounter = 1'b0;
-			end
-			else begin
-				wNextEnableCounter = 1'b0;
-			end
+	    // if ((rUpCounter == 1'b0) &&
+	    // 	((iData == `W) || (iData == `A) || (iData == `S) || (iData == `D))) 
+	    //    begin
+	    // 	  rCounterEnable <= 1'b1;
+	    // 	  oKeyboardReset <= 1'b1;
+	    //    end
+	    // else
+	    //    begin
+	    // 	  oKeyboardReset <= 1'b0;
+	    // 	  if (rUpCounter >= 32'd10000000) 
+	    // 	     rCounterEnable <= 1'b0;
+	    //    end
 
 
+	    //rCounterEnable <= rNextCounterEnable;
+	    
+	    if (rCounterEnable) 
+	       rUpCounter <= rUpCounter + 1;
+	    else 
+	       rUpCounter <= 32'b0;
 
-			case (iData)
 
-				`D:
-				begin
-					wNextPositionX = wCurrentPositionX + 1;
-					wNextPositionY = wCurrentPositionY;
-				end
-				
-				`A:
-					begin
-					wNextPositionX = wCurrentPositionX - 1;
-					wNextPositionY = wCurrentPositionY;
-					end
-				
-				`W:
-					begin
-					wNextPositionX = wCurrentPositionX;
-					wNextPositionY = wCurrentPositionY + 1;
-					end
-				
-				`S:
-					begin
-					wNextPositionX = wCurrentPositionX;
-					wNextPositionY = wCurrentPositionY - 1;
-					end
-					
-				default:
-					begin
-					wNextPositionX = wCurrentPositionX;
-					wNextPositionY = wCurrentPositionY;
-					end
-					
-			endcase
-	end
+	    if (rUpCounter == 32'b0)
+	       begin
+		  oCurrentPositionY <= rNextPositionY;
+		  oCurrentPositionX <= rNextPositionX;
+	       end
+	    else
+	       begin
+		  oCurrentPositionY <= oCurrentPositionY;
+		  oCurrentPositionX <= oCurrentPositionX;
+	       end
+
+	 end
+   end
+
+
+   always @(*) begin
+      
+
+      case (wCurrentData)
+
+	 `D:
+	    begin
+	       rNextPositionX = oCurrentPositionX + 1;
+	       rNextPositionY = oCurrentPositionY;
+	    end
+	 
+	 `A:
+	    begin
+	       rNextPositionX = oCurrentPositionX - 1;
+	       rNextPositionY = oCurrentPositionY;
+	    end
+	 
+	 `W:
+	    begin
+	       rNextPositionX = oCurrentPositionX;
+	       rNextPositionY = oCurrentPositionY - 1;
+	    end
+	 
+	 `S:
+	    begin
+	       rNextPositionX = oCurrentPositionX;
+	       rNextPositionY = oCurrentPositionY + 1;
+	    end
+	 
+	 default:
+	    begin
+	       rNextPositionX = oCurrentPositionX;
+	       rNextPositionY = oCurrentPositionY;
+	    end
+	 
+      endcase
+   end
 
 endmodule 
 
