@@ -8,7 +8,8 @@ module BlockPosition
 	(
 		input  wire Reset,
 		input  wire Clock,
-		input  wire [10:0] PS2_DATA,
+		input  wire Ps
+		input  wire PS2_DATA,
 		output wire [3:0]  oNextPositionX,
 		output wire [3:0]  oNextPositionY	
 	);
