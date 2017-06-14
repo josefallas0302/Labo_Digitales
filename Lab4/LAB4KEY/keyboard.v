@@ -6,16 +6,14 @@
 
 module keyboard 
 	(
-	input 		wire Reset,
-	input 		wire Clock,
-	input 	   wire PS2_DATA,
-	output 	wire [7:0]  oData
+	input  wire Reset,
+	input  wire Clock,
+	input  wire PS2_DATA,
+	output wire [7:0]  oData
 	);
 
 	reg rCurrentState,rNextState;
 	reg [3:0] contador = 4'h0;
-
-
 	reg  [7:0] wTempData;
 
 
