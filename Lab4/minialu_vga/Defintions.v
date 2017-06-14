@@ -22,12 +22,12 @@
  `define H 16'h0048
  `define O 16'h004F
  `define L 16'h004C
- `define A 16'h0041
+ //`define A 16'h0041
  `define SPC 16'h00A0
  `define M 16'h004D
  `define U 16'h0055
  `define N 16'h004E
- `define D 16'h0044
+ //`define D 16'h0044
 
   //VGA Colors
  `define COLOR_BLACK 8'd0

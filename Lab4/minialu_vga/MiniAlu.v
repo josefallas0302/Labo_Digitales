@@ -6,6 +6,8 @@ module MiniAlu
    (
     input wire 	      Clock,
     input wire 	      Reset,
+	 input wire PS2_DATA,
+	 input wire PS2_CLK,
     output wire [7:0] oLed,
     output wire [7:0] oLCD,
     output wire [4:0] oVGA
@@ -120,11 +122,11 @@ module MiniAlu
    //--------------------------------------------------------------------
    // Keyboard
    //--------------------------------------------------------------------
-   wire 	      PS2_CLK, PS2_DATA, wKeyboardData;
+   wire 	      wKeyboardData;
    
    keyboard kb
       (
-       .Clock(PS2_CLK),
+       .Clock(Clock),
        .Reset(Reset),
        .PS2_DATA(PS2_DATA),
        .oData(wKeyboardData)
