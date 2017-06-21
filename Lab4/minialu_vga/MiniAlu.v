@@ -127,6 +127,8 @@ module MiniAlu
    
    keyboard kb
       (
+       .reset(Reset),
+       .clock(Clock),
        .clk_kb(PS2_CLK),
        .data_kb(PS2_DATA),
        .out_reg(wKeyboardData),
