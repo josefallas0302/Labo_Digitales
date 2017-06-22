@@ -42,107 +42,108 @@ module MiniAlu
        .oDataOut0(wSourceDataRAM0)
        );
 
-   //--------------------------------------------------------------------
-   // VGA Display Logic
-   //--------------------------------------------------------------------
+   // //--------------------------------------------------------------------
+   // // VGA Display Logic
+   // //--------------------------------------------------------------------
    
-   wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS;
-   wire 	      wDisplayOn;
-   wire [`VMEM_X_WIDTH-1:0] wCurrentCol;
-   wire [`VMEM_Y_WIDTH-1:0] wCurrentRow;
+   // wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS;
+   // wire 	      wDisplayOn;
+   // wire [`VMEM_X_WIDTH-1:0] wCurrentCol;
+   // wire [`VMEM_Y_WIDTH-1:0] wCurrentRow;
 
-   wire [23:0] 		    wCurrentVideoReadAddr;
-   wire [23:0] 		    wVideoWriteAddr;
-   wire [2:0] 		    wWriteColor, wReadColor;
+   // wire [23:0] 		    wCurrentVideoReadAddr;
+   // wire [23:0] 		    wVideoWriteAddr;
+    wire [2:0] 		    wWriteColor, wReadColor;
    
-   assign wCurrentVideoReadAddr  = (`VMEM_X_SIZE)*(wCurrentRow-120) + (wCurrentCol-120);
-   assign wVideoWriteAddr  = (`VMEM_X_SIZE)*wSourceData1 + wSourceData0;
+   // assign wCurrentVideoReadAddr  = (`VMEM_X_SIZE)*(wCurrentRow-120) + (wCurrentCol-120);
+   // assign wVideoWriteAddr  = (`VMEM_X_SIZE)*wSourceData1 + wSourceData0;
 
       
-   RAM_SINGLE_READ_PORT #(`VMEM_DATA_WIDTH, 
-   			  `VMEM_X_WIDTH+`VMEM_Y_WIDTH,
-   			  `VMEM_X_SIZE*`VMEM_Y_SIZE,
-   			  `COLOR_BLACK) VideoMemory
-      (
-       .Clock(Clock),
-       .iWriteEnable(wOperation == `VGA),
-       .iReadAddress(wCurrentVideoReadAddr),
-       .iWriteAddress(wVideoWriteAddr),
-       .iDataIn(wWriteColor),
-       .oDataOut(wReadColor) 
-       );
+   // RAM_SINGLE_READ_PORT #(`VMEM_DATA_WIDTH, 
+   // 			  `VMEM_X_WIDTH+`VMEM_Y_WIDTH,
+   // 			  `VMEM_X_SIZE*`VMEM_Y_SIZE,
+   // 			  `COLOR_BLACK) VideoMemory
+   //    (
+   //     .Clock(Clock),
+   //     .iWriteEnable(wOperation == `VGA),
+   //     .iReadAddress(wCurrentVideoReadAddr),
+   //     .iWriteAddress(wVideoWriteAddr),
+   //     .iDataIn(wWriteColor),
+   //     .oDataOut(wReadColor) 
+   //     );
 
    
-   VGA_CONTROLLER2 #(`VMEM_X_WIDTH,
-   		    `VMEM_Y_WIDTH,
-   		    640, 
-   		    480) VGA_Control
+   // VGA_CONTROLLER2 #(`VMEM_X_WIDTH,
+   // 		    `VMEM_Y_WIDTH,
+   // 		    640, 
+   // 		    480) VGA_Control
+   //    (
+   //     .Clock(Clock),
+   //     .Reset(Reset),
+   //     .oVideoMemCol(wCurrentCol),
+   //     .oVideoMemRow(wCurrentRow),
+   //     .oVGAHorizontalSync(oVGA_HS),
+   //     .oVGAVerticalSync(oVGA_VS),
+   //     .oDisplay(wDisplayOn)
+   //     );
+
+   // assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol <= 120 || wCurrentCol >= `VGA_X_RES-120 || wCurrentRow < 120 || wCurrentRow >= `VGA_Y_RES-120 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
+
+   
+   // assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
+
+   // TEST CHECKBOARD
+   //--------------------------------------------------------------------
+   
+   wire 	      oVGA_HS, oVGA_VS;
+   wire [2:0] 	      wColor;
+
+   wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
+   
+   VGA_CHECKBOARD_PIXEL_GEN #(`VMEM_X_WIDTH,
+   			       `VMEM_Y_WIDTH,
+   			       `VGA_X_RES,
+   			       `VGA_Y_RES,
+   			       64, 
+   			       64) VGA_Control
       (
        .Clock(Clock),
        .Reset(Reset),
-       .oVideoMemCol(wCurrentCol),
-       .oVideoMemRow(wCurrentRow),
+       .iMarkedBlockPosX(wMarkedBlockPosX),
+       .iMarkedBlockPosY(wMarkedBlockPosY),
+       .oVGAColor(wColor),
        .oVGAHorizontalSync(oVGA_HS),
-       .oVGAVerticalSync(oVGA_VS),
-       .oDisplay(wDisplayOn)
+       .oVGAVerticalSync(oVGA_VS)
        );
 
-   assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol <= 120 || wCurrentCol >= 520 || wCurrentRow < 120 || wCurrentRow >= 360 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
+   assign oVGA = {wColor, oVGA_HS, oVGA_VS};
+
+
+   //--------------------------------------------------------------------
+   // Keyboard
+   //--------------------------------------------------------------------
+   wire [7:0]	      wKeyboardData;
+   wire 	      wKeyboardFlag;
    
-   assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
+   keyboard kb
+      (
+       .reset(Reset),
+       .clock(Clock),
+       .clk_kb(PS2_CLK),
+       .data_kb(PS2_DATA),
+       .out_reg(wKeyboardData),
+       .out_flag(wKeyboardFlag)
+       );
 
-   // // TEST CHECKBOARD
-   // //--------------------------------------------------------------------
-   
-   // wire 	      oVGA_HS, oVGA_VS;
-   // wire [2:0] 	      wColor;
-
-   // wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
-   
-   // VGA_CHECKBOARD_PIXEL_GEN #(`VMEM_X_WIDTH,
-   // 			       `VMEM_Y_WIDTH,
-   // 			       `VGA_X_RES,
-   // 			       `VGA_Y_RES,
-   // 			       64, 
-   // 			       64) VGA_Control
-   //    (
-   //     .Clock(Clock),
-   //     .Reset(Reset),
-   //     .iMarkedBlockPosX(wMarkedBlockPosX),
-   //     .iMarkedBlockPosY(wMarkedBlockPosY),
-   //     .oVGAColor(wColor),
-   //     .oVGAHorizontalSync(oVGA_HS),
-   //     .oVGAVerticalSync(oVGA_VS)
-   //     );
-
-   // assign oVGA = {wColor, oVGA_HS, oVGA_VS};
-
-
-   // //--------------------------------------------------------------------
-   // // Keyboard
-   // //--------------------------------------------------------------------
-   // wire [7:0]	      wKeyboardData;
-   // wire 	      wKeyboardFlag;
-   
-   // keyboard kb
-   //    (
-   //     .reset(Reset),
-   //     .clock(Clock),
-   //     .clk_kb(PS2_CLK),
-   //     .data_kb(PS2_DATA),
-   //     .out_reg(wKeyboardData),
-   //     .out_flag(wKeyboardFlag)
-   //     );
-
-   // Detector dtr
-   //    (
-   //     .Clock(Clock),
-   //     .Reset(Reset),
-   //     .iData(wKeyboardData),
-   //     .iKeyboardFlag(wKeyboardFlag),
-   //     .oCurrentPositionX(wMarkedBlockPosX),
-   //     .oCurrentPositionY(wMarkedBlockPosY)
-   //     );
+   Detector dtr
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .iData(wKeyboardData),
+       .iKeyboardFlag(wKeyboardFlag),
+       .oCurrentPositionX(wMarkedBlockPosX),
+       .oCurrentPositionY(wMarkedBlockPosY)
+       );
 
 
    
