@@ -217,15 +217,15 @@ module MiniAlu
        .Q(wDestination)
        );
 
-   //FIXME: Descomentar
-   // FFD_POSEDGE_SYNCRONOUS_RESET # ( 3 ) FFD5
-   //    (
-   //     .Clock(Clock),
-   //     .Reset(Reset),
-   //     .Enable(1'b1),
-   //     .D(wInstruction[18:16]),
-   //     .Q(wWriteColor)
-   //     );
+
+   FFD_POSEDGE_SYNCRONOUS_RESET # ( 3 ) FFD5
+      (
+       .Clock(Clock),
+       .Reset(Reset),
+       .Enable(1'b1),
+       .D(wInstruction[18:16]),
+       .Q(wWriteColor)
+       );
    
    
    //--------------------------------------------------------------------
