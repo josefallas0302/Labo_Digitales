@@ -42,9 +42,9 @@ module MiniAlu
        .oDataOut0(wSourceDataRAM0)
        );
 
-   //--------------------------------------------------------------------
-   // VGA Display Logic
-   //--------------------------------------------------------------------
+   // //--------------------------------------------------------------------
+   // // VGA Display Logic
+   // //--------------------------------------------------------------------
    
    // wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS;
    // wire 	      wDisplayOn;
@@ -73,7 +73,7 @@ module MiniAlu
    //     );
 
    
-   // VGA_CONTROLLER #(`VMEM_X_WIDTH,
+   // VGA_CONTROLLER2 #(`VMEM_X_WIDTH,
    // 		    `VMEM_Y_WIDTH,
    // 		    640, 
    // 		    480) VGA_Control
@@ -88,7 +88,6 @@ module MiniAlu
    //     );
 
    // assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol <= 120 || wCurrentCol >= `VGA_X_RES-120 || wCurrentRow < 120 || wCurrentRow >= `VGA_Y_RES-120 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
-
    
    // assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
 
@@ -104,8 +103,8 @@ module MiniAlu
    			       `VMEM_Y_WIDTH,
    			       `VGA_X_RES,
    			       `VGA_Y_RES,
-			       64, 
-			       64) VGA_Control
+   			       64, 
+   			       64) VGA_Control
       (
        .Clock(Clock),
        .Reset(Reset),

@@ -40,10 +40,10 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 		      : ((wFinalColorId == 2'b01) ? `COLOR_WHITE : `COLOR_RED);
    
   
-   VGA_CONTROLLER #(X_WIDTH,
-		    Y_WIDTH,
-		    X_SIZE, 
-		    Y_SIZE) VGA_Control
+   VGA_CONTROLLER2 #(X_WIDTH,
+		     Y_WIDTH,
+		     X_SIZE, 
+		     Y_SIZE) VGA_Control
       (
        .Clock(Clock),
        .Reset(Reset),
