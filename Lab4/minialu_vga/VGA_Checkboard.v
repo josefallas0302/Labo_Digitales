@@ -30,10 +30,10 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
    assign wBlockPosX  = wVideoCol/BLOCK_WIDTH_X;
    assign wBlockPosY  = wVideoRow/BLOCK_WIDTH_Y;
    
-   assign wNormalColorId  = (wBlockPosY[0] == 1'b0) ? {1'b0, wBlockPosX[0]} : {1'b0, ~wBlockPosX[0]};
+   assign wNormalColorId  = (wBlockPosY[0] == 1'b0) ? wBlockPosX[0] : ~wBlockPosX[0];
    
    assign wFinalColorId = (wBlockPosX == iMarkedBlockPosX 
-			   && wBlockPosY == iMarkedBlockPosY) ? 2'b10 : wNormalColorId;
+			   && wBlockPosY == iMarkedBlockPosY) ? 2'b10 : {1'b0, wNormalColorId};
    
    
    always @(*) begin
