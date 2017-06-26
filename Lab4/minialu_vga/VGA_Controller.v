@@ -1,12 +1,6 @@
 `timescale 1ns / 1ps
 `include "Defintions.v"
 
-`define STATE_RESET 0
-`define STATE_DISPLAY 1 
-`define STATE_PULSE 2
-`define STATE_FRONT_PORCH 3
-`define STATE_BACK_PORCH 4
-
 
 module VGA_CONTROLLER # (parameter X_WIDTH=8, 
 			 parameter Y_WIDTH=8,
