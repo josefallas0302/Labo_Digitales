@@ -16,32 +16,53 @@ module win_condition
     );
 
 
-	reg R0 = 1'b0;
-	reg R1 = 1'b0;
-	reg R2 = 1'b0;
-	reg C0 = 1'b0;
-	reg C1 = 1'b0;
-	reg C2 = 1'b0;
-	reg D0 = 1'b0;
-	reg D1 = 1'b0;
-	reg D2 = 1'b0;
-
 	
 	always @(*) begin
 
-		if( (P00 = X ) && (P01 = X ) && (P02 = X ) ) begin
+	if ( (P00 = 0) || (P11 = 0) || (P22 = 0))begin
+		//No HAGO NADA GANADO
+
+	end
+
+	else begin
+
+		if( (P00 == X)   && (P01 == X ) && (P02 == X) ) begin
 			// VERDE	
 
 		end
 
-		if( (P00 = O ) && (P01 = O ) && (P02 = O ) ) begin
-			//VERDE
-
-		end
 			
-		if( (P10 = X ) && (P11 = X ) && (P12 = X ) ) begin
+		if else( (P10 == X ) && (P11 == X) && (P12 == X)  ) begin
 			//VERDE
 		end		
 	
 
-	end
+		if else( (P20 == X ) &&  (P21 == X)  && (P22 == X)) begin
+			//VERDE
+		end		
+	
+		if else( (P00 == X) && (P10 == X)  &&  (P20 == X) ) begin
+		// VERDE
+		end
+
+
+		if else( (P01 == X) && (P11 == X)  && (P21 == X) ) begin
+		// VERDE
+		end
+	
+
+		if else( (P02 ==X) && (P12 ==X)  && (P22 == X ) ) begin
+		// VERDE
+			if
+		end
+
+
+		if else( (P00 == X) && (P11 == X)  && (P22 == X) ) begin
+		// VERDE
+		end
+
+		if else( (P20 == X) && (P11 == X) &&  (P21 == X)000 ) begin
+		// VERDE
+		end
+	end	
+end
