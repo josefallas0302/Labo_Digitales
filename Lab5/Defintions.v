@@ -17,6 +17,15 @@
  `define CALL 4'd13
  `define RET 4'd14
  `define VGA 4'd15
+
+
+----------------------------------------------------------------
+ `define X 4'b01
+ `define O 4'b10
+
+
+----------------------------------------------------------------
+
     
   //LCD Chars
  // `define H 16'h0048
@@ -80,7 +89,7 @@
  `define S 8'h1B
  `define W 8'h1D
  `define D 8'h23
- `define R 8'h1D
+ `define R 8'h2D
  `define ENTER 8'h5A
 
 
