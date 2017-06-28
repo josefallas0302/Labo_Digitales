@@ -12,21 +12,21 @@ module keyboard(reset, clock, clk_kb, data_kb, out_reg, out_flag);
    reg [3:0] 	    counter;
    reg [7:0] 	    data_curr;
    reg [7:0] 	    data_pre;
-   reg 		    	flag;
+   reg 		    flag;
 
    reg [7:0] 	    filter;
-   reg 		    	clk_kb_filtered;
+   reg 		    clk_kb_filtered;
    
 
    assign out_flag = flag && (data_curr == 8'hf0);
    
    initial
       begin
-	 counter   = 4'h1;
+	 counter = 4'h1;
 	 data_curr = 8'hf0;
-	 data_pre  = 8'hf0;
-	 flag      = 1'b0;
-	 out_reg   = 8'hf0;
+	 data_pre = 8'hf0;
+	 flag = 1'b0;
+	 out_reg = 8'hf0;
       end
 
 

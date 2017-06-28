@@ -14,9 +14,6 @@ module Detector
 	output reg flagReset,
 	output reg flagSym	
 	);
-
-	reg flagReset = 1'b0;
-	reg flagSym	  = 1'b0;
 	
 	reg [1:0] P00;
 	reg [1:0] P01;
@@ -28,8 +25,8 @@ module Detector
 	reg [1:0] P21;
 	reg [1:0] P22;
 
-	wire [3:0] counter;
-	wire [1:0] sym;
+	reg [3:0] counter;
+	reg [1:0] sym;
 
 
 
@@ -88,6 +85,8 @@ module Detector
 		  begin
 			 flagReset <= 1;
 			 flagSym   <= 0;
+			 oCurrentPositionX <= oCurrentPositionX;
+		    oCurrentPositionY <= oCurrentPositionY + 1;
 			 counter   <= 4'd0;
 		     
 		  end
@@ -136,7 +135,7 @@ module Detector
 			case (oCurrentPositionX)
 
 			2'd0:
-				if (oCurrentPositionY = 2'd0)
+				if (oCurrentPositionY == 2'd0)
 				begin
 					P00 <= sym;
 					P01 <= P01;
@@ -148,8 +147,7 @@ module Detector
 					P21 <= P21;
 					P22 <= P22;
 				end
-					
-				if else (oCurrentPositionY = 2'd1)
+				else if(oCurrentPositionY == 2'd1)
 				begin 
 					P00 <= P00;
 					P01 <= sym;
@@ -162,7 +160,7 @@ module Detector
 					P22 <= P22;
 				end
 					
-				if else (oCurrentPositionY = 2'd2)
+				else if(oCurrentPositionY == 2'd2)
 				begin
 					P00 <= P00;
 					P01 <= P01;
@@ -177,7 +175,7 @@ module Detector
 					 
 
 			2'd1:
-				if (oCurrentPositionY = 2'd0)
+				if (oCurrentPositionY == 2'd0)
 				begin
 					P00 <= P00;
 					P01 <= P01;
@@ -190,7 +188,7 @@ module Detector
 					P22 <= P22;
 				end
 					
-				if else (oCurrentPositionY = 2'd1)
+				else if (oCurrentPositionY == 2'd1)
 				begin
 					P00 <= P00; 
 					P01 <= P01;
@@ -203,7 +201,7 @@ module Detector
 					P22 <= P22;
 				end
 					
-				if else (oCurrentPositionY = 2'd2)
+				else if (oCurrentPositionY == 2'd2)
 				begin
 					P00 <= P00;
 					P01 <= P01;
@@ -218,7 +216,7 @@ module Detector
 
 					
 			2'd2:
-				if (oCurrentPositionY = 2'd0)
+				if (oCurrentPositionY == 2'd0)
 				begin
 					P00 <= P00;
 					P01 <= P01;
@@ -231,7 +229,7 @@ module Detector
 					P22 <= P22;
 				end
 					 
-				if else (oCurrentPositionY = 2'd1)
+				else if(oCurrentPositionY == 2'd1)
 				begin
 					P00 <= P00;
 					P01 <= P01;
@@ -244,7 +242,7 @@ module Detector
 					P22 <= P22;
 				end
 					
-				if else (oCurrentPositionY = 2'd2)
+				else if (oCurrentPositionY == 2'd2)
 				begin
 					P00 <= P00;
 					P01 <= P01;
