@@ -47,7 +47,9 @@ module MiniAlu
    // //--------------------------------------------------------------------
    
    // wire 	      oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS;
+   
    // wire 	      wDisplayOn;
+   
    // wire [`VMEM_X_WIDTH-1:0] wCurrentCol;
    // wire [`VMEM_Y_WIDTH-1:0] wCurrentRow;
 
@@ -73,7 +75,7 @@ module MiniAlu
    //     );
 
    
-   // VGA_CONTROLLER2 #(`VMEM_X_WIDTH,
+   // VGA_CONTROLLER #(`VMEM_X_WIDTH,
    // 		    `VMEM_Y_WIDTH,
    // 		    640, 
    // 		    480) VGA_Control
@@ -87,12 +89,16 @@ module MiniAlu
    //     .oDisplay(wDisplayOn)
    //     );
 
-   // assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol <= 120 || wCurrentCol >= `VGA_X_RES-120 || wCurrentRow < 120 || wCurrentRow >= `VGA_Y_RES-120 || wDisplayOn == 0) ? {0,0,0} : wReadColor;
+   // assign {oVGA_R,oVGA_G,oVGA_B} = ( wCurrentCol < 120 
+   // 				     || wCurrentCol >= `VGA_X_RES-120 
+   // 				     || wCurrentRow < 120 
+   // 				     || wCurrentRow >= `VGA_Y_RES-120 
+   // 				     || wDisplayOn == 0) ? 3'b000 : wReadColor;
 
    
    // assign oVGA 	= {oVGA_R, oVGA_G, oVGA_B, oVGA_HS, oVGA_VS};
 
-   // TEST CHECKBOARD
+   // Checkboard
    //--------------------------------------------------------------------
    
    wire 	      oVGA_HS, oVGA_VS;
