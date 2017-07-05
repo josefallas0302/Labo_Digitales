@@ -131,7 +131,8 @@ module Detector
 			else
 				sym <= 2'b10; //círculo
 
-		Pos[oCurrentPositionX][oCurrentPositionY] <= sym;
+		if (Pos[oCurrentPositionX][oCurrentPositionY] == 2'b0)
+			Pos[oCurrentPositionX][oCurrentPositionY] <= sym;
 	end
 
 endmodule
