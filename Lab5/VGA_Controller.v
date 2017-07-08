@@ -17,16 +17,16 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
     output wire 	     oDisplay
     );
 
-   reg		      clk25;
+   // reg 			     clk25;
 
    reg [X_WIDTH-1:0] 	      hCount;
    reg [Y_WIDTH-1:0] 	      vCount;
 
-   initial begin
-      clk25 = 1'b0;
-   end
+   // initial begin
+   //    clk25 = 1'b0;
+   // end
    
-   always @(posedge Clock) clk25 <= ~clk25;
+   // always @(posedge Clock) clk25 <= ~clk25;
 
 
    assign oVGAHorizontalSync = (hCount >= 648 && hCount <= 744)? 1'b0 : 1'b1;
@@ -35,11 +35,12 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
 
    assign oVideoMemCol 	= (oDisplay == 1'b1) ? hCount : 0;
    assign oVideoMemRow 	= (oDisplay == 1'b1) ? vCount : 0;
- 
+
    
-   always @(posedge clk25) 
+   //always @(posedge clk25) 
+   always @(posedge Clock) 
       begin
-	 if(Reset) 
+	 if(Reset)
 	    begin
 	       hCount <= 0;
 	       vCount <= 0;

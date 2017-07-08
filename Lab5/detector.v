@@ -34,8 +34,8 @@ module Detector
    always @(negedge iKeyboardFlag or posedge Reset) begin
       if (Reset)
 	 begin
-	    oCurrentPositionX <= 2'd2;
-	   	oCurrentPositionY <= 2'd2;
+	    oCurrentPositionX <= 2'd1;
+	   	oCurrentPositionY <= 2'd1;
 			flagReset <= 0;
 			flagSym   <= 0;
 			counter   <= 4'd0;

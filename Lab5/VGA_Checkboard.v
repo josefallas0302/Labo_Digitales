@@ -14,52 +14,153 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
     input wire 	      Reset,
     input wire [3:0]  iMarkedBlockPosX,
     input wire [3:0]  iMarkedBlockPosY,
-    output reg [2:0] oVGAColor,
+    output wire [2:0] oVGAColor,
     output wire       oVGAHorizontalSync,
     output wire       oVGAVerticalSync
     );
 
-   wire [X_WIDTH-1:0] wVideoCol;
-   wire [Y_WIDTH-1:0] wVideoRow;
 
-   wire 	      wNormalColorId;
-   wire [1:0] 	      wFinalColorId;
-   
-   wire [3:0] 	      wBlockPosX, wBlockPosY;
+   wire [X_WIDTH-1:0] wTotalCol, wFrameCol;
+   wire [Y_WIDTH-1:0] wTotalRow, wFrameRow;   
+   wire [7:0] 	      wLocalCol, wLocalRow;
+   wire 	      wColInFrame, wRowInFrame;
+   wire [14:0] 	      wXPixelAddress, wOPixelAddress;   
+   wire 	      wXPixelOut, wOPixelOut;
+   wire 	      wDisplayOn;
+   wire [2:0] 	      wVGAFrameColor;
 
-   assign wBlockPosX  = wVideoCol/BLOCK_WIDTH_X;
-   assign wBlockPosY  = wVideoRow/BLOCK_WIDTH_Y;
    
-   assign wNormalColorId  = (wBlockPosY[0] == 1'b0) ? wBlockPosX[0] : ~wBlockPosX[0];
-   
-   assign wFinalColorId = (wBlockPosX == iMarkedBlockPosX 
-			   && wBlockPosY == iMarkedBlockPosY) ? 2'b10 : {1'b0, wNormalColorId};
+   reg [X_WIDTH-1:0]  rOffsetFrameCol;
+   reg [Y_WIDTH-1:0]  rOffsetFrameRow;
+   reg [3:0] 	      rBlockPosX, rBlockPosY;
+   reg		      clk25;
    
    
+   initial begin
+      clk25 = 1'b0;
+   end
+   
+   always @(posedge Clock) clk25 <= ~clk25;
+
+   x_mem xPixelMemory (
+		       .clka(clk25),
+		       .addra(wXPixelAddress),
+		       .douta(wXPixelOut)
+		       );
+   
+   
+   o_mem oPixelMemory (
+		       .clka(clk25),
+		       .addra(wOPixelAddress),
+		       .douta(wOPixelOut)
+		       );
+
+
+
+
+   VGA_CONTROLLER #(X_WIDTH,
+		    Y_WIDTH,
+		    X_SIZE, 
+		    Y_SIZE) VGA_Control
+      (
+       .Clock(clk25),
+       .Reset(Reset),
+       .oVideoMemCol(wTotalCol),
+       .oVideoMemRow(wTotalRow),
+       .oVGAHorizontalSync(oVGAHorizontalSync),
+       .oVGAVerticalSync(oVGAVerticalSync),
+       .oDisplay(wDisplayOn)
+       );
+
+
+
+   
+   assign wColInFrame = wTotalCol >= 95 && wTotalCol < 545;
+   assign wRowInFrame = wTotalRow >= 15 && wTotalRow < 465;
+   
+   assign wFrameCol = wColInFrame ? wTotalCol-95 : 0;
+   assign wFrameRow = wRowInFrame ? wTotalRow-15 : 0;
+
+   assign wLocalCol  = wFrameCol - rOffsetFrameCol;
+   assign wLocalRow  = wFrameRow - rOffsetFrameRow;
+
+      
+   assign wXPixelAddress = wLocalCol + 150 * wLocalRow;
+   assign wOPixelAddress = wLocalCol + 150 * wLocalRow;
+
+ 
+
+   
+   reg        rSymPixelOut;
+   wire [1:0]  SymMat [0:2][0:2];
+   wire [1:0]       wCurrentSym;
+   
+   assign wCurrentSym = SymMat[rBlockPosY][rBlockPosX];
+   
+   assign SymMat[0][0]  = `O;     assign SymMat[0][1]  = `X; assign SymMat[0][2]  = `EMPTY;
+   assign SymMat[1][0]  = `EMPTY; assign SymMat[1][1]  = `O; assign SymMat[1][2]  = `O;
+   assign SymMat[2][0]  = `X;     assign SymMat[2][1]  = `X; assign SymMat[2][2]  = `O;
+
+   
+
    always @(*) begin
-      case (wFinalColorId)
-	 2'b00: oVGAColor  = `COLOR_BLACK;
-	 2'b01: oVGAColor  = `COLOR_WHITE;
-	 2'b10: oVGAColor  = `COLOR_RED;
-	 2'b11: oVGAColor  = `COLOR_BLACK;
+      case (wCurrentSym)
+	 `X:      rSymPixelOut 	= wXPixelOut;
+	 `O:      rSymPixelOut 	= wOPixelOut;
+	 `EMPTY:  rSymPixelOut 	= 1'b0;
+	 default: rSymPixelOut 	= 1'b0;
       endcase
    end
 
-   
-  
-   VGA_CONTROLLER #(X_WIDTH,
-		     Y_WIDTH,
-		     X_SIZE, 
-		     Y_SIZE) VGA_Control
-      (
-       .Clock(Clock),
-       .Reset(Reset),
-       .oVideoMemCol(wVideoCol),
-       .oVideoMemRow(wVideoRow),
-       .oVGAHorizontalSync(oVGAHorizontalSync),
-       .oVGAVerticalSync(oVGAVerticalSync),
-       .oDisplay()
-       );
+   assign wVGAFrameColor  = (rSymPixelOut == 1'b1) ? `COLOR_BLUE : `COLOR_WHITE;
+   assign oVGAColor = (wColInFrame && wRowInFrame) ? wVGAFrameColor : `COLOR_BLACK;
 
+
+      
+   
+
+   always @(posedge clk25)
+      begin
+	 if (Reset)
+	    begin
+	       rOffsetFrameRow <= 0;
+	       rOffsetFrameCol <= 0;
+	       rBlockPosX      <= 0;
+	       rBlockPosY      <= 0;
+	    end
+	 else
+	    begin
+	       
+	       if (wFrameCol >= 449)
+		  begin
+		     rBlockPosX      <= 0;
+		     rOffsetFrameCol <= 0;
+
+		  
+		     if (wFrameRow >= 449)
+			begin
+			   rBlockPosY 	   <= 0;
+			   rOffsetFrameRow <= 0;
+			end
+		     else 
+			begin
+			   if (wLocalRow >= BLOCK_WIDTH_Y-1)
+			      begin
+				 rOffsetFrameRow <= wFrameRow + 1;
+				 rBlockPosY 	 <= rBlockPosY + 1;
+			      end
+			end
+		  end
+	       else 
+		  begin
+		     if (wLocalCol >= BLOCK_WIDTH_X-1)
+			begin
+			   rOffsetFrameCol <= wFrameCol + 1;
+			   rBlockPosX 	   <= rBlockPosX + 1;
+			end
+		  end	       
+	       
+	    end
+      end   
    
 endmodule

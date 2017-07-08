@@ -110,8 +110,8 @@ module MiniAlu
    			       `VMEM_Y_WIDTH,
    			       `VGA_X_RES,
    			       `VGA_Y_RES,
-   			       64, 
-   			       64) VGA_Control
+   			       150, 
+   			       150) VGA_Control
       (
        .Clock(Clock),
        .Reset(Reset),
