@@ -15,7 +15,7 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
     input wire [3:0]  iMarkedBlockPosX,
     input wire [3:0]  iMarkedBlockPosY,
     input wire [0:17] iSymVector,
-    input wire [11:0] iWinSeqPos,
+    input wire [14:0] iWinSeqPos,
     input wire 	      iWinFlag,
     output wire [2:0] oVGAColor,
     output wire       oVGAHorizontalSync,
@@ -32,7 +32,7 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
    wire 	      wMarkedPosPixelFlag, wFrameStripePixelFlag;
    wire 	      wDisplayOn;
    wire [1:0] 	      wCurrentSym;
-   wire [3:0] 	      wSymPos;
+   wire [4:0] 	      wSymPos;
 
    
    reg [X_WIDTH-1:0]  rOffsetFrameCol;
@@ -110,9 +110,9 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
       endcase
   
       if (rSymPixelOut == 1'b1) begin
-	 if (iWinFlag && ( wSymPos == iWinSeqPos[0 +: 4]
-			 ||wSymPos == iWinSeqPos[4 +: 4]
-			 ||wSymPos == iWinSeqPos[8 +: 4])) begin
+	 if (iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5]
+			 ||wSymPos == iWinSeqPos[5 +: 5]
+			 ||wSymPos == iWinSeqPos[10 +: 5])) begin
 	    
 	    rVGASymColor = (rWinFxTimer[24] == 1'b0) ? `COLOR_GREEN : `COLOR_BLUE;
 	 end

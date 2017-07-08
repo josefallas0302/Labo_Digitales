@@ -21,7 +21,11 @@ module MiniAlu
    wire 	      wKeyboardFlag;
    wire [0:17] 	      wSymVector;
 
+   wire 	      wWinFlag;
+   wire [14:0] 	      wWinSeqPos;
+
    wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
+
 
    
    keyboard kb
@@ -40,15 +44,16 @@ module MiniAlu
        .Reset(Reset),
        .iData(wKeyboardData),
        .iKeyboardFlag(wKeyboardFlag),
+       .iWinFlag(wWinFlag),
        .oCurrentPosX(wMarkedBlockPosX),
        .oCurrentPosY(wMarkedBlockPosY),
        .oSymVector(wSymVector)
        );
-
-
-   wire 	      wWinFlag;
-   wire [11:0] 	      wWinSeqPos;
-
+   
+   
+   //--------------------------------------------------------------------
+   // TicTacToe Win Logic
+   //--------------------------------------------------------------------
    
    WIN_LOGIC Win_Logic (
 			.iSymVector(wSymVector),
@@ -58,9 +63,9 @@ module MiniAlu
 
    
 
-   // //--------------------------------------------------------------------
-   // // VGA Display Logic
-   // //--------------------------------------------------------------------
+   //--------------------------------------------------------------------
+   // VGA Display Logic
+   //--------------------------------------------------------------------
    
    wire 	      oVGA_HS, oVGA_VS;
    wire [2:0] 	      wColor;

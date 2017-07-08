@@ -29,16 +29,12 @@ module TestBench;
    reg Reset;
 
    // Outputs
-   wire [7:0] oLed;
-   wire [7:0] oLCD;
    wire [4:0] oVGA;
    
    // Instantiate the Unit Under Test (UUT)
    MiniAlu uut (
 		.Clock(Clock), 
 		.Reset(Reset), 
-		.oLed(oLed),
-		.oLCD(oLCD),
 		.oVGA(oVGA)
 		);
    

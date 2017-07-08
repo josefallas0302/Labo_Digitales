@@ -4,14 +4,15 @@
 module Detector
 
    (
-    input wire 	      Reset,
-    input wire 	      Clock,
-    input wire [7:0]  iData,
-    input wire 	      iKeyboardFlag,
-    output reg 	      oKeyboardReset,
-    output reg [3:0]  oCurrentPosX,
-    output reg [3:0]  oCurrentPosY,
-    output wire [0:17] oSymVector //WARNING: MSB is 0
+    input wire 	       Reset,
+    input wire 	       Clock,
+    input wire [7:0]   iData,
+    input wire 	       iKeyboardFlag,
+    input wire 	       iWinFlag,
+    output reg 	       oKeyboardReset,
+    output reg [3:0]   oCurrentPosX,
+    output reg [3:0]   oCurrentPosY,
+    output wire [0:17] oSymVector
     );
 
    reg [3:0] 	      counter;
@@ -36,9 +37,9 @@ module Detector
 	 oCurrentPosY  <= 2'd1;
 	 counter       <= 4'd0;
 	 
-	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `X;
-	 rSymMat[1][0] <= `O;  rSymMat[1][1] <= `X; rSymMat[1][2] <= `X;
-	 rSymMat[2][0] <= `X;  rSymMat[2][1] <= `O; rSymMat[2][2] <= `X;	    
+	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `O; rSymMat[0][2] <= `O;
+	 rSymMat[1][0] <= `X;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
+	 rSymMat[2][0] <= `O;  rSymMat[2][1] <= `X; rSymMat[2][2] <= `O;
       end
       else begin
 
@@ -80,7 +81,7 @@ module Detector
 
 	    `ENTER:
 	       begin
-		  if (rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY)
+		  if (!iWinFlag && rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY)
 		     rSymMat[oCurrentPosY][oCurrentPosX] <= (counter[0] == 0) ? `X : `O;
 	       end
 
