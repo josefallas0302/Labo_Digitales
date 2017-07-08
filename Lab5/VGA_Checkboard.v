@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 `include "Defintions.v"
-
+//TODO: Change hardcoded values to Defines
 
 module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8, 
 				   parameter Y_WIDTH=8, 
@@ -14,6 +14,7 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
     input wire 	      Reset,
     input wire [3:0]  iMarkedBlockPosX,
     input wire [3:0]  iMarkedBlockPosY,
+    input wire [0:17] iSymVector,
     output wire [2:0] oVGAColor,
     output wire       oVGAHorizontalSync,
     output wire       oVGAVerticalSync
@@ -28,12 +29,15 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
    wire 	      wXPixelOut, wOPixelOut;
    wire 	      wDisplayOn;
    wire [2:0] 	      wVGAFrameColor;
-
+   wire [1:0] 	      wCurrentSym;
    
    reg [X_WIDTH-1:0]  rOffsetFrameCol;
    reg [Y_WIDTH-1:0]  rOffsetFrameRow;
    reg [3:0] 	      rBlockPosX, rBlockPosY;
+   reg 		      rSymPixelOut;
    reg		      clk25;
+   
+   
    
    
    initial begin
@@ -54,7 +58,6 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 		       .addra(wOPixelAddress),
 		       .douta(wOPixelOut)
 		       );
-
 
 
 
@@ -87,21 +90,10 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
       
    assign wXPixelAddress = wLocalCol + 150 * wLocalRow;
    assign wOPixelAddress = wLocalCol + 150 * wLocalRow;
+   
 
- 
 
-   
-   reg        rSymPixelOut;
-   wire [1:0]  SymMat [0:2][0:2];
-   wire [1:0]       wCurrentSym;
-   
-   assign wCurrentSym = SymMat[rBlockPosY][rBlockPosX];
-   
-   assign SymMat[0][0]  = `O;     assign SymMat[0][1]  = `X; assign SymMat[0][2]  = `EMPTY;
-   assign SymMat[1][0]  = `EMPTY; assign SymMat[1][1]  = `O; assign SymMat[1][2]  = `O;
-   assign SymMat[2][0]  = `X;     assign SymMat[2][1]  = `X; assign SymMat[2][2]  = `O;
-
-   
+   assign wCurrentSym = iSymVector[(2*rBlockPosX + 6*rBlockPosY) +: 2];
 
    always @(*) begin
       case (wCurrentSym)
@@ -111,56 +103,44 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 	 default: rSymPixelOut 	= 1'b0;
       endcase
    end
-
+   
    assign wVGAFrameColor  = (rSymPixelOut == 1'b1) ? `COLOR_BLUE : `COLOR_WHITE;
    assign oVGAColor = (wColInFrame && wRowInFrame) ? wVGAFrameColor : `COLOR_BLACK;
-
-
       
    
 
    always @(posedge clk25)
       begin
-	 if (Reset)
-	    begin
-	       rOffsetFrameRow <= 0;
-	       rOffsetFrameCol <= 0;
+	 if (Reset) begin
+	    rOffsetFrameRow <= 0;
+	    rOffsetFrameCol <= 0;
+	    rBlockPosX      <= 0;
+	    rBlockPosY      <= 0;
+	 end
+	 else begin
+	    
+	    if (wFrameCol >= 449) begin
 	       rBlockPosX      <= 0;
-	       rBlockPosY      <= 0;
-	    end
-	 else
-	    begin
+	       rOffsetFrameCol <= 0;
 	       
-	       if (wFrameCol >= 449)
-		  begin
-		     rBlockPosX      <= 0;
-		     rOffsetFrameCol <= 0;
-
-		  
-		     if (wFrameRow >= 449)
-			begin
-			   rBlockPosY 	   <= 0;
-			   rOffsetFrameRow <= 0;
-			end
-		     else 
-			begin
-			   if (wLocalRow >= BLOCK_WIDTH_Y-1)
-			      begin
-				 rOffsetFrameRow <= wFrameRow + 1;
-				 rBlockPosY 	 <= rBlockPosY + 1;
-			      end
-			end
+	       if (wFrameRow >= 449) begin
+		  rBlockPosY      <= 0;
+		  rOffsetFrameRow <= 0;
+	       end
+	       else begin
+		  if (wLocalRow >= BLOCK_WIDTH_Y-1) begin
+		     rOffsetFrameRow <= wFrameRow + 1;
+		     rBlockPosY      <= rBlockPosY + 1;
 		  end
-	       else 
-		  begin
-		     if (wLocalCol >= BLOCK_WIDTH_X-1)
-			begin
-			   rOffsetFrameCol <= wFrameCol + 1;
-			   rBlockPosX 	   <= rBlockPosX + 1;
-			end
-		  end	       
-	       
+	       end
 	    end
+	    else begin
+	       if (wLocalCol >= BLOCK_WIDTH_X-1) begin
+		  rOffsetFrameCol <= wFrameCol + 1;
+		  rBlockPosX      <= rBlockPosX + 1;
+	       end
+	    end	       	    
+	 end
       end   
    
 endmodule

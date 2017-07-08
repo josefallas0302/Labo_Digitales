@@ -3,136 +3,96 @@
 
 module Detector
 
-	(
-	input wire Reset,
-	input wire Clock,
-	input wire [7:0] iData,
-	input wire iKeyboardFlag,
-	output reg oKeyboardReset,
-	output reg [3:0] oCurrentPositionX,
-	output reg [3:0] oCurrentPositionY,
-	output reg flagReset,
-	output reg flagSym
-	);
+   (
+    input wire 	      Reset,
+    input wire 	      Clock,
+    input wire [7:0]  iData,
+    input wire 	      iKeyboardFlag,
+    output reg 	      oKeyboardReset,
+    output reg [3:0]  oCurrentPosX,
+    output reg [3:0]  oCurrentPosY,
+    output wire [0:17] oSymVector //WARNING: MSB is 0
+    );
 
-	reg [1:0] Pos [2:0][2:0];
+   reg [3:0] 	      counter;
+   reg [1:0] 	      rSymMat [0:2][0:2];
 
-/* reg [1:0] P00;
-	reg [1:0] P01;
-	reg [1:0] P02;
-	reg [1:0] P10;
-	reg [1:0] P11;
-	reg [1:0] P12;
-	reg [1:0] P20;
-	reg [1:0] P21;
-	reg [1:0] P22;*/
-
-	reg [3:0] counter;
-	reg [1:0] sym;
-
-
-   always @(negedge iKeyboardFlag or posedge Reset) begin
-      if (Reset)
-	 begin
-	    oCurrentPositionX <= 2'd1;
-	   	oCurrentPositionY <= 2'd1;
-			flagReset <= 0;
-			flagSym   <= 0;
-			counter   <= 4'd0;
-	 end
-      else
-	 begin
-
-	    case (iData)
-
-	       `D:
-		  begin
-		    oCurrentPositionX <= oCurrentPositionX + 1;
-		    oCurrentPositionY <= oCurrentPositionY;
-			 	flagReset <= 0;
-			 	flagSym   <= 0;
-			 	counter   <= counter;
-		  end
-
-	       `A:
-		  begin
-		     oCurrentPositionX <= oCurrentPositionX - 1;
-		     oCurrentPositionY <= oCurrentPositionY;
-			 flagReset <= 0;
-			 flagSym   <= 0;
-			 counter   <= counter;
-		  end
-
-	       `W:
-		  begin
-		    oCurrentPositionX <= oCurrentPositionX;
-		    oCurrentPositionY <= oCurrentPositionY - 1;
-			 	flagReset <= 0;
-			 	flagSym   <= 0;
-			 	counter   <= counter;
-		  end
-
-	       `S:
-		  begin
-		    oCurrentPositionX <= oCurrentPositionX;
-		    oCurrentPositionY <= oCurrentPositionY + 1;
-			 	flagReset <= 0;
-			 	flagSym   <= 0;
-			 	counter   <= counter;
-		  end
-
-		   `R:
-		  begin
-			 	flagReset <= 1;
-			 	flagSym   <= 0;
-			 	oCurrentPositionX <= oCurrentPositionX;
-		   	oCurrentPositionY <= oCurrentPositionY + 1;
-			 	counter   <= counter;
-		  end
-
-		   `ENTER:
-		  begin
-		   	flagReset <= 0;
-			 	flagSym   <= 1;
-			 	counter   <= counter + 1;
-		  end
-
-	       default:
-		  begin
-				oCurrentPositionX <= oCurrentPositionX;
-		   	oCurrentPositionY <= oCurrentPositionY;
-			 	flagReset <= 0;
-			 	flagSym   <= 0;
-			 	counter   <= 4'd0;
-		  end
-
-	    endcase
-	end
+   integer 	      r,c;
+   
+   genvar 	      i,j;
+   generate
+   for (i = 0; i < 3; i = i + 1) begin: SYMMAT_ROW
+      for (j = 0; j < 3; j = j + 1) begin: SYMMAT_COL
+	 assign oSymVector[2*(j+3*i) +: 2] = rSymMat[i][j];
+      end
    end
+   endgenerate   
+   
+   
+   
+   always @(negedge iKeyboardFlag or posedge Reset) begin
+      if (Reset) begin
+	 oCurrentPosX  <= 2'd1;
+	 oCurrentPosY  <= 2'd1;
+	 counter       <= 4'd0;
+	 
+	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `EMPTY;
+	 rSymMat[1][0] <= `X;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
+	 rSymMat[2][0] <= `O;  rSymMat[2][1] <= `X; rSymMat[2][2] <= `O;	    
+      end
+      else begin
 
-	always @(posedge flagReset)
-		begin
-		  Pos [0][0] <= 2'b0;
-			Pos [0][1] <= 2'b0;
-			Pos [0][2] <= 2'b0;
-			Pos [1][0] <= 2'b0;
-			Pos [1][1] <= 2'b0;
-			Pos [1][2] <= 2'b0;
-			Pos [2][0] <= 2'b0;
-			Pos [2][1] <= 2'b0;
-			Pos [2][2] <= 2'b0;
-			counter    <= 4'd0;
-		end
+	 case (iData)
 
-	always @(posedge flagSym)
-		begin
-			if (counter %2 != 0)
-				sym <= 2'b01; //equis
-			else
-				sym <= 2'b10; //círculo
+	    `D:
+	       begin
+		  oCurrentPosX <= oCurrentPosX + 1;
+		  oCurrentPosY <= oCurrentPosY;
+	       end
 
-		if (Pos[oCurrentPositionX][oCurrentPositionY] == 2'b0)
-			Pos[oCurrentPositionX][oCurrentPositionY] <= sym;
-	end
+	    `A:
+	       begin
+		  oCurrentPosX <= oCurrentPosX - 1;
+		  oCurrentPosY <= oCurrentPosY;
+	       end
+
+	    `W:
+	       begin
+		  oCurrentPosX <= oCurrentPosX;
+		  oCurrentPosY <= oCurrentPosY - 1;
+	       end
+
+	    `S:
+	       begin
+		  oCurrentPosX <= oCurrentPosX;
+		  oCurrentPosY <= oCurrentPosY + 1;
+	       end
+
+	    `R:
+	       begin
+		  for (r=0; r<3; r=r+1) begin
+		     for (c=0; c<3; c=c+1) begin
+			rSymMat[r][c] <= 2'b0;
+		     end
+		  end 
+		  counter <= 4'd0;
+	       end
+
+	    `ENTER:
+	       begin
+		  if (rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY)
+		     rSymMat[oCurrentPosY][oCurrentPosX] <= (counter[0] == 0) ? `X : `O;
+	       end
+
+	    default:
+	       begin
+		  oCurrentPosX <= oCurrentPosX;
+		  oCurrentPosY <= oCurrentPosY;
+		  counter 	  <= 4'd0;
+	       end
+
+	 endcase
+      end
+   end
 
 endmodule
