@@ -6,8 +6,8 @@ module TICTACTOE
    (
     input wire 	      Clock,
     input wire 	      Reset,
-    input wire 	      PS2_DATA,
-    input wire 	      PS2_CLK,
+    input wire 	      PS2_Data,
+    input wire 	      PS2_Clock,
     //output wire [7:0] oLCD,
     output wire [4:0] oVGA
     );
@@ -19,25 +19,21 @@ module TICTACTOE
    wire [7:0]	      wKeyboardData;
    wire 	      wKeyboardFlag;
    wire [0:17] 	      wSymVector;
-
    wire 	      wWinFlag;
    wire [14:0] 	      wWinSeqPos;
-
    wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
-
-
    
    KEYBOARD_READ Kb_Read
       (
-       .reset(Reset),
-       .clock(Clock),
-       .clk_kb(PS2_CLK),
-       .data_kb(PS2_DATA),
-       .out_reg(wKeyboardData),
-       .out_flag(wKeyboardFlag)
+       .Clock(Clock),
+       .Reset(Reset),
+       .iKbClock(PS2_Clock),
+       .iKbData(PS2_Data),
+       .oReadValue(wKeyboardData),
+       .oKbFlag(wKeyboardFlag)
        );
 
-   KEYBOARD_TICTACTOE Kb_Detector
+   KEYBOARD_TICTACTOE Kb_TicTacToe
       (
        .Clock(Clock),
        .Reset(Reset),
@@ -52,8 +48,7 @@ module TICTACTOE
    
    //--------------------------------------------------------------------
    // TicTacToe Win Logic
-   //--------------------------------------------------------------------
-   
+   //--------------------------------------------------------------------   
    WIN_LOGIC Win_Logic (
 			.iSymVector(wSymVector),
 			.oWinFlag(wWinFlag),
@@ -61,11 +56,9 @@ module TICTACTOE
 			);
 
    
-
    //--------------------------------------------------------------------
    // VGA Display Logic
    //--------------------------------------------------------------------
-   
    wire 	      oVGA_HS, oVGA_VS;
    wire [2:0] 	      wColor;
    
@@ -86,6 +79,5 @@ module TICTACTOE
        );
 
    assign oVGA = {wColor, oVGA_HS, oVGA_VS};
-
    
 endmodule

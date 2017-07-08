@@ -18,7 +18,9 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
     output wire       oVGAVerticalSync
     );
 
-
+   //--------------------------------------------------------------------
+   // Wires/Regs declaration
+   //--------------------------------------------------------------------
    wire [X_WIDTH-1:0] wTotalCol, wFrameCol;
    wire [Y_WIDTH-1:0] wTotalRow, wFrameRow;   
    wire [7:0] 	      wLocalCol, wLocalRow;
@@ -41,28 +43,13 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    reg		      clk25;   
    
    
-   
-   initial begin
-      clk25 = 1'b0;
-   end
-   
+   initial clk25 = 1'b0;   
    always @(posedge Clock) clk25 <= ~clk25;
 
-   X_ROM xPixelMemory (
-		       .clka(clk25),
-		       .addra(wXPixelAddress),
-		       .douta(wXPixelOut)
-		       );
-   
-   
-   O_ROM oPixelMemory (
-		       .clka(clk25),
-		       .addra(wOPixelAddress),
-		       .douta(wOPixelOut)
-		       );
 
-
-
+   //--------------------------------------------------------------------
+   // VGA Controller
+   //--------------------------------------------------------------------
    VGA_CONTROLLER #(X_WIDTH,
 		    Y_WIDTH) VGA_Control
       (
@@ -76,7 +63,25 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
        );
 
 
+   //--------------------------------------------------------------------
+   // X and O symbols ROM 
+   //--------------------------------------------------------------------
+   X_ROM xPixelMemory (
+		       .clka(clk25),
+		       .addra(wXPixelAddress),
+		       .douta(wXPixelOut)
+		       );
+   
+   O_ROM oPixelMemory (
+		       .clka(clk25),
+		       .addra(wOPixelAddress),
+		       .douta(wOPixelOut)
+		       );
 
+
+   //--------------------------------------------------------------------
+   // Row/Col definitions
+   //--------------------------------------------------------------------
    assign wColInFrame = wTotalCol >= 95 && wTotalCol < 545;
    assign wRowInFrame = wTotalRow >= 15 && wTotalRow < 465;
    
@@ -90,8 +95,9 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    assign wOPixelAddress = wLocalCol + 150 * wLocalRow;
 
    
-
-
+   //--------------------------------------------------------------------
+   // Symbols color definition
+   //--------------------------------------------------------------------
    assign wSymPos = 2*rBlockPosX + 6*rBlockPosY;
    assign wCurrentSym  = iSymVector[wSymPos +: 2];
    
@@ -114,9 +120,11 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
       end
       else rVGASymColor = `COLOR_BLACK;
    end
-
    
 
+   //--------------------------------------------------------------------
+   // Frame color definition
+   //--------------------------------------------------------------------
    assign wMarkedPosPixelFlag = (rBlockPosX == iMarkedBlockPosX 
 				 && rBlockPosY == iMarkedBlockPosY
 				 && ( wLocalCol < 3 || wLocalCol > 147 
@@ -127,23 +135,27 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
 				    ||(wFrameRow > 147 && wFrameRow < 153) 
 				    ||(wFrameRow > 297 && wFrameRow < 303)); 
    
-   
    always @(*) begin
-      if (wMarkedPosPixelFlag)
-	 rVGAFrameColor  = `COLOR_CYAN;  //Selected position box
+      if (wMarkedPosPixelFlag && !iWinFlag) //Selected position box
+	 rVGAFrameColor  = `COLOR_CYAN;  
       else begin
-	 if (wFrameStripePixelFlag)
-	    rVGAFrameColor = `COLOR_MAGENTA;  //Frame stripes
+	 if (wFrameStripePixelFlag) //Frame stripes
+	    rVGAFrameColor = (iWinFlag && ~rWinFxTimer[21]) ? `COLOR_WHITE : `COLOR_MAGENTA;
 	 else
 	    rVGAFrameColor  = rVGASymColor;
       end
    end
-           
+
+   
+   //--------------------------------------------------------------------
+   // Final color definition
+   //--------------------------------------------------------------------   
    assign oVGAColor  = (wColInFrame && wRowInFrame) ? rVGAFrameColor : `COLOR_BLACK;
 
 
-   
-
+   //--------------------------------------------------------------------
+   // Sequential logic (Block position, Fx-Timer, Row-Col)
+   //--------------------------------------------------------------------
    always @(posedge clk25)
       begin
 	 if (Reset) begin

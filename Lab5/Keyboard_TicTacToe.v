@@ -37,9 +37,9 @@ module KEYBOARD_TICTACTOE
 	 oCurrentPosY  <= 2'd1;
 	 counter       <= 4'd0;
 	 
-	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `O; rSymMat[0][2] <= `O;
+	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `O;
 	 rSymMat[1][0] <= `X;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
-	 rSymMat[2][0] <= `O;  rSymMat[2][1] <= `X; rSymMat[2][2] <= `O;
+	 rSymMat[2][0] <= `X;  rSymMat[2][1] <= `O; rSymMat[2][2] <= `O;
       end
       else begin
 
