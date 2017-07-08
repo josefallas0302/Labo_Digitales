@@ -21,8 +21,8 @@ module Detector
    
    genvar 	      i,j;
    generate
-   for (i = 0; i < 3; i = i + 1) begin: SYMMAT_ROW
-      for (j = 0; j < 3; j = j + 1) begin: SYMMAT_COL
+   for (i=0; i<3; i=i+1) begin: SYMMAT_ROW
+      for (j=0; j<3; j=j+1) begin: SYMMAT_COL
 	 assign oSymVector[2*(j+3*i) +: 2] = rSymMat[i][j];
       end
    end
@@ -36,9 +36,9 @@ module Detector
 	 oCurrentPosY  <= 2'd1;
 	 counter       <= 4'd0;
 	 
-	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `EMPTY;
-	 rSymMat[1][0] <= `X;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
-	 rSymMat[2][0] <= `O;  rSymMat[2][1] <= `X; rSymMat[2][2] <= `O;	    
+	 rSymMat[0][0] <= `O;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `X;
+	 rSymMat[1][0] <= `O;  rSymMat[1][1] <= `X; rSymMat[1][2] <= `X;
+	 rSymMat[2][0] <= `X;  rSymMat[2][1] <= `O; rSymMat[2][2] <= `X;	    
       end
       else begin
 
@@ -88,7 +88,6 @@ module Detector
 	       begin
 		  oCurrentPosX <= oCurrentPosX;
 		  oCurrentPosY <= oCurrentPosY;
-		  counter 	  <= 4'd0;
 	       end
 
 	 endcase

@@ -15,6 +15,8 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
     input wire [3:0]  iMarkedBlockPosX,
     input wire [3:0]  iMarkedBlockPosY,
     input wire [0:17] iSymVector,
+    input wire [11:0] iWinSeqPos,
+    input wire 	      iWinFlag,
     output wire [2:0] oVGAColor,
     output wire       oVGAHorizontalSync,
     output wire       oVGAVerticalSync
@@ -27,16 +29,20 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
    wire 	      wColInFrame, wRowInFrame;
    wire [14:0] 	      wXPixelAddress, wOPixelAddress;   
    wire 	      wXPixelOut, wOPixelOut;
+   wire 	      wMarkedPosPixelFlag, wFrameStripePixelFlag;
    wire 	      wDisplayOn;
-   wire [2:0] 	      wVGAFrameColor;
    wire [1:0] 	      wCurrentSym;
+   wire [3:0] 	      wSymPos;
+
    
    reg [X_WIDTH-1:0]  rOffsetFrameCol;
    reg [Y_WIDTH-1:0]  rOffsetFrameRow;
    reg [3:0] 	      rBlockPosX, rBlockPosY;
    reg 		      rSymPixelOut;
-   reg		      clk25;
-   
+   reg [2:0] 	      rVGASymColor;
+   reg [2:0] 	      rVGAFrameColor;
+   reg [24:0] 	      rWinFxTimer;
+   reg		      clk25;   
    
    
    
@@ -77,7 +83,6 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 
 
 
-   
    assign wColInFrame = wTotalCol >= 95 && wTotalCol < 545;
    assign wRowInFrame = wTotalRow >= 15 && wTotalRow < 465;
    
@@ -86,15 +91,16 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 
    assign wLocalCol  = wFrameCol - rOffsetFrameCol;
    assign wLocalRow  = wFrameRow - rOffsetFrameRow;
-
       
    assign wXPixelAddress = wLocalCol + 150 * wLocalRow;
    assign wOPixelAddress = wLocalCol + 150 * wLocalRow;
+
    
 
 
-   assign wCurrentSym = iSymVector[(2*rBlockPosX + 6*rBlockPosY) +: 2];
-
+   assign wSymPos = 2*rBlockPosX + 6*rBlockPosY;
+   assign wCurrentSym  = iSymVector[wSymPos +: 2];
+   
    always @(*) begin
       case (wCurrentSym)
 	 `X:      rSymPixelOut 	= wXPixelOut;
@@ -102,11 +108,46 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 	 `EMPTY:  rSymPixelOut 	= 1'b0;
 	 default: rSymPixelOut 	= 1'b0;
       endcase
+  
+      if (rSymPixelOut == 1'b1) begin
+	 if (iWinFlag && ( wSymPos == iWinSeqPos[0 +: 4]
+			 ||wSymPos == iWinSeqPos[4 +: 4]
+			 ||wSymPos == iWinSeqPos[8 +: 4])) begin
+	    
+	    rVGASymColor = (rWinFxTimer[24] == 1'b0) ? `COLOR_GREEN : `COLOR_BLUE;
+	 end
+	 else rVGASymColor = `COLOR_BLUE;
+      end
+      else rVGASymColor = `COLOR_BLACK;
    end
+
    
-   assign wVGAFrameColor  = (rSymPixelOut == 1'b1) ? `COLOR_BLUE : `COLOR_WHITE;
-   assign oVGAColor = (wColInFrame && wRowInFrame) ? wVGAFrameColor : `COLOR_BLACK;
-      
+
+   assign wMarkedPosPixelFlag = (rBlockPosX == iMarkedBlockPosX 
+				 && rBlockPosY == iMarkedBlockPosY
+				 && ( wLocalCol < 3 || wLocalCol > 147 
+				   || wLocalRow < 3 || wLocalRow > 147));
+
+   assign wFrameStripePixelFlag  = ((wFrameCol > 147 && wFrameCol < 153) 
+                                    ||(wFrameCol > 297 && wFrameCol < 303)
+				    ||(wFrameRow > 147 && wFrameRow < 153) 
+				    ||(wFrameRow > 297 && wFrameRow < 303)); 
+   
+   
+   always @(*) begin
+      if (wMarkedPosPixelFlag)
+	 rVGAFrameColor  = `COLOR_CYAN;  //Selected position box
+      else begin
+	 if (wFrameStripePixelFlag)
+	    rVGAFrameColor = `COLOR_MAGENTA;  //Frame stripes
+	 else
+	    rVGAFrameColor  = rVGASymColor;
+      end
+   end
+           
+   assign oVGAColor  = (wColInFrame && wRowInFrame) ? rVGAFrameColor : `COLOR_BLACK;
+
+
    
 
    always @(posedge clk25)
@@ -114,10 +155,12 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 	 if (Reset) begin
 	    rOffsetFrameRow <= 0;
 	    rOffsetFrameCol <= 0;
-	    rBlockPosX      <= 0;
-	    rBlockPosY      <= 0;
+	    rBlockPosX 	    <= 0;
+	    rBlockPosY 	    <= 0;
+	    rWinFxTimer     <= 0;
 	 end
 	 else begin
+	    rWinFxTimer <= rWinFxTimer + 1;
 	    
 	    if (wFrameCol >= 449) begin
 	       rBlockPosX      <= 0;

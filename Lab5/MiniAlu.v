@@ -22,6 +22,7 @@ module MiniAlu
    wire [0:17] 	      wSymVector;
 
    wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
+
    
    keyboard kb
       (
@@ -45,6 +46,17 @@ module MiniAlu
        );
 
 
+   wire 	      wWinFlag;
+   wire [11:0] 	      wWinSeqPos;
+
+   
+   WIN_LOGIC Win_Logic (
+			.iSymVector(wSymVector),
+			.oWinFlag(wWinFlag),
+			.oWinSeqPos(wWinSeqPos)
+			);
+
+   
 
    // //--------------------------------------------------------------------
    // // VGA Display Logic
@@ -66,6 +78,8 @@ module MiniAlu
        .iMarkedBlockPosX(wMarkedBlockPosX),
        .iMarkedBlockPosY(wMarkedBlockPosY),
        .iSymVector(wSymVector),
+       .iWinSeqPos(wWinSeqPos),
+       .iWinFlag(wWinFlag),
        .oVGAColor(wColor),
        .oVGAHorizontalSync(oVGA_HS),
        .oVGAVerticalSync(oVGA_VS)
@@ -74,4 +88,5 @@ module MiniAlu
    assign oVGA = {wColor, oVGA_HS, oVGA_VS};
 
 
+   
 endmodule
