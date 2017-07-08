@@ -1,4 +1,4 @@
-module keyboard(reset, clock, clk_kb, data_kb, out_reg, out_flag);
+module KEYBOARD_READ (reset, clock, clk_kb, data_kb, out_reg, out_flag);
 
    // Assigning ports as in/out
    input reset;

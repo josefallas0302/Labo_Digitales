@@ -2,33 +2,16 @@
 `ifndef DEFINTIONS_V
  `define DEFINTIONS_V
  `default_nettype none	
- `define NOP    4'd0
- `define LED    4'd2
- `define BLE    4'd3
- `define STO    4'd4
- `define ADD    4'd5
- `define JMP    4'd6
- `define SUB    4'd7
- `define SMUL   4'd8
- `define LCD_CHAR 4'd9
- `define LCD_CMD 4'd10
- `define LCD_ENB 4'd11
- `define SHL 4'd12
- `define CALL 4'd13
- `define RET 4'd14
- `define VGA 4'd15
 
 
 //----------------------------------------------------------------
+ //TicTacToe Symbols
  `define EMPTY 2'b00
  `define X 2'b01
- `define O 2'b10
-  
+ `define O 2'b10  
 
 //----------------------------------------------------------------
-
-    
-  //LCD Chars
+ //LCD Chars
  // `define H 16'h0048
  // `define O 16'h004F
  // `define L 16'h004C
@@ -49,10 +32,9 @@
  `define COLOR_YELLOW 8'd6
  `define COLOR_WHITE 8'd7
 
- //Video Memory parameters
- `define VMEM_DATA_WIDTH 3
- `define VMEM_X_WIDTH 10
- `define VMEM_Y_WIDTH 10 //9
+ //VGA parameters
+ `define VGA_COL_WIDTH 10
+ `define VGA_ROW_WIDTH 10
  `define VMEM_X_SIZE 400
  `define VMEM_Y_SIZE 240
  `define VGA_X_RES 640
@@ -69,22 +51,6 @@
  `define VSYNC_PULSE_T 32'd1600
 
     
-  //RAM registers
- `define R0 8'd0
- `define R1 8'd1
- `define R2 8'd2
- `define R3 8'd3
- `define R4 8'd4
- `define R5 8'd5
- `define R6 8'd6
- `define R7 8'd7
- `define R8 8'd8
- `define R9 8'd9  
-  
-  //Multiplication registers
- `define RL 8'd10
- `define RH 8'd11
-
   //Keyboard Chars
  `define A 8'h1C
  `define S 8'h1B
@@ -92,9 +58,5 @@
  `define D 8'h23
  `define R 8'h2D
  `define ENTER 8'h5A
-
-
     
 `endif
-
-    

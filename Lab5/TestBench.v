@@ -32,7 +32,7 @@ module TestBench;
    wire [4:0] oVGA;
    
    // Instantiate the Unit Under Test (UUT)
-   MiniAlu uut (
+   TICTACTOE uut (
 		.Clock(Clock), 
 		.Reset(Reset), 
 		.oVGA(oVGA)

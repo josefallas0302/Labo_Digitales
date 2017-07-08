@@ -1,7 +1,7 @@
 `timescale 1us / 1ns
 `include "Defintions.v"
 
-module Detector
+module KEYBOARD_TICTACTOE
 
    (
     input wire 	       Reset,

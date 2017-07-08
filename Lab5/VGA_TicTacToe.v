@@ -2,13 +2,9 @@
 `include "Defintions.v"
 //TODO: Change hardcoded values to Defines
 
-module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8, 
-				   parameter Y_WIDTH=8, 
-				   parameter X_SIZE=256, 
-				   parameter Y_SIZE=256,
-				   parameter BLOCK_WIDTH_X=64,
-				   parameter BLOCK_WIDTH_Y=64
-				)
+module VGA_TICTACTOE # (parameter X_WIDTH=8, 
+			parameter Y_WIDTH=8
+			)
    (
     input wire 	      Clock,
     input wire 	      Reset,
@@ -52,14 +48,14 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
    
    always @(posedge Clock) clk25 <= ~clk25;
 
-   x_mem xPixelMemory (
+   X_ROM xPixelMemory (
 		       .clka(clk25),
 		       .addra(wXPixelAddress),
 		       .douta(wXPixelOut)
 		       );
    
    
-   o_mem oPixelMemory (
+   O_ROM oPixelMemory (
 		       .clka(clk25),
 		       .addra(wOPixelAddress),
 		       .douta(wOPixelOut)
@@ -68,9 +64,7 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 
 
    VGA_CONTROLLER #(X_WIDTH,
-		    Y_WIDTH,
-		    X_SIZE, 
-		    Y_SIZE) VGA_Control
+		    Y_WIDTH) VGA_Control
       (
        .Clock(clk25),
        .Reset(Reset),
@@ -171,14 +165,14 @@ module VGA_CHECKBOARD_PIXEL_GEN # (parameter X_WIDTH=8,
 		  rOffsetFrameRow <= 0;
 	       end
 	       else begin
-		  if (wLocalRow >= BLOCK_WIDTH_Y-1) begin
+		  if (wLocalRow >= 149) begin
 		     rOffsetFrameRow <= wFrameRow + 1;
 		     rBlockPosY      <= rBlockPosY + 1;
 		  end
 	       end
 	    end
 	    else begin
-	       if (wLocalCol >= BLOCK_WIDTH_X-1) begin
+	       if (wLocalCol >= 149) begin
 		  rOffsetFrameCol <= wFrameCol + 1;
 		  rBlockPosX      <= rBlockPosX + 1;
 	       end

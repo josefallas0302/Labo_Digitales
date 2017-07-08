@@ -2,13 +2,12 @@
 `include "Defintions.v"
 
 
-module MiniAlu
+module TICTACTOE
    (
     input wire 	      Clock,
     input wire 	      Reset,
     input wire 	      PS2_DATA,
     input wire 	      PS2_CLK,
-    //output wire [7:0] oLed,
     //output wire [7:0] oLCD,
     output wire [4:0] oVGA
     );
@@ -28,7 +27,7 @@ module MiniAlu
 
 
    
-   keyboard kb
+   KEYBOARD_READ Kb_Read
       (
        .reset(Reset),
        .clock(Clock),
@@ -38,7 +37,7 @@ module MiniAlu
        .out_flag(wKeyboardFlag)
        );
 
-   Detector dtr
+   KEYBOARD_TICTACTOE Kb_Detector
       (
        .Clock(Clock),
        .Reset(Reset),
@@ -71,12 +70,8 @@ module MiniAlu
    wire [2:0] 	      wColor;
    
    
-   VGA_CHECKBOARD_PIXEL_GEN #(`VMEM_X_WIDTH,
-   			      `VMEM_Y_WIDTH,
-   			      `VGA_X_RES,
-   			      `VGA_Y_RES,
-   			      150, 
-   			      150) VGA_Control
+   VGA_TICTACTOE #(`VGA_COL_WIDTH,
+   		   `VGA_ROW_WIDTH) VGA_TicTacToe
       (
        .Clock(Clock),
        .Reset(Reset),
@@ -91,7 +86,6 @@ module MiniAlu
        );
 
    assign oVGA = {wColor, oVGA_HS, oVGA_VS};
-
 
    
 endmodule
