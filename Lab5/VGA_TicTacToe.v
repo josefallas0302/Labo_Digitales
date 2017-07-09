@@ -1,6 +1,5 @@
 `timescale 1ns / 1ps
 `include "Defintions.v"
-//TODO: Change hardcoded values to Defines
 
 module VGA_TICTACTOE # (parameter X_WIDTH=8, 
 			parameter Y_WIDTH=8
@@ -24,8 +23,8 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    wire [X_WIDTH-1:0] wTotalCol, wFrameCol;
    wire [Y_WIDTH-1:0] wTotalRow, wFrameRow;   
    wire [7:0] 	      wLocalCol, wLocalRow;
-   wire 	      wColInFrame, wRowInFrame;
-   wire [14:0] 	      wXPixelAddress, wOPixelAddress;   
+   wire 	      wPixelInFrame;
+   wire [14:0] 	      wSymPixelAddr;
    wire 	      wXPixelOut, wOPixelOut;
    wire 	      wMarkedPosPixelFlag, wFrameStripePixelFlag;
    wire 	      wDisplayOn;
@@ -68,13 +67,13 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    //--------------------------------------------------------------------
    X_ROM xPixelMemory (
 		       .clka(clk25),
-		       .addra(wXPixelAddress),
+		       .addra(wSymPixelAddr),
 		       .douta(wXPixelOut)
 		       );
    
    O_ROM oPixelMemory (
 		       .clka(clk25),
-		       .addra(wOPixelAddress),
+		       .addra(wSymPixelAddr),
 		       .douta(wOPixelOut)
 		       );
 
@@ -82,23 +81,23 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    //--------------------------------------------------------------------
    // Row/Col definitions
    //--------------------------------------------------------------------
-   assign wColInFrame = wTotalCol >= 95 && wTotalCol < 545;
-   assign wRowInFrame = wTotalRow >= 15 && wTotalRow < 465;
+   assign wPixelInFrame = (wTotalCol >= `FRAME_START_X) && (wTotalCol < `FRAME_END_X)
+			  && (wTotalRow >= `FRAME_START_Y) && (wTotalRow < `FRAME_END_Y);
+
    
-   assign wFrameCol = wColInFrame ? wTotalCol-95 : 0;
-   assign wFrameRow = wRowInFrame ? wTotalRow-15 : 0;
+   assign wFrameCol = wTotalCol - `FRAME_START_X;
+   assign wFrameRow = wTotalRow - `FRAME_START_Y;
 
    assign wLocalCol  = wFrameCol - rOffsetFrameCol;
    assign wLocalRow  = wFrameRow - rOffsetFrameRow;
       
-   assign wXPixelAddress = wLocalCol + 150 * wLocalRow;
-   assign wOPixelAddress = wLocalCol + 150 * wLocalRow;
+   assign wSymPixelAddr = wPixelInFrame ? (wLocalCol+1 + `FRAME_BLOCK_DIM * wLocalRow) : 0;
 
    
    //--------------------------------------------------------------------
    // Symbols color definition
    //--------------------------------------------------------------------
-   assign wSymPos = 2*rBlockPosX + 6*rBlockPosY;
+   assign wSymPos = 2*(rBlockPosX + `NUM_BLOCKS_DIM * rBlockPosY);
    assign wCurrentSym  = iSymVector[wSymPos +: 2];
    
    always @(*) begin
@@ -127,13 +126,19 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    //--------------------------------------------------------------------
    assign wMarkedPosPixelFlag = (rBlockPosX == iMarkedBlockPosX 
 				 && rBlockPosY == iMarkedBlockPosY
-				 && ( wLocalCol < 3 || wLocalCol > 147 
-				   || wLocalRow < 3 || wLocalRow > 147));
+				 && ( wLocalCol < `FRAME_MARKED_START
+				      || wLocalCol >= `FRAME_MARKED_END
+				      || wLocalRow < `FRAME_MARKED_START
+				      || wLocalRow >= `FRAME_MARKED_END));
 
-   assign wFrameStripePixelFlag  = ((wFrameCol > 147 && wFrameCol < 153) 
-                                    ||(wFrameCol > 297 && wFrameCol < 303)
-				    ||(wFrameRow > 147 && wFrameRow < 153) 
-				    ||(wFrameRow > 297 && wFrameRow < 303)); 
+   assign wFrameStripePixelFlag = ((wFrameCol > `FRAME_STRIPE_START 
+				    && wFrameCol < `FRAME_STRIPE_END) 
+                                   || ( wFrameCol > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM 
+				    	&& wFrameCol < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)
+				   || ( wFrameRow > `FRAME_STRIPE_START 
+				    	&& wFrameRow < `FRAME_STRIPE_END) 
+				   || ( wFrameRow > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM 
+					&& wFrameRow < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)); 
    
    always @(*) begin
       if (wMarkedPosPixelFlag && !iWinFlag) //Selected position box
@@ -150,7 +155,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    //--------------------------------------------------------------------
    // Final color definition
    //--------------------------------------------------------------------   
-   assign oVGAColor  = (wColInFrame && wRowInFrame) ? rVGAFrameColor : `COLOR_BLACK;
+   assign oVGAColor  = wPixelInFrame ? rVGAFrameColor : `COLOR_BLACK;
 
 
    //--------------------------------------------------------------------
@@ -167,26 +172,27 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
 	 end
 	 else begin
 	    rWinFxTimer <= rWinFxTimer + 1;
-	    
-	    if (wFrameCol >= 449) begin
-	       rBlockPosX      <= 0;
-	       rOffsetFrameCol <= 0;
-	       
-	       if (wFrameRow >= 449) begin
-		  rBlockPosY      <= 0;
-		  rOffsetFrameRow <= 0;
-	       end
-	       else begin
-		  if (wLocalRow >= 149) begin
-		     rOffsetFrameRow <= wFrameRow + 1;
-		     rBlockPosY      <= rBlockPosY + 1;
+	    if (wPixelInFrame) begin
+	       if (wFrameCol == `FRAME_TOTAL_DIM-1) begin
+		  rBlockPosX      <= 0;
+		  rOffsetFrameCol <= 0;
+		  
+		  if (wFrameRow == `FRAME_TOTAL_DIM-1) begin
+		     rBlockPosY      <= 0;
+		     rOffsetFrameRow <= 0;
+		  end
+		  else begin
+		     if (wLocalRow == `FRAME_BLOCK_DIM-1) begin
+			rOffsetFrameRow <= wFrameRow + 1;
+			rBlockPosY      <= rBlockPosY + 1;
+		     end
 		  end
 	       end
-	    end
-	    else begin
-	       if (wLocalCol >= 149) begin
-		  rOffsetFrameCol <= wFrameCol + 1;
-		  rBlockPosX      <= rBlockPosX + 1;
+	       else begin
+		  if (wLocalCol == `FRAME_BLOCK_DIM-1) begin
+		     rOffsetFrameCol <= wFrameCol + 1;
+		     rBlockPosX      <= rBlockPosX + 1;
+		  end
 	       end
 	    end	       	    
 	 end

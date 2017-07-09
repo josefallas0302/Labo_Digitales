@@ -7,7 +7,6 @@ module KEYBOARD_READ (
 		      output wire oKbFlag
 		      );
    
-   // Instantaiting and Intializing Registers
    reg [3:0] 	    rCounter;
    reg [7:0] 	    rCurrData;
    reg [7:0] 	    rDataPre;

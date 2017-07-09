@@ -15,32 +15,32 @@ module VGA_CONTROLLER # (parameter X_WIDTH=8,
     output wire 	      oDisplay
     );
 
-   reg [X_WIDTH-1:0] 	      hCount;
-   reg [Y_WIDTH-1:0] 	      vCount;
+   reg [X_WIDTH-1:0] 	      rHCount;
+   reg [Y_WIDTH-1:0] 	      rVCount;
 
 
-   assign oVGAHorizontalSync = (hCount >= 648 && hCount <= 744)? 1'b0 : 1'b1;
-   assign oVGAVerticalSync = (vCount >= 488 && vCount <= 489)? 1'b0 : 1'b1;
-   assign oDisplay = (hCount <= 639 && vCount <= 479)? 1'b1 : 1'b0;
+   assign oVGAHorizontalSync = !(rHCount >= `HSYNC_START && rHCount < `HSYNC_END);
+   assign oVGAVerticalSync = !(rVCount >= `VSYNC_START && rVCount < `VSYNC_END);
+   assign oDisplay = (rHCount < `VGA_X_RES && rVCount < `VGA_Y_RES);
 
-   assign oVideoMemCol 	= (oDisplay == 1'b1) ? hCount : 0;
-   assign oVideoMemRow 	= (oDisplay == 1'b1) ? vCount : 0;
+   assign oVideoMemCol 	= (oDisplay == 1'b1) ? rHCount : 0;
+   assign oVideoMemRow 	= (oDisplay == 1'b1) ? rVCount : 0;
 
    
    always @(posedge Clock) begin
       if(Reset) begin
-	 hCount <= 0;
-	 vCount <= 0;
+	 rHCount <= 0;
+	 rVCount <= 0;
       end
       else begin
-	 if (hCount < 799)
-	    hCount <= hCount + 1;
+	 if (rHCount < `H_TOTAL_T)
+	    rHCount <= rHCount + 1;
 	 else begin
-	    hCount <= 0;
-	    if (vCount < 524) 
-	       vCount <= vCount + 1;
+	    rHCount <= 0;
+	    if (rVCount < `V_TOTAL_T) 
+	       rVCount <= rVCount + 1;
 	    else
-	       vCount <= 0;
+	       rVCount <= 0;
 	 end
       end
    end

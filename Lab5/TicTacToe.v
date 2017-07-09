@@ -8,7 +8,6 @@ module TICTACTOE
     input wire 	      Reset,
     input wire 	      PS2_Data,
     input wire 	      PS2_Clock,
-    //output wire [7:0] oLCD,
     output wire [4:0] oVGA
     );
    
