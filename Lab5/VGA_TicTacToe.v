@@ -22,12 +22,13 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    //--------------------------------------------------------------------
    wire [X_WIDTH-1:0] wTotalCol, wFrameCol;
    wire [Y_WIDTH-1:0] wTotalRow, wFrameRow;   
-   wire [7:0] 	      wLocalCol, wLocalRow;
+   wire [11:0] 	      wLocalCol, wLocalRow;
    wire 	      wPixelInFrame;
    wire [14:0] 	      wSymPixelAddr;
    wire 	      wXPixelOut, wOPixelOut;
    wire 	      wMarkedPosPixelFlag, wFrameStripePixelFlag;
    wire 	      wDisplayOn;
+   wire 	      wInWinnerBlock;
    wire [1:0] 	      wCurrentSym;
    wire [4:0] 	      wSymPos;
 
@@ -38,7 +39,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    reg 		      rSymPixelOut;
    reg [2:0] 	      rVGASymColor;
    reg [2:0] 	      rVGAFrameColor;
-   reg [24:0] 	      rWinFxTimer;
+   reg [31:0] 	      rWinFxTimer;
    reg		      clk25;   
    
    
@@ -72,10 +73,10 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
 		       );
    
    O_ROM oPixelMemory (
-		       .clka(clk25),
-		       .addra(wSymPixelAddr),
-		       .douta(wOPixelOut)
-		       );
+   		       .clka(clk25),
+   		       .addra(wSymPixelAddr),
+   		       .douta(wOPixelOut)
+   		       );
 
 
    //--------------------------------------------------------------------
@@ -91,15 +92,40 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    assign wLocalCol  = wFrameCol - rOffsetFrameCol;
    assign wLocalRow  = wFrameRow - rOffsetFrameRow;
       
-   assign wSymPixelAddr = wPixelInFrame ? (wLocalCol+1 + `FRAME_BLOCK_DIM * wLocalRow) : 0;
+   
+   wire signed [11:0]  wLocalColRotTrans, wLocalRowRotTrans, wPhaseIn;
+   wire [11:0] 	      wLocalColRotated, wLocalRowRotated;
+   wire [11:0] 	      wLocalColMux, wLocalRowMux;
+   
+   assign wPhaseIn = rWinFxTimer[24:13];
+   
+   Rotate rotate (
+		  .x_in(wLocalCol-12'd60),
+		  .y_in(wLocalRow-12'd75),
+		  .phase_in(wPhaseIn),
+		  .x_out(wLocalColRotTrans),
+		  .y_out(wLocalRowRotTrans),
+		  .clk(clk25)
+		  );
 
+   assign wLocalColRotated  = (wLocalColRotTrans+12'd75 < 12'd0) ? 0 : (wLocalColRotTrans+12'd75 > 12'd149) ? 149 : wLocalColRotTrans+12'd75;
+   assign wLocalRowRotated  = (wLocalRowRotTrans+12'd75 < 12'd0) ? 0 : (wLocalRowRotTrans+12'd75 > 12'd149) ? 149 : wLocalRowRotTrans+12'd75;
+
+
+   assign wSymPos = 2*(rBlockPosX + `NUM_BLOCKS_DIM * rBlockPosY);
+   assign wCurrentSym  = iSymVector[wSymPos +: 2];
+   assign wInWinnerBlock = iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5]
+					 ||wSymPos == iWinSeqPos[5 +: 5]
+					 ||wSymPos == iWinSeqPos[10 +: 5]);
+
+   
+   assign wLocalColMux = wInWinnerBlock ? wLocalColRotated : wLocalCol;   
+   assign wLocalRowMux = wInWinnerBlock ? wLocalRowRotated : wLocalRow;
+   assign wSymPixelAddr  = wPixelInFrame ? (wLocalColMux + `FRAME_BLOCK_DIM * wLocalRowMux) : 0;
    
    //--------------------------------------------------------------------
    // Symbols color definition
    //--------------------------------------------------------------------
-   assign wSymPos = 2*(rBlockPosX + `NUM_BLOCKS_DIM * rBlockPosY);
-   assign wCurrentSym  = iSymVector[wSymPos +: 2];
-   
    always @(*) begin
       case (wCurrentSym)
 	 `X:      rSymPixelOut 	= wXPixelOut;
@@ -109,10 +135,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
       endcase
   
       if (rSymPixelOut == 1'b1) begin
-	 if (iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5]
-			 ||wSymPos == iWinSeqPos[5 +: 5]
-			 ||wSymPos == iWinSeqPos[10 +: 5])) begin
-	    
+	 if (wInWinnerBlock) begin
 	    rVGASymColor = (rWinFxTimer[24] == 1'b0) ? `COLOR_GREEN : `COLOR_BLUE;
 	 end
 	 else rVGASymColor = `COLOR_BLUE;
