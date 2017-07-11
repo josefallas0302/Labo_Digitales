@@ -41,9 +41,9 @@ module KEYBOARD_TICTACTOE
 	 oCurrentPosY  <= 2'd1;
 	 counter       <= 4'd0;
 	 
-	 rSymMat[0][0] <= `X;  rSymMat[0][1] <= `O; rSymMat[0][2] <= `O;
-	 rSymMat[1][0] <= `O;  rSymMat[1][1] <= `X; rSymMat[1][2] <= `X;
-	 rSymMat[2][0] <= `X;  rSymMat[2][1] <= `X; rSymMat[2][2] <= `X;
+	 rSymMat[0][0] <= `X;  rSymMat[0][1] <= `EMPTY; rSymMat[0][2] <= `EMPTY;
+	 rSymMat[1][0] <= `EMPTY;  rSymMat[1][1] <= `X; rSymMat[1][2] <= `EMPTY;
+	 rSymMat[2][0] <= `EMPTY;  rSymMat[2][1] <= `EMPTY; rSymMat[2][2] <= `X;
       end
       else begin
 
@@ -72,15 +72,17 @@ module KEYBOARD_TICTACTOE
 	       begin
 		  for (r=0; r<`NUM_BLOCKS_DIM; r=r+1) begin
 		     for (c=0; c<`NUM_BLOCKS_DIM; c=c+1) begin
-			rSymMat[r][c] <= 2'b0;
+			rSymMat[r][c] <= 2'b00;
 		     end
 		  end 
 		  counter <= 4'd0;
 	       end
 	    `ENTER:
 	       begin
-		  if (!iWinFlag && rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY)
+		  if (!iWinFlag && rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY) begin
 		     rSymMat[oCurrentPosY][oCurrentPosX] <= (counter[0] == 0) ? `X : `O;
+		     counter <= counter + 4'd1;
+		  end
 	       end
 	    default:
 	       begin

@@ -18,7 +18,7 @@ module WIN_LOGIC (
    function  isWin;
       input [5:0] data;  
       begin
-	 isWin = (data[1:0]==data[3:2]) && (data[3:2]==data[5:4]);
+	 isWin = (data[1:0] != `EMPTY) && (data[1:0]==data[3:2]) && (data[3:2]==data[5:4]);
       end
    endfunction
 

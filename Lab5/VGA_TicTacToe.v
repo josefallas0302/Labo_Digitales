@@ -23,6 +23,9 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    wire [X_WIDTH-1:0] wTotalCol, wFrameCol;
    wire [Y_WIDTH-1:0] wTotalRow, wFrameRow;   
    wire [11:0] 	      wLocalCol, wLocalRow;
+   wire signed [11:0] wLocalColRotTrans, wLocalRowRotTrans, wPhaseIn;
+   wire [11:0] 	      wLocalColRotated, wLocalRowRotated;
+   wire [11:0] 	      wLocalColMux, wLocalRowMux;
    wire 	      wPixelInFrame;
    wire [14:0] 	      wSymPixelAddr;
    wire 	      wXPixelOut, wOPixelOut;
@@ -47,9 +50,9 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    always @(posedge Clock) clk25 <= ~clk25;
 
 
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // VGA Controller
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    VGA_CONTROLLER #(X_WIDTH,
 		    Y_WIDTH) VGA_Control
       (
@@ -62,10 +65,9 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
        .oDisplay(wDisplayOn)
        );
 
-
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // X and O symbols ROM 
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    X_ROM xPixelMemory (
 		       .clka(clk25),
 		       .addra(wSymPixelAddr),
@@ -79,53 +81,54 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    		       );
 
 
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // Row/Col definitions
-   //--------------------------------------------------------------------
-   assign wPixelInFrame = (wTotalCol >= `FRAME_START_X) && (wTotalCol < `FRAME_END_X)
-			  && (wTotalRow >= `FRAME_START_Y) && (wTotalRow < `FRAME_END_Y);
+   //--------------------------------------------------------------------------------------
+   assign wPixelInFrame = (wTotalCol >= `FRAME_START_X) && (wTotalCol < `FRAME_END_X) && 
+			  (wTotalRow >= `FRAME_START_Y) && (wTotalRow < `FRAME_END_Y);
 
+   assign wFrameCol  = wTotalCol - `FRAME_START_X;
+   assign wFrameRow  = wTotalRow - `FRAME_START_Y;
    
-   assign wFrameCol = wTotalCol - `FRAME_START_X;
-   assign wFrameRow = wTotalRow - `FRAME_START_Y;
-
    assign wLocalCol  = wFrameCol - rOffsetFrameCol;
    assign wLocalRow  = wFrameRow - rOffsetFrameRow;
-      
-   
-   wire signed [11:0]  wLocalColRotTrans, wLocalRowRotTrans, wPhaseIn;
-   wire [11:0] 	      wLocalColRotated, wLocalRowRotated;
-   wire [11:0] 	      wLocalColMux, wLocalRowMux;
-   
-   assign wPhaseIn = rWinFxTimer[24:13];
-   
-   Rotate rotate (
-		  .x_in(wLocalCol-12'd60),
-		  .y_in(wLocalRow-12'd75),
-		  .phase_in(wPhaseIn),
-		  .x_out(wLocalColRotTrans),
-		  .y_out(wLocalRowRotTrans),
-		  .clk(clk25)
-		  );
-
-   assign wLocalColRotated  = (wLocalColRotTrans+12'd75 < 12'd0) ? 0 : (wLocalColRotTrans+12'd75 > 12'd149) ? 149 : wLocalColRotTrans+12'd75;
-   assign wLocalRowRotated  = (wLocalRowRotTrans+12'd75 < 12'd0) ? 0 : (wLocalRowRotTrans+12'd75 > 12'd149) ? 149 : wLocalRowRotTrans+12'd75;
-
 
    assign wSymPos = 2*(rBlockPosX + `NUM_BLOCKS_DIM * rBlockPosY);
    assign wCurrentSym  = iSymVector[wSymPos +: 2];
-   assign wInWinnerBlock = iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5]
-					 ||wSymPos == iWinSeqPos[5 +: 5]
-					 ||wSymPos == iWinSeqPos[10 +: 5]);
+   assign wInWinnerBlock = iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5] ||
+					 wSymPos == iWinSeqPos[5 +: 5] ||
+					 wSymPos == iWinSeqPos[10 +: 5] );
 
+      
+   //--------------------------------------------------------------------------------------
+   // Rotation FX logic
+   //--------------------------------------------------------------------------------------
+   assign wPhaseIn  = rWinFxTimer[24:13];   
+   Rotate rotate (
+		  .x_in(wLocalCol+10-`FRAME_BLOCK_DIM/2),
+		  .y_in(wLocalRow-`FRAME_BLOCK_DIM/2),
+		  .phase_in(wPhaseIn),
+		  .x_out(wLocalColRotTrans),
+		  .y_out(wLocalRowRotTrans),
+		  .clk(Clock)
+		  );
+
+   assign wLocalColRotated = (wLocalColRotTrans+`FRAME_BLOCK_DIM/2 < 0)? 
+			      0 :(wLocalColRotTrans+`FRAME_BLOCK_DIM/2 >`FRAME_BLOCK_DIM-1)? 
+			     `FRAME_BLOCK_DIM-1 : wLocalColRotTrans+`FRAME_BLOCK_DIM/2;
+
+   assign wLocalRowRotated = (wLocalRowRotTrans+`FRAME_BLOCK_DIM/2 < 0)? 
+			      0 :(wLocalRowRotTrans+`FRAME_BLOCK_DIM/2 >`FRAME_BLOCK_DIM-1)? 
+			      `FRAME_BLOCK_DIM-1 : wLocalRowRotTrans+`FRAME_BLOCK_DIM/2;
    
+   
+   //--------------------------------------------------------------------------------------
+   // Symbols color definition
+   //--------------------------------------------------------------------------------------
    assign wLocalColMux = wInWinnerBlock ? wLocalColRotated : wLocalCol;   
    assign wLocalRowMux = wInWinnerBlock ? wLocalRowRotated : wLocalRow;
-   assign wSymPixelAddr  = wPixelInFrame ? (wLocalColMux + `FRAME_BLOCK_DIM * wLocalRowMux) : 0;
-   
-   //--------------------------------------------------------------------
-   // Symbols color definition
-   //--------------------------------------------------------------------
+   assign wSymPixelAddr = wPixelInFrame ? (wLocalColMux +`FRAME_BLOCK_DIM*wLocalRowMux) : 0;
+
    always @(*) begin
       case (wCurrentSym)
 	 `X:      rSymPixelOut 	= wXPixelOut;
@@ -144,24 +147,24 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    end
    
 
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // Frame color definition
-   //--------------------------------------------------------------------
-   assign wMarkedPosPixelFlag = (rBlockPosX == iMarkedBlockPosX 
-				 && rBlockPosY == iMarkedBlockPosY
-				 && ( wLocalCol < `FRAME_MARKED_START
-				      || wLocalCol >= `FRAME_MARKED_END
-				      || wLocalRow < `FRAME_MARKED_START
-				      || wLocalRow >= `FRAME_MARKED_END));
+   //--------------------------------------------------------------------------------------
+   assign wMarkedPosPixelFlag = (rBlockPosX == iMarkedBlockPosX && 
+				 rBlockPosY == iMarkedBlockPosY && 
+				 (wLocalCol < `FRAME_MARKED_START || 
+				  wLocalCol >= `FRAME_MARKED_END  || 
+				  wLocalRow < `FRAME_MARKED_START ||
+				  wLocalRow >= `FRAME_MARKED_END  ));
 
-   assign wFrameStripePixelFlag = ((wFrameCol > `FRAME_STRIPE_START 
-				    && wFrameCol < `FRAME_STRIPE_END) 
-                                   || ( wFrameCol > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM 
-				    	&& wFrameCol < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)
-				   || ( wFrameRow > `FRAME_STRIPE_START 
-				    	&& wFrameRow < `FRAME_STRIPE_END) 
-				   || ( wFrameRow > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM 
-					&& wFrameRow < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)); 
+   assign wFrameStripePixelFlag = ((wFrameCol > `FRAME_STRIPE_START && 
+				    wFrameCol < `FRAME_STRIPE_END) || 
+				   (wFrameCol > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM && 
+				    wFrameCol < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM) || 
+				   (wFrameRow > `FRAME_STRIPE_START && 
+				    wFrameRow < `FRAME_STRIPE_END) || 
+				   (wFrameRow > `FRAME_STRIPE_START+`FRAME_BLOCK_DIM && 
+				    wFrameRow < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)); 
    
    always @(*) begin
       if (wMarkedPosPixelFlag && !iWinFlag) //Selected position box
@@ -174,16 +177,15 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
       end
    end
 
-   
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // Final color definition
-   //--------------------------------------------------------------------   
+   //--------------------------------------------------------------------------------------
    assign oVGAColor  = wPixelInFrame ? rVGAFrameColor : `COLOR_BLACK;
 
 
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    // Sequential logic (Block position, Fx-Timer, Row-Col)
-   //--------------------------------------------------------------------
+   //--------------------------------------------------------------------------------------
    always @(posedge clk25)
       begin
 	 if (Reset) begin
