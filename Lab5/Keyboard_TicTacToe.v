@@ -16,7 +16,6 @@ module KEYBOARD_TICTACTOE
     output reg [3:0]   oTurnCounter
     );
 
-   //reg [3:0] 	       oTurnCounter;
    reg [1:0] 	      rSymMat [0:2][0:2];
    
    integer 	      r,c;
@@ -42,17 +41,17 @@ module KEYBOARD_TICTACTOE
 	 oCurrentPosY  <= 2'd1;
 	 oTurnCounter  <= 4'd0;
 	 
-	 rSymMat[0][0] <= `X;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `O;
-	 rSymMat[1][0] <= `O;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
-	 rSymMat[2][0] <= `O;  rSymMat[2][1] <= `O; rSymMat[2][2] <= `X;
+	 rSymMat[0][0] <= `EMPTY;  rSymMat[0][1] <= `EMPTY; rSymMat[0][2] <= `EMPTY;
+	 rSymMat[1][0] <= `EMPTY;  rSymMat[1][1] <= `EMPTY; rSymMat[1][2] <= `EMPTY;
+	 rSymMat[2][0] <= `EMPTY;  rSymMat[2][1] <= `EMPTY; rSymMat[2][2] <= `EMPTY;
       end
       else begin
 
 	 case (iData)
-	    `D: oCurrentPosX <= oCurrentPosX + 1;
-	    `A: oCurrentPosX <= oCurrentPosX - 1;
-	    `W: oCurrentPosY <= oCurrentPosY - 1;
-	    `S: oCurrentPosY <= oCurrentPosY + 1;
+	    `D: if (oCurrentPosX < 4'd2) oCurrentPosX <= oCurrentPosX + 1;
+	    `A: if (oCurrentPosX > 4'd0) oCurrentPosX <= oCurrentPosX - 1;
+	    `S: if (oCurrentPosY < 4'd2) oCurrentPosY <= oCurrentPosY + 1;
+	    `W: if (oCurrentPosY > 4'd0) oCurrentPosY <= oCurrentPosY - 1;
 	    `R:
 	       begin
 		  for (r=0; r<`NUM_BLOCKS_DIM; r=r+1) begin
