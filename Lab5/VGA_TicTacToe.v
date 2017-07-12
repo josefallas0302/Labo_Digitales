@@ -12,6 +12,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
     input wire [0:17] iSymVector,
     input wire [14:0] iWinSeqPos,
     input wire 	      iWinFlag,
+    input wire [3:0]  iTurnCounter,
     output wire [2:0] oVGAColor,
     output wire       oVGAHorizontalSync,
     output wire       oVGAVerticalSync
@@ -34,7 +35,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    wire 	      wInWinnerBlock;
    wire [1:0] 	      wCurrentSym;
    wire [4:0] 	      wSymPos;
-
+   wire 	      wNoWinnerFlag;
    
    reg [X_WIDTH-1:0]  rOffsetFrameCol;
    reg [Y_WIDTH-1:0]  rOffsetFrameRow;
@@ -95,11 +96,14 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
 
    assign wSymPos = 2*(rBlockPosX + `NUM_BLOCKS_DIM * rBlockPosY);
    assign wCurrentSym  = iSymVector[wSymPos +: 2];
+   
    assign wInWinnerBlock = iWinFlag && ( wSymPos == iWinSeqPos[0 +: 5] ||
 					 wSymPos == iWinSeqPos[5 +: 5] ||
 					 wSymPos == iWinSeqPos[10 +: 5] );
 
-      
+   assign wNoWinnerFlag = !iWinFlag && (iTurnCounter >= 4'd9);
+   
+   
    //--------------------------------------------------------------------------------------
    // Rotation FX logic
    //--------------------------------------------------------------------------------------
@@ -129,6 +133,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
    assign wLocalRowMux = wInWinnerBlock ? wLocalRowRotated : wLocalRow;
    assign wSymPixelAddr = wPixelInFrame ? (wLocalColMux +`FRAME_BLOCK_DIM*wLocalRowMux) : 0;
 
+   
    always @(*) begin
       case (wCurrentSym)
 	 `X:      rSymPixelOut 	= wXPixelOut;
@@ -139,9 +144,15 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
   
       if (rSymPixelOut == 1'b1) begin
 	 if (wInWinnerBlock) begin
-	    rVGASymColor = (rWinFxTimer[24] == 1'b0) ? `COLOR_GREEN : `COLOR_BLUE;
+	    rVGASymColor = (rWinFxTimer[23] == 1'b0) ? `COLOR_GREEN : `COLOR_BLUE;
 	 end
-	 else rVGASymColor = `COLOR_BLUE;
+	 else begin
+	    if (wNoWinnerFlag) begin
+	       rVGASymColor = (rWinFxTimer[23] == 1'b0) ? `COLOR_RED : `COLOR_BLUE;
+	    end
+	    else 
+	       rVGASymColor  = `COLOR_BLUE;
+	 end
       end
       else rVGASymColor = `COLOR_BLACK;
    end
@@ -167,7 +178,7 @@ module VGA_TICTACTOE # (parameter X_WIDTH=8,
 				    wFrameRow < `FRAME_STRIPE_END+`FRAME_BLOCK_DIM)); 
    
    always @(*) begin
-      if (wMarkedPosPixelFlag && !iWinFlag) //Selected position box
+      if (wMarkedPosPixelFlag && !iWinFlag && !wNoWinnerFlag) //Selected position box
 	 rVGAFrameColor  = `COLOR_CYAN;  
       else begin
 	 if (wFrameStripePixelFlag) //Frame stripes

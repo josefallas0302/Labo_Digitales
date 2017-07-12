@@ -21,6 +21,7 @@ module TICTACTOE
    wire 	      wWinFlag;
    wire [14:0] 	      wWinSeqPos;
    wire [3:0] 	      wMarkedBlockPosX, wMarkedBlockPosY;
+   wire [3:0] 	      wTurnCounter;
    
    KEYBOARD_READ Kb_Read
       (
@@ -41,7 +42,8 @@ module TICTACTOE
        .iWinFlag(wWinFlag),
        .oCurrentPosX(wMarkedBlockPosX),
        .oCurrentPosY(wMarkedBlockPosY),
-       .oSymVector(wSymVector)
+       .oSymVector(wSymVector),
+       .oTurnCounter(wTurnCounter)
        );
    
    
@@ -72,6 +74,7 @@ module TICTACTOE
        .iSymVector(wSymVector),
        .iWinSeqPos(wWinSeqPos),
        .iWinFlag(wWinFlag),
+       .iTurnCounter(wTurnCounter),
        .oVGAColor(wColor),
        .oVGAHorizontalSync(oVGA_HS),
        .oVGAVerticalSync(oVGA_VS)

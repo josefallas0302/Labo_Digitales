@@ -12,10 +12,11 @@ module KEYBOARD_TICTACTOE
     output reg 	       oKeyboardReset,
     output reg [3:0]   oCurrentPosX,
     output reg [3:0]   oCurrentPosY,
-    output wire [0:17] oSymVector
+    output wire [0:17] oSymVector,
+    output reg [3:0]   oTurnCounter
     );
 
-   reg [3:0] 	      counter;
+   //reg [3:0] 	       oTurnCounter;
    reg [1:0] 	      rSymMat [0:2][0:2];
    
    integer 	      r,c;
@@ -39,7 +40,7 @@ module KEYBOARD_TICTACTOE
       if (Reset) begin
 	 oCurrentPosX  <= 2'd0;
 	 oCurrentPosY  <= 2'd1;
-	 counter       <= 4'd0;
+	 oTurnCounter  <= 4'd0;
 	 
 	 rSymMat[0][0] <= `X;  rSymMat[0][1] <= `X; rSymMat[0][2] <= `O;
 	 rSymMat[1][0] <= `O;  rSymMat[1][1] <= `O; rSymMat[1][2] <= `X;
@@ -48,26 +49,10 @@ module KEYBOARD_TICTACTOE
       else begin
 
 	 case (iData)
-	    `D:
-	       begin
-		  oCurrentPosX <= oCurrentPosX + 1;
-		  oCurrentPosY <= oCurrentPosY;
-	       end
-	    `A:
-	       begin
-		  oCurrentPosX <= oCurrentPosX - 1;
-		  oCurrentPosY <= oCurrentPosY;
-	       end
-	    `W:
-	       begin
-		  oCurrentPosX <= oCurrentPosX;
-		  oCurrentPosY <= oCurrentPosY - 1;
-	       end
-	    `S:
-	       begin
-		  oCurrentPosX <= oCurrentPosX;
-		  oCurrentPosY <= oCurrentPosY + 1;
-	       end
+	    `D: oCurrentPosX <= oCurrentPosX + 1;
+	    `A: oCurrentPosX <= oCurrentPosX - 1;
+	    `W: oCurrentPosY <= oCurrentPosY - 1;
+	    `S: oCurrentPosY <= oCurrentPosY + 1;
 	    `R:
 	       begin
 		  for (r=0; r<`NUM_BLOCKS_DIM; r=r+1) begin
@@ -75,22 +60,17 @@ module KEYBOARD_TICTACTOE
 			rSymMat[r][c] <= 2'b00;
 		     end
 		  end 
-		  counter <= 4'd0;
+		  oTurnCounter <= 4'd0;
 	       end
 	    `ENTER:
 	       begin
 		  if (!iWinFlag && rSymMat[oCurrentPosY][oCurrentPosX] == `EMPTY) begin
-		     rSymMat[oCurrentPosY][oCurrentPosX] <= (counter[0] == 0) ? `X : `O;
-		     counter <= counter + 4'd1;
+		     rSymMat[oCurrentPosY][oCurrentPosX] <= (oTurnCounter[0] == 0) ? `X : `O;
+		     oTurnCounter <= oTurnCounter + 4'd1;
 		  end
 	       end
-	    default:
-	       begin
-		  oCurrentPosX <= oCurrentPosX;
-		  oCurrentPosY <= oCurrentPosY;
-	       end
-
 	 endcase
+
       end
    end
 
